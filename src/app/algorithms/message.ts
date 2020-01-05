@@ -1,4 +1,5 @@
-import {Alphabet, Classifier} from './classifier';
+import {Classifier} from './classifier';
+import {Alphabet} from './alphabet';
 
 const COORD_LEN = 3;
 export type MessageType = [Alphabet, Alphabet];

@@ -1,0 +1,13 @@
+app-root {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  app-chess-view {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}

@@ -1,14 +1,8 @@
 import {breed, primitiveArrayEquals, randomArrayMutate, randomArrayOfValues} from './utils';
 import {Message} from './message';
 import {ClassifierConfig} from './classifier-config';
+import {ALPHABET, Alphabet} from './alphabet';
 
-export enum Alphabet {
-  Zero = '0',
-  One = '1',
-  PassThrough = '#'
-}
-
-const ALPHABET: Alphabet[] = [Alphabet.Zero, Alphabet.One, Alphabet.PassThrough];
 
 export class Classifier {
   public static readonly comparator = (a: Classifier, b: Classifier) => b._strength - a._strength;
@@ -48,8 +42,12 @@ export class Classifier {
   }
 
   static equal(c1: Classifier, c2: Classifier): boolean {
-    if (c1 === c2 || !c1 && !c2) return true;
-    if (!c1 || !c2) return false;
+    if (c1 === c2 || !c1 && !c2) {
+      return true;
+    }
+    if (!c1 || !c2) {
+      return false;
+    }
     return c1 instanceof Classifier &&
       c2 instanceof Classifier &&
       primitiveArrayEquals(c1.action, c2.action) &&

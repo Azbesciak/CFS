@@ -1,0 +1,25 @@
+app-chess-cell {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
+  .predicted-cell {
+    $predicted-cell-size: 30%;
+    width: $predicted-cell-size;
+    height: $predicted-cell-size;
+  }
+
+  &, .predicted-cell {
+    &.unknown {
+      background-color: var(--unknown-color);
+    }
+
+    &.zero {
+      background-color: var(--zero-color);
+    }
+
+    &.one {
+      background-color: var(--one-color);
+    }
+  }
+}
