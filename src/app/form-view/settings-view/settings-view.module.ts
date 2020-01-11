@@ -12,11 +12,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatInputModule} from "@angular/material/input";
-import { GenericFormComponent } from './generic-form/generic-form.component';
+import {GenericFormComponent} from './generic-form/generic-form.component';
+import {ClassifiersNumberComponent} from './state-tab/classifiers-number/classifiers-number.component';
 
 
 @NgModule({
-  declarations: [SettingsViewComponent, StateTabComponent, GeneticAlgorithmTabComponent, BucketBrigadeTabComponent, GenericFormComponent],
+  declarations: [SettingsViewComponent, StateTabComponent, GeneticAlgorithmTabComponent, BucketBrigadeTabComponent, GenericFormComponent, ClassifiersNumberComponent],
   exports: [SettingsViewComponent],
   imports: [
     CommonModule,

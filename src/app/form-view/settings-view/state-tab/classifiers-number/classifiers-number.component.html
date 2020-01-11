@@ -1,0 +1,12 @@
+<form (submit)="acceptChange()" [formGroup]="group">
+  <label>numberOfClassifiers</label>
+  <mat-form-field>
+    <input matInput [formControl]="control" type="number" required>
+    <mat-error *ngIf="control.hasError('min')">Value must be positive</mat-error>
+    <mat-error *ngIf="control.hasError('required')">Value is required</mat-error>
+    <mat-error *ngIf="control.hasError('pattern')">Value must be integer</mat-error>
+  </mat-form-field>
+  <button mat-icon-button type="submit" [disabled]="currentValue === control.value">
+    <mat-icon>done</mat-icon>
+  </button>
+</form>

@@ -25,7 +25,7 @@ export class StateTabComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.patterns = this.patternService.getAvailablePatterns();
-    this.startSub = this.algorithm.isStarted.subscribe(v => this.isStarted = v);
+    this.startSub = this.algorithm.isStarted$.subscribe(v => this.isStarted = v);
   }
 
   onPatternChanged($event: MatSelectChange) {

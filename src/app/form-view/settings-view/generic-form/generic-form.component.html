@@ -3,7 +3,7 @@
     <label>{{f.field}}</label>
     <mat-slider *ngSwitchCase="'decimal'" [formControlName]="f.field" min="0.01" max="1" step="0.01" [thumbLabel]="true"></mat-slider>
     <mat-form-field *ngSwitchCase="'integer'">
-      <input matInput [formControlName]="f.field" type="number" step="1" pattern="-?\d+">
+      <input matInput [formControlName]="f.field" type="number" step="1" pattern="-?\d+" required>
       <mat-error *ngIf="form.get(f.field).hasError('min')">Value must be positive</mat-error>
       <mat-error *ngIf="form.get(f.field).hasError('required')">Value is required</mat-error>
       <mat-error *ngIf="form.get(f.field).hasError('pattern')">Integer values allowed only</mat-error>
