@@ -1,10 +1,9 @@
 app-generic-form form {
-  margin: 1.25rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1rem;
   align-items: center;
-
+  margin: var(--form-margin);
   label {
     justify-self: flex-end;
   }

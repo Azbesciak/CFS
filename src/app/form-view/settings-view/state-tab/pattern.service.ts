@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Alphabet} from "../../../algorithms/alphabet";
 import {environment} from "../../../../environments/environment";
+import {BehaviorSubject} from "rxjs";
 
 export interface Pattern {
   name: string;
@@ -62,8 +63,21 @@ function generatePatterns(width: number, height: number): Pattern[] {
   providedIn: "root"
 })
 export class PatternService {
-  availablePatterns() {
-    const {height, width} = environment.chess;
-    return generatePatterns(width, height);
+  private width: number = environment.chess.width;
+  private height: number = environment.chess.height;
+  private readonly patterns: Pattern[] = generatePatterns(this.width, this.height);
+
+  private readonly _selectedPattern = new BehaviorSubject<Pattern>(this.patterns[0]);
+  readonly selectedPattern = this._selectedPattern.asObservable();
+
+  selectPattern(pattern: Pattern) {
+    if (pattern.value.length !== this.width) return;
+    if (pattern.value.some(v => v.length !== this.height)) return;
+    this._selectedPattern.next(pattern);
   }
+
+  getAvailablePatterns() {
+    return this.patterns.slice();
+  }
+
 }

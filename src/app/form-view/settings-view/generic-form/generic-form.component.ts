@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
   Output,
   ViewEncapsulation
 } from '@angular/core';
@@ -17,7 +16,7 @@ import {
   ValueType
 } from "../../../algorithms/field-definition";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Observable, Unsubscribable} from "rxjs";
+import {merge, of, Unsubscribable} from "rxjs";
 
 @Component({
   selector: 'app-generic-form',
@@ -26,7 +25,7 @@ import {Observable, Unsubscribable} from "rxjs";
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GenericFormComponent<T> implements OnInit, OnDestroy {
+export class GenericFormComponent<T> implements OnDestroy {
   form: FormGroup;
   fieldsDefinitions: FieldDefinition<T>[];
   private formSub: Unsubscribable;
@@ -39,19 +38,24 @@ export class GenericFormComponent<T> implements OnInit, OnDestroy {
       return;
     }
     this.form = this.fb.group(extractValues(value, (k, v) =>
-      [v.defaultValue, [Validators.required, Validators.min(0.01), v.type === ValueType.decimal ? Validators.max(1) : undefined].filter(v => v)])
+        [v.defaultValue, [
+          Validators.required,
+          Validators.min(0.01),
+          v.type === ValueType.decimal ? Validators.max(1) : null
+        ].filter(v => v)]
+      )
     );
     this.fieldsDefinitions = toFieldDefinition(value);
-    this.formSub = this.form.valueChanges.subscribe(v => this.form.valid && this.configChange.next(v));
+    this.formSub = merge(
+      of(this.form.value),
+      this.form.valueChanges
+    ).subscribe(v => this.form.valid && this.configChange.next(v));
   }
 
   @Output()
   readonly configChange: EventEmitter<Properties<T, number>> = new EventEmitter();
 
   constructor(private fb: FormBuilder) {
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy(): void {

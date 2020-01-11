@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body {
   height: 100%;
 }
@@ -7,6 +5,7 @@ html, body {
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -18,4 +17,5 @@ body {
   --zero-color: #fff;
   --one-color: #212121;
   --unknown-color: #9E9E9E;
+  --form-margin: 1.25rem;
 }
