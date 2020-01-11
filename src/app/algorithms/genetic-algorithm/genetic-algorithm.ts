@@ -1,18 +1,16 @@
-import {Classifier} from './classifier';
-import {Message} from './message';
+import {Classifier} from '../classifier';
+import {Message} from '../message';
+import {GeneticAlgorithmCfg} from "./genetic-algorithm-cfg";
+import {Algorithm} from "../algorithm";
 
-export class GeneticAlgorithm {
-  constructor(
-    public readonly mutation: number,
-    public readonly strengthThreshold: number,
-    public readonly elitism: number,
-    private readonly outPercentage: number,
-    private readonly maxClassifiers: number
-  ) {
+const GAClassifiersComparator = (a: Classifier, b: Classifier) => b.strength - a.strength;
+export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
+  constructor(cfg: GeneticAlgorithmCfg) {
+    super(cfg);
   }
 
   execute(classifiers: Classifier[]) {
-    classifiers.sort(Classifier.comparator);
+    classifiers.sort(GAClassifiersComparator);
     let outNo = this.removeClassifiersWithToLowStrength(classifiers);
     const afterBreed = this.breed(classifiers, 1);
     if (afterBreed.length > 0)
@@ -22,7 +20,7 @@ export class GeneticAlgorithm {
   }
 
   private makeAsExternalOutput(classifiers: Classifier[], outNo: number) {
-    const maxOutNo = Math.floor(classifiers.length * this.outPercentage);
+    const maxOutNo = Math.floor(classifiers.length * this.cfg.outPercentage);
     for (let i = classifiers.length - 1; i >= 0 && outNo < maxOutNo; i--) {
       const classifier = classifiers[i];
       if (classifier.isOutput()) {
@@ -34,8 +32,8 @@ export class GeneticAlgorithm {
   }
 
   private mutateClassifiers(classifiers: Classifier[]) {
-    for (let i = Math.floor(classifiers.length * this.elitism); i < classifiers.length; i++) {
-      if (Math.random() < this.mutation)
+    for (let i = Math.floor(classifiers.length * this.cfg.elitism); i < classifiers.length; i++) {
+      if (Math.random() < this.cfg.mutation)
         classifiers[i].mutate();
     }
   }
@@ -45,7 +43,7 @@ export class GeneticAlgorithm {
     for (let i = classifiers.length - 1; i >= 0 && classifiers.length > 2; i--) {
       const classifier = classifiers[i];
       classifier.newEpoch();
-      if (classifier.strength < this.strengthThreshold) {
+      if (classifier.strength < this.cfg.strengthThreshold) {
         classifiers.splice(i, 1);
       } else if (classifier.isOutput()) {
         ++outNo;
@@ -62,7 +60,7 @@ export class GeneticAlgorithm {
     }
     let first: Classifier = classifiers[0];
     let second: Classifier;
-    for (let i = 1; i < classifiers.length && kb < toBKilled && classifiers.length < this.maxClassifiers; i++) {
+    for (let i = 1; i < classifiers.length && kb < toBKilled && classifiers.length < this.cfg.maxClassifiers; i++) {
       second = classifiers[i];
       let j = 0;
       let candidate: Classifier;

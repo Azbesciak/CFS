@@ -1,25 +1,8 @@
-import {Classifier} from './classifier';
-import {Message} from './message';
+import {Classifier} from '../classifier';
+import {Message} from '../message';
+import {BucketBrigadeCfg} from "./bucket-brigade-cfg";
+import {Algorithm} from "../algorithm";
 
-export interface BucketBrigadeCfg {
-  readonly k: number;
-  readonly lifeTax: number;
-  readonly bidTax: number;
-  readonly winners: number;
-  readonly msgAgeThreshold: number;
-}
-
-const DEFAULT_CONFIG = {
-  k: 0.1,
-  lifeTax: 0.06,
-  bidTax: 0.05,
-  winners: 1,
-  msgAgeThreshold: 3
-};
-
-export function bucketBrigadeConfig(cfg: Partial<BucketBrigadeCfg>): BucketBrigadeCfg {
-  return Object.assign({}, DEFAULT_CONFIG, cfg);
-}
 
 interface BucketBrigadeClassifier {
   classifier: Classifier;
@@ -29,14 +12,13 @@ interface BucketBrigadeClassifier {
 const BBClassifiersComparator =
   (c1: BucketBrigadeClassifier, c2: BucketBrigadeClassifier) => c2.classifier.bid - c1.classifier.bid;
 
-export class BucketBrigade {
+export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
   private active: Classifier[] = [];
   private activated: Classifier[] = [];
   private prevActivated: Classifier[] = [];
-  private readonly cfg: BucketBrigadeCfg;
 
   constructor(cfg: BucketBrigadeCfg) {
-    this.cfg = {...cfg};
+    super(cfg)
   }
 
   matchCompete(classifiers: Classifier[], messages: Message[]) {

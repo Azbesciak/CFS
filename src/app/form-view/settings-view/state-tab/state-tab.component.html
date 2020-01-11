@@ -1,0 +1,15 @@
+<div class="result">
+  <div class="result-label">Global accuracy</div>
+  <div class="result-value">{{accuracy | number:"0.2-2" | percent}}</div>
+</div>
+<div class="buttons">
+  <button mat-icon-button (click)="started ? stop() : start()" [matTooltip]="started ? 'Stop' : 'Start'">
+    <mat-icon>{{started ? "stop": "play_arrow"}}</mat-icon>
+  </button>
+  <button mat-icon-button (click)="reset()" matTooltip="Reset">
+    <mat-icon>replay</mat-icon>
+  </button>
+</div>
+<mat-select [value]="pattern" (selectionChange)="onPatternChanged($event)">
+  <mat-option *ngFor="let p of patterns" [value]="p">{{p.name}}</mat-option>
+</mat-select>

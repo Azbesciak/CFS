@@ -3,9 +3,15 @@ import {Message} from './message';
 import {ClassifierConfig} from './classifier-config';
 import {ALPHABET, Alphabet} from './alphabet';
 
+export interface ClassifierView {
+  index: number;
+  condition: string;
+  action: string;
+  strength: number;
+  specifity: number;
+}
 
 export class Classifier {
-  public static readonly comparator = (a: Classifier, b: Classifier) => b._strength - a._strength;
   static classifiersNumber: number;
   private _strength = 1;
   private active = false;
@@ -14,6 +20,19 @@ export class Classifier {
   readonly classifierIndex = Classifier.classifiersNumber++;
   private _bid: number;
   private _lived = 0;
+  private _view: ClassifierView;
+
+  get view(): ClassifierView {
+    if (!this._view)
+      this._view = {
+        action: this.action.join(""),
+        condition: this.condition.join(""),
+        index: this.classifierIndex,
+        specifity: this.specifity,
+        strength: this._strength
+      };
+    return this._view;
+  }
 
   get strength() {
     return this._strength;
@@ -78,10 +97,12 @@ export class Classifier {
 
   pay(amount: number) {
     this._strength += amount;
+    this._view = null;
   }
 
   payTax(life: number) {
     this._strength -= this._strength * life;
+    this._view = null;
   }
 
   activate(message: Message): Message {

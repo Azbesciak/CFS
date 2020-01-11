@@ -1,0 +1,7 @@
+app-messages-view {
+  .message {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-column-gap: .5rem;
+  }
+}

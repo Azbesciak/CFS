@@ -1,0 +1,8 @@
+app-add-classifier {
+  form {
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr auto;
+    align-items: center;
+    grid-column-gap: 0.5em;
+  }
+}

@@ -1,0 +1,12 @@
+<app-section-header label="Messages"></app-section-header>
+<mat-list *ngIf="messages && messages.length > 0; else noMessages">
+  <mat-list-item *ngFor="let mes of messages">
+    <div class="message">
+      <span class="message-value">{{mes.value.join("")}}</span>
+      <span class="message-sender">(123)</span>
+    </div>
+  </mat-list-item>
+</mat-list>
+<ng-template #noMessages>
+  <app-no-content message="No messages"></app-no-content>
+</ng-template>
