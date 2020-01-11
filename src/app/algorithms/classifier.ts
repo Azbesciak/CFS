@@ -1,6 +1,5 @@
 import {breed, primitiveArrayEquals, randomArrayMutate, randomArrayOfValues} from './utils';
-import {Message} from './message';
-import {ClassifierConfig} from './classifier-config';
+import {Message} from './message/message';
 import {ALPHABET, Alphabet} from './alphabet';
 
 export interface ClassifierView {
@@ -48,16 +47,15 @@ export class Classifier {
 
   private constructor(
     private condition: Alphabet[],
-    private action: Alphabet[],
-    readonly cfg: ClassifierConfig
+    private action: Alphabet[]
   ) {
     this.specifity = Classifier.calculateSpecifity(condition);
   }
 
-  static fromLengths(conditionLen: number, actionLen: number, cfg: ClassifierConfig): Classifier {
+  static fromLengths(conditionLen: number, actionLen: number): Classifier {
     let actions = randomArrayOfValues(ALPHABET, actionLen);
     Message.makeAsMessageOfType(actions, Message.INPUT_INTERNAL_TYPE);
-    return new Classifier(randomArrayOfValues(ALPHABET, conditionLen), actions, {...cfg});
+    return new Classifier(randomArrayOfValues(ALPHABET, conditionLen), actions);
   }
 
   static equal(c1: Classifier, c2: Classifier): boolean {
@@ -156,16 +154,16 @@ export class Classifier {
     return this.messages;
   }
 
-  mutate() {
-    randomArrayMutate(this.condition, ALPHABET, this.cfg.mutationProbability);
-    randomArrayMutate(this.action, ALPHABET, this.cfg.mutationProbability);
+  mutate(mutationProbability: number) {
+    randomArrayMutate(this.condition, ALPHABET, mutationProbability);
+    randomArrayMutate(this.action, ALPHABET, mutationProbability);
   }
 
   breed(classifier: Classifier): Classifier {
     const condition = breed(this.condition, classifier.condition);
     const action = breed(this.action, classifier.action);
     --Classifier.classifiersNumber;
-    return new Classifier(condition, action, this.cfg);
+    return new Classifier(condition, action);
   }
 
   inverseCopy(): Classifier {
@@ -177,7 +175,7 @@ export class Classifier {
   }
 
   copy() {
-    return new Classifier(this.condition.slice(), this.action.slice(), this.cfg);
+    return new Classifier(this.condition.slice(), this.action.slice());
   }
 }
 

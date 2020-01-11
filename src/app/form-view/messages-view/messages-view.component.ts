@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {Message} from "../../algorithms/message";
+import {Message} from "../../algorithms/message/message";
 
 @Component({
   selector: 'app-messages-view',

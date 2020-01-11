@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Message} from "../algorithms/message";
+import {Message} from "../algorithms/message/message";
 
 @Component({
   selector: 'app-form-view',
@@ -7,7 +7,7 @@ import {Message} from "../algorithms/message";
   styleUrls: ['./form-view.component.scss']
 })
 export class FormViewComponent implements OnInit {
-  messages: Message[] = [];//[Message.fromCoords(6, 3), Message.fromCoords(1, 2)];
+  messages: Message[] = [];
 
   constructor() {
   }

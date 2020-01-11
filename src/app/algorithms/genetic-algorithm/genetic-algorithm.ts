@@ -1,12 +1,16 @@
 import {Classifier} from '../classifier';
-import {Message} from '../message';
 import {GeneticAlgorithmCfg} from "./genetic-algorithm-cfg";
 import {Algorithm} from "../algorithm";
+import {MessageConfigProvider} from "../message/message-config.provider";
 
 const GAClassifiersComparator = (a: Classifier, b: Classifier) => b.strength - a.strength;
+
 export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
-  constructor(cfg: GeneticAlgorithmCfg) {
+  private readonly messageLength: number;
+
+  constructor(cfg: GeneticAlgorithmCfg, messageConfig: MessageConfigProvider) {
     super(cfg);
+    this.messageLength = messageConfig.messageLength;
   }
 
   execute(classifiers: Classifier[]) {
@@ -33,8 +37,8 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
 
   private mutateClassifiers(classifiers: Classifier[]) {
     for (let i = Math.floor(classifiers.length * this.cfg.elitism); i < classifiers.length; i++) {
-      if (Math.random() < this.cfg.mutation)
-        classifiers[i].mutate();
+      if (Math.random() < this.cfg.mutationProbability)
+        classifiers[i].mutate(this.cfg.classifierMutationProbability);
     }
   }
 
@@ -68,7 +72,8 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
         candidate = first.breed(second);
         if (++j > 100) {
           if (i >= classifiers.length - 1) {
-            candidate = Classifier.fromLengths(Message.MESSAGE_LENGTH, Message.MESSAGE_LENGTH, candidate.cfg);
+            // probably could be different - in original code 8/8... fixed, without variable
+            candidate = Classifier.fromLengths(this.messageLength, this.messageLength);
             continue;
           }
           first = second;

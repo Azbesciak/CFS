@@ -1,5 +1,5 @@
 import {Classifier} from '../classifier';
-import {Message} from '../message';
+import {Message} from '../message/message';
 import {BucketBrigadeCfg} from "./bucket-brigade-cfg";
 import {Algorithm} from "../algorithm";
 

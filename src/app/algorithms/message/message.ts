@@ -1,7 +1,6 @@
-import {Classifier} from './classifier';
-import {Alphabet} from './alphabet';
+import {Classifier} from '../classifier';
+import {Alphabet} from '../alphabet';
 
-const COORD_LEN = 3;
 export type MessageType = [Alphabet, Alphabet];
 
 export class Message {
@@ -9,7 +8,7 @@ export class Message {
   static readonly INPUT_INTERNAL_TYPE: MessageType = [Alphabet.One, Alphabet.One];
   static readonly OUTPUT_EXTERNAL_TYPE: MessageType = [Alphabet.Zero, Alphabet.Zero];
   static readonly INPUT_EXTERNAL_TYPE: MessageType = [Alphabet.One, Alphabet.Zero];
-  static readonly MESSAGE_LENGTH = 8;
+  static readonly MESSAGE_PREFIX_LENGTH = 2;
   private _wasUsed = false;
 
   constructor(readonly value: Alphabet[], readonly classifier?: Classifier) {
@@ -31,20 +30,6 @@ export class Message {
 
   get wasUsed() {
     return this._wasUsed;
-  }
-
-  private static numberToBinary(value: number): Alphabet[] {
-    const word = value.toString(2).split('') as Alphabet[];
-    while (word.length < COORD_LEN) {
-      word.unshift(Alphabet.Zero);
-    }
-    return word;
-  }
-
-  static fromCoords(x: number, y: number) {
-    const xBinary = Message.numberToBinary(x);
-    const yBinary = Message.numberToBinary(y);
-    return new Message([...Message.INPUT_EXTERNAL_TYPE, ...xBinary, ...yBinary]);
   }
 
   use() {

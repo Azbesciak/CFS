@@ -4,6 +4,9 @@ import {BucketBrigadeCfg} from "../../algorithms/bucket-brigade/bucket-brigade-c
 import {GeneticAlgorithm} from "../../algorithms/genetic-algorithm/genetic-algorithm";
 import {BucketBrigade} from "../../algorithms/bucket-brigade/bucket-brigade";
 import {BehaviorSubject} from "rxjs";
+import {Classifier} from "../../algorithms/classifier";
+import {environment} from "../../../environments/environment";
+import {MessageConfigProvider} from "./message-config.provider";
 
 @Injectable({
   providedIn: "root"
@@ -11,15 +14,17 @@ import {BehaviorSubject} from "rxjs";
 export class AlgorithmService {
   private ga: GeneticAlgorithm;
   private bb: BucketBrigade;
+  private readonly messageLength: number;
 
-  private readonly _isRunning = new BehaviorSubject<boolean>(false);
-  readonly isStarted = this._isRunning.asObservable();
+  constructor(private messageConfigProvider: MessageConfigProvider) {
+    this.messageLength = messageConfigProvider.messageLength;
+  }
 
   updateGeneticAlgorithm(cfg: GeneticAlgorithmCfg) {
     if (this.ga)
       this.ga.update(cfg);
     else
-      this.ga = new GeneticAlgorithm(cfg);
+      this.ga = new GeneticAlgorithm(cfg, this.messageConfigProvider);
   }
 
   updateBucketBrigade(cfg: BucketBrigadeCfg) {
@@ -38,7 +43,7 @@ export class AlgorithmService {
   }
 
   reset() {
-    this._isRunning.next(false);
+    this._isRunning$.next(false);
   }
 
 }
