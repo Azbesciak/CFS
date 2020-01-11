@@ -9,7 +9,7 @@ import {Message} from "../../algorithms/message/message";
 })
 export class MessageConfigProvider implements ProviderInterface {
   private static getLengthInBinary(maxValue: number) {
-    return (Math.min(maxValue - 1, 0)).toString(2).length;
+    return (Math.max(maxValue - 1, 1)).toString(2).length;
   }
 
   readonly widthCoordLength = MessageConfigProvider.getLengthInBinary(environment.chess.width);
