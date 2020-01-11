@@ -15,6 +15,7 @@ import {FormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {SettingsViewModule} from "./settings-view/settings-view.module";
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {SettingsViewModule} from "./settings-view/settings-view.module";
     MatIconModule,
     FormsModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class FormViewModule {

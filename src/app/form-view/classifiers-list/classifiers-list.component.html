@@ -1,13 +1,15 @@
 <app-section-header label="Classifiers"></app-section-header>
-<table mat-table [dataSource]="classifiersViews" *ngIf="classifiersViews && classifiersViews.length > 0; else noClassifiers">
-  <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
-    <th mat-header-cell *matHeaderCellDef>{{col | titlecase}}</th>
-    <td mat-cell *matCellDef="let element">{{element[col]}}</td>
-  </ng-container>
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0; else noClassifiers" matSort>
+    <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | titlecase}}</th>
+      <td mat-cell *matCellDef="let element">{{element[col]}}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
 <ng-template #noClassifiers>
   <app-no-content message="No classifiers"></app-no-content>
 </ng-template>

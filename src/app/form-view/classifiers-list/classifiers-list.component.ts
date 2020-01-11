@@ -1,5 +1,15 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {Classifier, ClassifierView} from "../../algorithms/classifier";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import {ClassifierView} from "../../algorithms/classifier";
+import {AlgorithmService} from "../settings-view/algorithm.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-classifiers-list',
@@ -9,18 +19,21 @@ import {Classifier, ClassifierView} from "../../algorithms/classifier";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClassifiersListComponent implements OnInit {
-  @Input()
-  set classifiers(value: Classifier[]) {
-    this.classifiersViews = value ? value.map(c => c.view) : [];
+  @ViewChild(MatSort, {static: false})
+  sort: MatSort;
+
+  dataSource = new MatTableDataSource<ClassifierView>([]);
+  displayedColumns: (keyof ClassifierView)[] = ["index", "action", "condition", "strength", "specifity"];
+
+  constructor(readonly algorithm: AlgorithmService, private changeDet: ChangeDetectorRef) {
   }
 
-  displayedColumns: (keyof ClassifierView)[]= ["index", "action", "condition", "strength", "specifity"];
-
-  classifiersViews: ClassifierView[];
-
-  constructor() { }
-
   ngOnInit() {
+    this.algorithm.classifiers$.subscribe(c => {
+      this.dataSource.data = c.map(v => v.view);
+      this.changeDet.markForCheck();
+      setTimeout(() => this.dataSource.sort = this.sort)
+    });
   }
 
 }

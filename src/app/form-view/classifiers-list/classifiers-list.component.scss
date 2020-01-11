@@ -1,6 +1,14 @@
 app-classifiers-list {
   display: block;
-  table {
-    width: 100%;
+
+  .table-container {
+    max-height: 15rem;
+    overflow: auto;
+    tr.mat-row {
+      height: 2rem;
+    }
+    table {
+      width: 100%;
+    }
   }
 }
