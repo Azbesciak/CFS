@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Message} from "../algorithms/message/message";
 
 @Component({
   selector: 'app-form-view',
   templateUrl: './form-view.component.html',
-  styleUrls: ['./form-view.component.scss']
+  styleUrls: ['./form-view.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormViewComponent implements OnInit {
   messages: Message[] = [];
