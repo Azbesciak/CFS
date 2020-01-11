@@ -1,13 +1,19 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MessageConfigProvider} from "../settings-view/message-config.provider";
+import {AlgorithmService} from "../settings-view/algorithm.service";
+import {Classifier} from "../../algorithms/classifier";
+import {Alphabet, ALPHABET} from "../../algorithms/alphabet";
+
+const VALID_ALPHABET_VALIDATOR = (field: FormControl) => {
+  let value = field.value as string;
+  if (!value || value.length === 0) return null;
+  if (value.split("").some(v => !ALPHABET.includes(v as Alphabet))) {
+    return {
+      invalidValue: {allowed: ALPHABET.join(", ")}
+    }
+  }
+};
 
 @Component({
   selector: 'app-add-classifier',
@@ -17,24 +23,43 @@ import {NgForm} from "@angular/forms";
   encapsulation: ViewEncapsulation.None
 })
 export class AddClassifierComponent implements OnInit {
-  @ViewChild("form", {static: true})
-  form: NgForm;
+  form: FormGroup;
+  conditionControl: FormControl;
+  actionControl: FormControl;
 
-  @Output()
-  classifierAdded = new EventEmitter<ClassifierModel>();
+  constructor(
+    private messagesFactory: MessageConfigProvider,
+    private algorithm: AlgorithmService,
+    private fb: FormBuilder
+  ) {
+  }
 
-  value: ClassifierModel = newClassifierModel();
-
-  conditionPattern = "[01#]{8}";
-  actionPattern = "[01]{8}";
+  private makeControl() {
+    return this.fb.control("", [
+      Validators.required,
+      VALID_ALPHABET_VALIDATOR,
+      Validators.maxLength(this.messagesFactory.messageLength),
+      Validators.minLength(this.messagesFactory.messageLength)
+    ])
+  }
 
   ngOnInit() {
+    this.conditionControl = this.makeControl();
+    this.actionControl = this.makeControl();
+    this.form = this.fb.group({
+      "condition": this.conditionControl,
+      "action": this.actionControl
+    });
   }
 
   addClassifier() {
-    if (this.form.invalid || this.form.pristine) return;
-    this.classifierAdded.next(this.value);
-    this.value = newClassifierModel();
+    if (this.form.pristine || this.form.invalid) return;
+    const {condition, action} = this.form.value;
+    this.algorithm.addClassifier(Classifier.fromString(condition, action));
+    this.form.reset({});
+    this.form.markAsPristine();
+    this.actionControl.setErrors(null);
+    this.conditionControl.setErrors(null);
   }
 }
 

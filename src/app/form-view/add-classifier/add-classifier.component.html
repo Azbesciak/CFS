@@ -1,17 +1,7 @@
-<form (submit)="addClassifier()" #form="ngForm">
-  <mat-form-field>
-    <input matInput placeholder="Condition" required [pattern]="conditionPattern"
-           autocomplete="off" type="text" name="condition" [(ngModel)]="value.condition">
-    <mat-error *ngIf="form.controls.condition && form.controls.condition.hasError('required')">Value required</mat-error>
-    <mat-error *ngIf="form.controls.condition && form.controls.condition.hasError('pattern')">Invalid condition</mat-error>
-  </mat-form-field>
+<form (submit)="addClassifier()" [formGroup]="form">
+  <app-add-classifier-input [control]="conditionControl" [name]="'Condition'"></app-add-classifier-input>
   <div class="then-indicator">/</div>
-  <mat-form-field>
-    <input matInput placeholder="Action" required [pattern]="actionPattern"
-           autocomplete="off" type="text" name="action" [(ngModel)]="value.action">
-    <mat-error *ngIf="form.controls.action && form.controls.action.hasError('required')">Value required</mat-error>
-    <mat-error *ngIf="form.controls.action && form.controls.action.hasError('pattern')">Invalid action</mat-error>
-  </mat-form-field>
+  <app-add-classifier-input [control]="actionControl" [name]="'Action'"></app-add-classifier-input>
   <button mat-icon-button type="submit" [disabled]="form.pristine || form.invalid">
     <mat-icon>add</mat-icon>
   </button>

@@ -58,6 +58,20 @@ export class Classifier {
     return new Classifier(randomArrayOfValues(ALPHABET, conditionLen), actions);
   }
 
+  static fromString(condition: string, action: string): Classifier {
+    const conditionAlphabet = Classifier.validateAlphabetString(condition, "condition");
+    const actionAlphabet = Classifier.validateAlphabetString(action, "action");
+    return new Classifier(conditionAlphabet, actionAlphabet);
+  }
+
+  private static validateAlphabetString(str: string, role: string) {
+    const strAlphabet = str.split("");
+    if (strAlphabet.some(v => !ALPHABET.includes(v as Alphabet))) {
+      throw Error(`Illegal value in ${role}: '${str}', allowed are [${ALPHABET.join(", ")}]`)
+    }
+    return strAlphabet as Alphabet[];
+  }
+
   static equal(c1: Classifier, c2: Classifier): boolean {
     if (c1 === c2 || !c1 && !c2) {
       return true;

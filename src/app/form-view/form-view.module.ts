@@ -11,18 +11,19 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {SettingsViewModule} from "./settings-view/settings-view.module";
 import {MatSortModule} from "@angular/material/sort";
+import {AddClassifierInputComponent} from './add-classifier/add-classifier-input/add-classifier-input.component';
 
 
 @NgModule({
   declarations: [
     FormViewComponent, MessagesViewComponent,
     ClassifiersListComponent, AddClassifierComponent,
-    SectionHeaderComponent, NoContentComponent
+    SectionHeaderComponent, NoContentComponent, AddClassifierInputComponent
   ],
   exports: [
     FormViewComponent
@@ -38,7 +39,8 @@ import {MatSortModule} from "@angular/material/sort";
     FormsModule,
     MatCardModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    ReactiveFormsModule
   ]
 })
 export class FormViewModule {
