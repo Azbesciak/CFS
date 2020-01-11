@@ -11,7 +11,7 @@ export interface ClassifierView {
 }
 
 export class Classifier {
-  static classifiersNumber: number;
+  static classifiersNumber: number = 0;
   private _strength = 1;
   private active = false;
   private readonly specifity: number;
