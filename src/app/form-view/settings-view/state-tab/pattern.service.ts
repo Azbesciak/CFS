@@ -15,21 +15,21 @@ export function matrix<T>(width: number, height: number, supplier: (x: number, y
 
 function horizontalLinesPattern(width: number, height: number): Pattern {
   return {
-    name: "horizontal_lines",
+    name: "horizontalLines",
     value: matrix(width, height, x => x % 2 === 0 ? Alphabet.Zero : Alphabet.One)
   }
 }
 
 function halfByHalfPattern(width: number, height: number): Pattern {
   return {
-    name: "half_by_half",
+    name: "halfByHalf",
     value: matrix(width, height, x => x < height / 2 ? Alphabet.Zero : Alphabet.One)
   }
 }
 
 function verticalLinesPattern(width: number, height: number): Pattern {
   return {
-    name: "half_by_half",
+    name: "verticalLines",
     value: matrix(width, height, (_, y) => y % 2 === 0 ? Alphabet.Zero : Alphabet.One)
   }
 }
