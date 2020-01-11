@@ -234,7 +234,7 @@ public class CFSdemo extends JFrame implements MouseListener, MouseMotionListene
         panel = new JPanel(new FlowLayout());
         l = new JLabel(Messages.getString("CFSdemo.27"));
         l.setLabelFor(cb_pattern);
-//        
+//
         panel.add(l);
         panel.add(cb_pattern);
         cb_pattern.addActionListener(this);
@@ -543,8 +543,7 @@ public class CFSdemo extends JFrame implements MouseListener, MouseMotionListene
 
             if (result) {
                 if (p.matcher(this.TAaction.getText()).find()) {
-                    this.classifierList.add(new Classifier(this.TAcondition.getText(),
-                            this.TAaction.getText()));
+                    this.classifierList.add(new Classifier(this.TAcondition.getText(), this.TAaction.getText()));
                     this.updateClassifierList();
                     return;
                 }

@@ -58,7 +58,7 @@ function generatePatterns(width: number, height: number): Pattern[] {
     chessPattern(width, height)
   ]
 }
-
+const customPatternName = "custom";
 @Injectable({
   providedIn: "root"
 })
@@ -77,7 +77,19 @@ export class PatternService {
   }
 
   getAvailablePatterns() {
-    return this.patterns.slice();
+    return this.patterns;
+  }
+
+  selectCustomPattern(pattern: Alphabet[][]) {
+    if (this.patterns[0].name === customPatternName) {
+      this.patterns[0].value = pattern;
+    } else {
+      this.patterns.unshift({
+        name: customPatternName,
+        value: pattern
+      })
+    }
+    this.selectPattern(this.patterns[0]);
   }
 
 }
