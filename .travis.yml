@@ -13,7 +13,7 @@ install:
   - npm install
 
 script:
-  - npm run-script build-gh-pages
+  - npm run build-gh-pages
 
 deploy:
   provider: pages
@@ -21,4 +21,4 @@ deploy:
   github_token: $GITHUB_TOKEN
   local_dir: dist/cfs
   on:
-    branch: gh-pages
+    branch: master
