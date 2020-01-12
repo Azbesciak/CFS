@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,7 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
 }

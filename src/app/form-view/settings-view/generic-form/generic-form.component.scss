@@ -6,6 +6,8 @@ app-generic-form form {
   margin: var(--form-margin);
   label {
     justify-self: flex-end;
+    max-width: 10rem;
+    text-align: right;
   }
 
   .mat-slider, mat-form-field {

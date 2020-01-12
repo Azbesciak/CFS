@@ -14,22 +14,24 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatInputModule} from "@angular/material/input";
 import {GenericFormComponent} from './generic-form/generic-form.component';
 import {ClassifiersNumberComponent} from './state-tab/classifiers-number/classifiers-number.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
   declarations: [SettingsViewComponent, StateTabComponent, GeneticAlgorithmTabComponent, BucketBrigadeTabComponent, GenericFormComponent, ClassifiersNumberComponent],
   exports: [SettingsViewComponent],
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MatSliderModule,
-    MatInputModule
-  ]
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatSliderModule,
+        MatInputModule,
+        TranslateModule
+    ]
 })
 export class SettingsViewModule {
 }

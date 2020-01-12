@@ -1,4 +1,4 @@
-<app-section-header label="Messages"></app-section-header>
+<app-section-header [label]="'messages' | translate"></app-section-header>
 <mat-list *ngIf="messages && messages.length > 0; else noMessages">
   <mat-list-item *ngFor="let mes of messages">
     <div class="message">
@@ -8,5 +8,5 @@
   </mat-list-item>
 </mat-list>
 <ng-template #noMessages>
-  <app-no-content message="No messages"></app-no-content>
+  <app-no-content [message]="'noMessages' | translate"></app-no-content>
 </ng-template>

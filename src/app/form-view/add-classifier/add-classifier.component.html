@@ -1,8 +1,8 @@
 <form (submit)="addClassifier()" [formGroup]="form">
-  <app-add-classifier-input [control]="conditionControl" [name]="'Condition'"></app-add-classifier-input>
+  <app-add-classifier-input [control]="conditionControl" [name]="'condition' | translate"></app-add-classifier-input>
   <div class="then-indicator">/</div>
-  <app-add-classifier-input [control]="actionControl" [name]="'Action'"></app-add-classifier-input>
-  <button mat-icon-button type="submit" [disabled]="form.pristine || form.invalid">
+  <app-add-classifier-input [control]="actionControl" [name]="'action' | translate"></app-add-classifier-input>
+  <button mat-icon-button type="submit" [disabled]="form.pristine || form.invalid" [matTooltip]="'add' | translate">
     <mat-icon>add</mat-icon>
   </button>
 </form>

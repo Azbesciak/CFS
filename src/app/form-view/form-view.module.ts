@@ -17,6 +17,8 @@ import {MatTableModule} from "@angular/material/table";
 import {SettingsViewModule} from "./settings-view/settings-view.module";
 import {MatSortModule} from "@angular/material/sort";
 import {AddClassifierInputComponent} from './add-classifier/add-classifier-input/add-classifier-input.component';
+import {TranslateModule} from "@ngx-translate/core";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import {AddClassifierInputComponent} from './add-classifier/add-classifier-input
     MatCardModule,
     MatTableModule,
     MatSortModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTooltipModule
   ]
 })
 export class FormViewModule {

@@ -1,8 +1,8 @@
-<app-section-header label="Classifiers"></app-section-header>
+<app-section-header [label]="'classifiers' | translate"></app-section-header>
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0; else noClassifiers" matSort>
     <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | titlecase}}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{col | translate | titlecase}}</th>
       <td mat-cell *matCellDef="let element">{{element[col]}}</td>
     </ng-container>
 
@@ -11,5 +11,5 @@
   </table>
 </div>
 <ng-template #noClassifiers>
-  <app-no-content message="No classifiers"></app-no-content>
+  <app-no-content [message]="'noClassifiers' | translate"></app-no-content>
 </ng-template>
