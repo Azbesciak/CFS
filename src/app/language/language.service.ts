@@ -3,6 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 const LANGUAGE_STORAGE_KEY = "language";
+const AVAILABLE_LANGUAGES = ["en", "pl"];
 
 @Injectable({
   providedIn: "root"
@@ -25,7 +26,7 @@ export class LanguageService {
   }
 
   constructor(private translate: TranslateService, private toast: MatSnackBar) {
-    this.allowedLanguages = ["en", "pl"];
+    this.allowedLanguages = AVAILABLE_LANGUAGES;
     this.selectedLanguage = LanguageService.getUserDefinedLanguage() ||
       this.getBrowserLanguageIfSupported() ||
       this.allowedLanguages[0];
