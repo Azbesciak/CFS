@@ -8,6 +8,7 @@ export interface ClassifierView {
   action: string;
   strength: number;
   specifity: number;
+  lived: number;
 }
 
 export class Classifier {
@@ -27,7 +28,8 @@ export class Classifier {
         condition: this.condition.join(""),
         id: this.id,
         specifity: +this.specifity.toFixed(4),
-        strength: +this._strength.toFixed(4)
+        strength: +this._strength.toFixed(4),
+        lived: this._lived
       };
     return this._view;
   }
@@ -113,6 +115,9 @@ export class Classifier {
 
   newEpoch() {
     ++this._lived;
+    if (this._view) {
+      ++this._view.lived;
+    }
   }
 
 

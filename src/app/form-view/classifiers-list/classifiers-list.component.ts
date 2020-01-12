@@ -12,7 +12,7 @@ import {MatSort} from "@angular/material/sort";
 })
 export class ClassifiersListComponent {
   dataSource = new MatTableDataSource<ClassifierView>([]);
-  displayedColumns: (keyof ClassifierView)[] = ["id", "action", "condition", "strength", "specifity"];
+  displayedColumns: (keyof ClassifierView)[] = ["id", "condition", "action", "strength", "specifity", "lived"];
 
   @ViewChild(MatSort, {static: false})
   sort: MatSort;
