@@ -6,6 +6,8 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} fr
   styles: [`
     app-section-header .section-header {
       font-weight: 500;
+      margin-block-start: 0.5rem;
+      margin-block-end: 0.5rem;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
