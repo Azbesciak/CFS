@@ -4,4 +4,11 @@ app-messages-view {
     grid-template-columns: max-content auto;
     grid-column-gap: .5rem;
   }
+  .mat-list-base .mat-list-item {
+    height: 2rem;
+  }
+  .mat-list.mat-list-base {
+    max-height: 15rem;
+    overflow: auto;
+  }
 }

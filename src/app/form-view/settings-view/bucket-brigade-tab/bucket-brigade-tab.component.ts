@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlgorithmService} from "../algorithm.service";
+import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
 import {BucketBrigadeCfg, bucketBrigadeProperties} from "../../../algorithms/bucket-brigade/bucket-brigade-cfg";
 
 @Component({

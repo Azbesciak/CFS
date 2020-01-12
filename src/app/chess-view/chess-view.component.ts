@@ -8,10 +8,12 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ChessCell} from './chess-cell/chess-cell';
-import {matrix, Pattern, PatternService} from "../form-view/settings-view/state-tab/pattern.service";
+import {PatternService} from "../form-view/settings-view/state-tab/pattern.service";
 import {environment} from "../../environments/environment";
 import {Alphabet} from "../algorithms/alphabet";
 import {Unsubscribable} from "rxjs";
+import {Pattern} from "../form-view/settings-view/state-tab/pattern";
+import {matrix} from "../algorithms/matrix";
 
 export type Chessboard = ChessCell[][];
 
@@ -26,7 +28,10 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   private patternSub: Unsubscribable;
   height = environment.chess.height;
   width = environment.chess.width;
-  chessboard: Chessboard = matrix(this.width, this.height, () => ({originalValue: Alphabet.Zero, predictedValue: Alphabet.Zero}));
+  chessboard: Chessboard = matrix(this.width, this.height, () => ({
+    originalValue: Alphabet.Zero,
+    predictedValue: Alphabet.Zero
+  }));
   private currentPattern: Pattern;
   // repeat(1fr, len) does not work in angular 8 - sanitizer .
   // https://github.com/angular/angular/issues/28897

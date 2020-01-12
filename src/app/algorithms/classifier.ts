@@ -3,7 +3,7 @@ import {Message} from './message/message';
 import {ALPHABET, Alphabet} from './alphabet';
 
 export interface ClassifierView {
-  index: number;
+  id: number;
   condition: string;
   action: string;
   strength: number;
@@ -16,7 +16,6 @@ export class Classifier {
   private active = false;
   private readonly specifity: number;
   private readonly messages: Message[] = [];
-  readonly classifierIndex = Classifier.classifiersNumber++;
   private _bid: number;
   private _lived = 0;
   private _view: ClassifierView;
@@ -26,9 +25,9 @@ export class Classifier {
       this._view = {
         action: this.action.join(""),
         condition: this.condition.join(""),
-        index: this.classifierIndex,
-        specifity: this.specifity,
-        strength: this._strength
+        id: this.id,
+        specifity: +this.specifity.toFixed(4),
+        strength: +this._strength.toFixed(4)
       };
     return this._view;
   }
@@ -47,9 +46,26 @@ export class Classifier {
 
   private constructor(
     private condition: Alphabet[],
-    private action: Alphabet[]
+    private action: Alphabet[],
+    readonly id = Classifier.classifiersNumber++
   ) {
     this.specifity = Classifier.calculateSpecifity(condition);
+  }
+
+  static newInstanceFrom(classifier: Classifier) {
+    return new Classifier(classifier.condition.slice(), classifier.action.slice());
+  }
+
+  static copy(classifier: Classifier) {
+    const newCls = new Classifier(classifier.condition.slice(), classifier.action.slice(), classifier.id);
+    newCls._strength = classifier._strength;
+    newCls._view = classifier._view;
+    newCls._lived = classifier._lived;
+    newCls._bid = classifier._bid;
+    newCls.active = classifier.active;
+    if (classifier.messages.length > 0)
+      newCls.messages.push(...classifier.messages);
+    return newCls;
   }
 
   static fromLengths(conditionLen: number, actionLen: number): Classifier {
@@ -181,15 +197,11 @@ export class Classifier {
   }
 
   inverseCopy(): Classifier {
-    const copy = this.copy();
+    const copy = Classifier.newInstanceFrom(this);
     const lastElementIndex = copy.action.length - 1;
     copy.action[lastElementIndex] = copy.action[lastElementIndex] === Alphabet.One ? Alphabet.Zero : Alphabet.One;
     copy._strength = this._strength + 0.1;
     return copy;
-  }
-
-  copy() {
-    return new Classifier(this.condition.slice(), this.action.slice());
   }
 }
 

@@ -3,7 +3,7 @@
   <mat-list-item *ngFor="let mes of messages">
     <div class="message">
       <span class="message-value">{{mes.value.join("")}}</span>
-      <span class="message-sender">(123)</span>
+      <span class="message-sender" *ngIf="mes.classifier">({{mes.classifier.id}})</span>
     </div>
   </mat-list-item>
 </mat-list>

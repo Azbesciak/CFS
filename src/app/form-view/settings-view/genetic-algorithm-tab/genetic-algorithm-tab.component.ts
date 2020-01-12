@@ -3,7 +3,7 @@ import {
   GeneticAlgorithmCfg,
   geneticAlgorithmProperties
 } from "../../../algorithms/genetic-algorithm/genetic-algorithm-cfg";
-import {AlgorithmService} from "../algorithm.service";
+import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
 
 @Component({
   selector: 'app-genetic-algorithm-tab',

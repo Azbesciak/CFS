@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AlgorithmService} from "./settings-view/algorithm.service";
+import {AlgorithmService} from "../algorithm-worker/algorithm.service";
 import {Classifier} from "../algorithms/classifier";
 
 @Component({

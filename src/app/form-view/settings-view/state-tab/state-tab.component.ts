@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {Pattern, PatternService} from "./pattern.service";
+import {PatternService} from "./pattern.service";
 import {MatSelectChange} from "@angular/material/select";
-import {AlgorithmService} from "../algorithm.service";
-import {Unsubscribable} from "rxjs";
+import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
+import {merge, Observable, of, Unsubscribable} from "rxjs";
+import {Pattern} from "./pattern";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-state-tab',
@@ -13,7 +15,7 @@ import {Unsubscribable} from "rxjs";
 })
 export class StateTabComponent implements OnInit, OnDestroy {
   isStarted: boolean;
-  accuracy = 0;
+  accuracy$: Observable<number>;
   patterns: Pattern[];
   private startSub: Unsubscribable;
 
@@ -26,6 +28,7 @@ export class StateTabComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.patterns = this.patternService.getAvailablePatterns();
     this.startSub = this.algorithm.isStarted$.subscribe(v => this.isStarted = v);
+    this.accuracy$ = merge(of(0), this.algorithm.resultUpdates$.pipe(map(v => v.accuracy)));
   }
 
   onPatternChanged($event: MatSelectChange) {

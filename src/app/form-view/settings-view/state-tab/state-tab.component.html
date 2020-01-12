@@ -1,7 +1,7 @@
 <app-classifiers-number></app-classifiers-number>
 <div class="result">
   <div class="result-label">Global accuracy</div>
-  <div class="result-value">{{accuracy | number:"0.2-2" | percent}}</div>
+  <div class="result-value">{{accuracy$ | async| number:"0.2-2" | percent}}</div>
 </div>
 <div class="buttons">
   <button mat-icon-button (click)="isStarted ? algorithm.stop() : algorithm.start()" [matTooltip]="isStarted ? 'Stop' : 'Start'">
