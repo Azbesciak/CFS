@@ -5,7 +5,7 @@
   <mat-card-content>
     <app-messages-view [messages]="algorithm.messages$ | async"></app-messages-view>
     <app-classifiers-list [classifiers]="algorithm.classifiers$ | async"></app-classifiers-list>
-    <app-add-classifier></app-add-classifier>
+    <app-add-classifier (classifierAdded)="onClassifierAdded($event)"></app-add-classifier>
     <app-settings-view></app-settings-view>
   </mat-card-content>
 </mat-card>

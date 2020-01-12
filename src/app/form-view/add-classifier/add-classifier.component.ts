@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MessageConfigProvider} from "../settings-view/message-config.provider";
-import {AlgorithmService} from "../settings-view/algorithm.service";
 import {Classifier} from "../../algorithms/classifier";
 import {Alphabet, ALPHABET} from "../../algorithms/alphabet";
 
@@ -29,10 +28,12 @@ export class AddClassifierComponent implements OnInit {
 
   constructor(
     private messagesFactory: MessageConfigProvider,
-    private algorithm: AlgorithmService,
     private fb: FormBuilder
   ) {
   }
+
+  @Output()
+  classifierAdded = new EventEmitter<Classifier>();
 
   private makeControl() {
     return this.fb.control("", [
@@ -55,20 +56,10 @@ export class AddClassifierComponent implements OnInit {
   addClassifier() {
     if (this.form.pristine || this.form.invalid) return;
     const {condition, action} = this.form.value;
-    this.algorithm.addClassifier(Classifier.fromString(condition, action));
+    this.classifierAdded.next(Classifier.fromString(condition, action));
     this.form.reset({});
     this.form.markAsPristine();
     this.actionControl.setErrors(null);
     this.conditionControl.setErrors(null);
   }
-}
-
-
-interface ClassifierModel {
-  action: string;
-  condition: string;
-}
-
-function newClassifierModel(): ClassifierModel {
-  return {action: "", condition: ""};
 }

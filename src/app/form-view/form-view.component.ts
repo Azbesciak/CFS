@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AlgorithmService} from "./settings-view/algorithm.service";
+import {Classifier} from "../algorithms/classifier";
 
 @Component({
   selector: 'app-form-view',
@@ -15,4 +16,7 @@ export class FormViewComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClassifierAdded(newClassifier: Classifier) {
+    this.algorithm.addClassifier(newClassifier);
+  }
 }
