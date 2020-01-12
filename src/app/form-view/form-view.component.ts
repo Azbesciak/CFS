@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Message} from "../algorithms/message/message";
+import {AlgorithmService} from "./settings-view/algorithm.service";
 
 @Component({
   selector: 'app-form-view',
@@ -9,9 +9,7 @@ import {Message} from "../algorithms/message/message";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormViewComponent implements OnInit {
-  messages: Message[] = [];
-
-  constructor() {
+  constructor(readonly algorithm: AlgorithmService) {
   }
 
   ngOnInit() {

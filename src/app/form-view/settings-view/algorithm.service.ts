@@ -5,8 +5,8 @@ import {GeneticAlgorithm} from "../../algorithms/genetic-algorithm/genetic-algor
 import {BucketBrigade} from "../../algorithms/bucket-brigade/bucket-brigade";
 import {BehaviorSubject} from "rxjs";
 import {Classifier} from "../../algorithms/classifier";
-import {environment} from "../../../environments/environment";
 import {MessageConfigProvider} from "./message-config.provider";
+import {Message} from "../../algorithms/message/message";
 
 @Injectable({
   providedIn: "root"
@@ -19,6 +19,8 @@ export class AlgorithmService {
   private readonly _classifiers$ = new BehaviorSubject<Classifier[]>([]);
   readonly classifiers$ = this._classifiers$.asObservable();
   private readonly messageLength: number;
+  private _messages$ = new BehaviorSubject<Message[]>([]);
+  readonly messages$ = this._messages$.asObservable();
 
   constructor(private messageConfigProvider: MessageConfigProvider) {
     this.messageLength = messageConfigProvider.messageLength;
