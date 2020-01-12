@@ -3,4 +3,13 @@ app-form-view {
     display: grid;
     grid-row-gap: .75rem;
   }
+
+  .mat-card-header-text {
+    width: 100%;
+  }
+  .mat-card-title {
+    display: grid;
+    grid-template-columns: auto 3rem;
+    grid-column-gap: 3rem;
+  }
 }

@@ -7,14 +7,7 @@ import {ChessViewModule} from './chess-view/chess-view.module';
 import {FormViewModule} from "./form-view/form-view.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-
-// required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+import {LanguageModule} from "./language/language.module";
 
 @NgModule({
   declarations: [
@@ -26,14 +19,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChessViewModule,
     FormViewModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    LanguageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
