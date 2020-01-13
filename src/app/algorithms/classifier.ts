@@ -71,8 +71,8 @@ export class Classifier {
   }
 
   static fromLengths(conditionLen: number, actionLen: number): Classifier {
-    let actions = randomArrayOfValues(ALPHABET, actionLen);
-    Message.makeAsMessageOfType(actions, Message.INPUT_INTERNAL_TYPE);
+    const actions = randomArrayOfValues(ALPHABET, actionLen);
+    Message.makeAsMessageOfType(actions, Message.OUTPUT_EXTERNAL_TYPE);
     return new Classifier(randomArrayOfValues(ALPHABET, conditionLen), actions);
   }
 
@@ -138,7 +138,7 @@ export class Classifier {
     this._view = null;
   }
 
-  activate(message: Message): Message {
+  private activate(message: Message): Message {
     const result = this.action.slice();
     for (let i = 0; i < result.length; i++) {
       if (result[i] === Alphabet.PassThrough) {
