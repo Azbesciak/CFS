@@ -105,10 +105,15 @@ export class AlgorithmExecutor {
           const runMessages = [this.messageFactory.fromCoords(x, y)];
           this.bb.matchCompete(classifiers, runMessages);
           const response = this.getClassifiersAggregatedResponse(runMessages);
-          accuracy += this.computeQuality(x, y, response);
+          let quality = this.computeQuality(x, y, response);
+          accuracy += quality;
+          if (quality === 0 && response !== -1) {
+            this.bb.invertedCopy(classifiers);
+          }
+          this.bb.payCurrentClassifiers(quality);
           this.ga.execute(classifiers);
           messages.push(...runMessages);
-          prediction[x][y] = this.getClassifiersPrediction(response)
+          prediction[x][y] = this.getClassifiersPrediction(response);
         }
       }
       this.classifiers = classifiers;
