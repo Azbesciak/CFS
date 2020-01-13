@@ -30,7 +30,8 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   private resultSub: Unsubscribable;
   height = environment.chess.height;
   width = environment.chess.width;
-  chessboard: Chessboard = matrix(this.width, this.height, () => ({
+  chessboard: Chessboard = matrix(this.width, this.height, (x, y) => ({
+    id: x * this.width + y,
     originalValue: Alphabet.Zero,
     predictedValue: Alphabet.PassThrough
   }));
@@ -39,6 +40,8 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   // https://github.com/angular/angular/issues/28897
   @HostBinding("style.grid-template-columns")
   columns = "1fr ".repeat(this.width);
+
+  cellIdentity = (_, cell) => cell.id;
 
   constructor(
     private patternService: PatternService,

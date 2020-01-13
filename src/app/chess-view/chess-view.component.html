@@ -1,3 +1,6 @@
 <ng-container *ngFor="let row of chessboard; let x = index">
-  <app-chess-cell *ngFor="let cell of row; let y = index" [value]="cell" (click)="onCellClicked(cell, x, y, $event)"></app-chess-cell>
+  <app-chess-cell
+    *ngFor="let cell of row; let y = index; trackBy: cellIdentity"
+    [value]="cell" (click)="onCellClicked(cell, x, y, $event)"
+  ></app-chess-cell>
 </ng-container>
