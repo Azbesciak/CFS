@@ -4,18 +4,19 @@ import {Classifier} from "../algorithms/classifier";
 import {GeneticAlgorithmCfg} from "../algorithms/genetic-algorithm/genetic-algorithm-cfg";
 import {BucketBrigadeCfg} from "../algorithms/bucket-brigade/bucket-brigade-cfg";
 import {MessageConfigProvider} from "../form-view/settings-view/message-config.provider";
-import {Alphabet} from "../algorithms/alphabet";
-import {Message} from "../algorithms/message/message";
 import {PatternService} from "../form-view/settings-view/state-tab/pattern.service";
 import {filter, shareReplay} from "rxjs/operators";
-import {Matrix} from "../algorithms/matrix";
+import {AlgorithmExecutor, AlgorithmResultUpdate} from "./algorithm.executor";
+import {environment} from "../../environments/environment";
+
+type AlgorithmWorker = AlgorithmExecutor | Worker
 
 @Injectable({
   providedIn: "root"
 })
 export class AlgorithmWorkerProxy implements OnDestroy {
   private patternUpdate: Unsubscribable;
-  private readonly worker: Worker;
+  private readonly worker: AlgorithmWorker;
   private runId = 0;
   private readonly _resultUpdates$ = new BehaviorSubject<AlgorithmResultUpdate>(null);
   readonly resultUpdates$ = this._resultUpdates$.pipe(
@@ -27,15 +28,17 @@ export class AlgorithmWorkerProxy implements OnDestroy {
     private messageConfigProvider: MessageConfigProvider,
     pattern: PatternService
   ) {
-    if (typeof Worker !== 'undefined') {
-      // Create a new
+    if (typeof Worker !== 'undefined' && environment.enableWorker) {
       this.worker = new Worker('./algorithm.worker', {type: 'module'});
       this.worker.onmessage = ({data}) => this._resultUpdates$.next(data);
-      this.patternUpdate = pattern.selectedPattern.subscribe(pattern => this.worker.postMessage({pattern}))
     } else {
-      // Web Workers are not supported in this environment.
-      // You should add a fallback so that your program still executes correctly.
+      this.worker = new AlgorithmExecutor(
+        environment.chess.width,
+        environment.chess.height,
+        res => this._resultUpdates$.next(res)
+      );
     }
+    this.patternUpdate = pattern.selectedPattern.subscribe(pattern => this.worker.postMessage({pattern}))
   }
 
   updateClassifiers(classifiers: Classifier[]) {
@@ -62,12 +65,4 @@ export class AlgorithmWorkerProxy implements OnDestroy {
       this.patternUpdate = null;
     }
   }
-}
-
-export interface AlgorithmResultUpdate {
-  runId: number;
-  prediction: Matrix<Alphabet>;
-  messages: Message[];
-  classifiers: Classifier[];
-  accuracy: number;
 }

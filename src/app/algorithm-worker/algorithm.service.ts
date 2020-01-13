@@ -4,9 +4,10 @@ import {BucketBrigadeCfg} from "../algorithms/bucket-brigade/bucket-brigade-cfg"
 import {BehaviorSubject, merge, Observable} from "rxjs";
 import {Classifier} from "../algorithms/classifier";
 import {MessageConfigProvider} from "../form-view/settings-view/message-config.provider";
-import {AlgorithmResultUpdate, AlgorithmWorkerProxy} from "./algorithm-worker-proxy.service";
-import {filter, map, shareReplay, tap, throttleTime} from "rxjs/operators";
+import {AlgorithmWorkerProxy} from "./algorithm-worker-proxy.service";
+import {map, shareReplay, tap, throttleTime} from "rxjs/operators";
 import {Message} from "../algorithms/message/message";
+import {AlgorithmResultUpdate} from "./algorithm.executor";
 
 @Injectable({
   providedIn: "root"
@@ -41,7 +42,7 @@ export class AlgorithmService {
       map(r => r.classifiers.map(Classifier.copy)),
       tap(c => {
         if (c !== this._classifiers$.value)
-          this._classifiers$.next(c)
+          this._classifiers$.next(c);
       }),
       throttleTime(100)
     );
