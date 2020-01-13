@@ -54,7 +54,7 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
           continue;
         }
       }
-      existing.pay(existing.strength * 1.01);
+      existing.strength = (c.strength * 1.01);
     }
     if (classifiersSet.length > 0) {
       classifiers.push(...classifiersSet); // does it have to be mutated?

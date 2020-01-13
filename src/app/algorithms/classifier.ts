@@ -34,6 +34,11 @@ export class Classifier {
     return this._view;
   }
 
+  set strength(v: number) {
+    this._strength = v;
+    this._view = null;
+  }
+
   get strength() {
     return this._strength;
   }
