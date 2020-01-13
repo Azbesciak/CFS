@@ -13,7 +13,7 @@ install:
   - npm install
 
 script:
-  - npm run build-gh-pages
+  - npm run build-prod -- --baseHref=https://azbesciak.github.io/CFS/
 
 deploy:
   provider: pages
