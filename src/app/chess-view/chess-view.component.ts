@@ -8,11 +8,11 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ChessCell} from './chess-cell/chess-cell';
-import {PatternService} from "../form-view/settings-view/state-tab/pattern.service";
+import {PatternService} from "../state-view/pattern.service";
 import {environment} from "../../environments/environment";
 import {Alphabet} from "../algorithms/alphabet";
 import {Unsubscribable} from "rxjs";
-import {Pattern} from "../form-view/settings-view/state-tab/pattern";
+import {Pattern} from "../state-view/pattern";
 import {Matrix, matrix} from "../algorithms/matrix";
 import {AlgorithmService} from "../algorithm-worker/algorithm.service";
 

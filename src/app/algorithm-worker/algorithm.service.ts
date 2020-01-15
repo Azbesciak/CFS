@@ -3,7 +3,7 @@ import {GeneticAlgorithmCfg} from "../algorithms/genetic-algorithm/genetic-algor
 import {BucketBrigadeCfg} from "../algorithms/bucket-brigade/bucket-brigade-cfg";
 import {BehaviorSubject, merge, Observable} from "rxjs";
 import {Classifier} from "../algorithms/classifier";
-import {MessageConfigProvider} from "../form-view/settings-view/message-config.provider";
+import {MessageConfigProvider} from "../settings-view/message-config.provider";
 import {AlgorithmWorkerProxy} from "./algorithm-worker-proxy.service";
 import {map, shareReplay, tap, throttleTime} from "rxjs/operators";
 import {Message} from "../algorithms/message/message";

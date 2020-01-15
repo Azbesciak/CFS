@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgModule, OnInit, ViewEncapsulation} from '@angular/core';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-no-content',
@@ -26,3 +27,10 @@ export class NoContentComponent implements OnInit {
   }
 
 }
+
+@NgModule({
+  declarations: [NoContentComponent],
+  exports: [NoContentComponent],
+  imports: [CommonModule]
+})
+export class NoContentModule {}

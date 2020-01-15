@@ -1,19 +1,19 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {PatternService} from "./pattern.service";
 import {MatSelectChange} from "@angular/material/select";
-import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
+import {AlgorithmService} from "../algorithm-worker/algorithm.service";
 import {merge, Observable, of, Unsubscribable} from "rxjs";
 import {Pattern} from "./pattern";
 import {map} from "rxjs/operators";
 
 @Component({
-  selector: 'app-state-tab',
-  templateUrl: './state-tab.component.html',
-  styleUrls: ['./state-tab.component.scss'],
+  selector: 'app-state-view',
+  templateUrl: './state-view.component.html',
+  styleUrls: ['./state-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StateTabComponent implements OnInit, OnDestroy {
+export class StateViewComponent implements OnInit, OnDestroy {
   isStarted: boolean;
   accuracy$: Observable<number>;
   patterns: Pattern[];

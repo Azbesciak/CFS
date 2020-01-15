@@ -8,6 +8,9 @@ import {FormViewModule} from "./form-view/form-view.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {LanguageModule} from "./language/language.module";
+import {SettingsViewModule} from "./settings-view/settings-view.module";
+import {StateViewModule} from "./state-view/state-view.module";
+import {HeaderModule} from "./header/header.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import {LanguageModule} from "./language/language.module";
     ChessViewModule,
     FormViewModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    LanguageModule
+    LanguageModule,
+    SettingsViewModule,
+    StateViewModule,
+    HeaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

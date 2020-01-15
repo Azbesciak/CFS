@@ -14,7 +14,7 @@ import {
   Properties,
   toFieldDefinition,
   ValueType
-} from "../../../algorithms/field-definition";
+} from "../../algorithms/field-definition";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {merge, of, Unsubscribable} from "rxjs";
 

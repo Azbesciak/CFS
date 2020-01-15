@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 import {
   GeneticAlgorithmCfg,
   geneticAlgorithmProperties
-} from "../../../algorithms/genetic-algorithm/genetic-algorithm-cfg";
-import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
+} from "../../algorithms/genetic-algorithm/genetic-algorithm-cfg";
+import {AlgorithmService} from "../../algorithm-worker/algorithm.service";
 
 @Component({
   selector: 'app-genetic-algorithm-tab',

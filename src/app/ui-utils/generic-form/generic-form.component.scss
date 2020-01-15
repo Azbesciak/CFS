@@ -3,7 +3,6 @@ app-generic-form form {
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1rem;
   align-items: center;
-  margin: var(--form-margin);
   label {
     justify-self: flex-end;
     max-width: 10rem;

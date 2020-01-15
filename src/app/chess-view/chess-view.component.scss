@@ -2,8 +2,8 @@ app-chess-view {
   $cell-border-color: var(--main-background-color);
   $cell-border-width: 0.1rem;
   display: grid;
-  width: 25rem;
-  height: 25rem;
+  width: max(min(30vw, 60vh), 25rem);
+  height: max(min(30vw, 60vh), 25rem);
   grid-gap: $cell-border-width;
   background-color: $cell-border-color;
   border: $cell-border-width solid $cell-border-color;

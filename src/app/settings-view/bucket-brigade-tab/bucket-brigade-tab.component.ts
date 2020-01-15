@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {AlgorithmService} from "../../../algorithm-worker/algorithm.service";
-import {BucketBrigadeCfg, bucketBrigadeProperties} from "../../../algorithms/bucket-brigade/bucket-brigade-cfg";
+import {AlgorithmService} from "../../algorithm-worker/algorithm.service";
+import {BucketBrigadeCfg, bucketBrigadeProperties} from "../../algorithms/bucket-brigade/bucket-brigade-cfg";
 
 @Component({
   selector: 'app-bucket-brigade-tab',

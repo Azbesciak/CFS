@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {Alphabet} from "../../../algorithms/alphabet";
-import {environment} from "../../../../environments/environment";
+import {Alphabet} from "../algorithms/alphabet";
+import {environment} from "../../environments/environment";
 import {BehaviorSubject} from "rxjs";
 import {Pattern} from "./pattern";
-import {matrix} from "../../../algorithms/matrix";
+import {matrix} from "../algorithms/matrix";
 
 
 function horizontalLinesPattern(width: number, height: number): Pattern {

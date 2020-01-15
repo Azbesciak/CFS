@@ -1,9 +1,7 @@
-app-state-tab {
-  margin: var(--form-margin);
+app-state-view {
   align-items: center;
   grid-row-gap: .5rem;
   grid-template-rows: repeat(3, 2rem);
-
   .grid-row, & {
     align-items: center;
     display: grid;

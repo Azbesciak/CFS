@@ -22,3 +22,7 @@ body {
 .mat-form-field-flex .mat-form-field-infix {
   width: 4rem;
 }
+
+label {
+  justify-self: flex-end;
+}

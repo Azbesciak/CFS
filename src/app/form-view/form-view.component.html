@@ -1,14 +1,3 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <span class="title">{{'classifiersSystem' | translate }}</span>
-      <app-language-select></app-language-select>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <app-messages-view [messages]="algorithm.messages$ | async"></app-messages-view>
-    <app-classifiers-list [classifiers]="algorithm.classifiers$ | async"></app-classifiers-list>
-    <app-add-classifier (classifierAdded)="onClassifierAdded($event)"></app-add-classifier>
-    <app-settings-view></app-settings-view>
-  </mat-card-content>
-</mat-card>
+<app-classifiers-list [classifiers]="algorithm.classifiers$ | async"></app-classifiers-list>
+<app-add-classifier (classifierAdded)="onClassifierAdded($event)"></app-add-classifier>
+<app-messages-view [messages]="algorithm.messages$ | async"></app-messages-view>

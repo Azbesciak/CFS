@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {MessageConfigProvider as ProviderInterface} from "../../algorithms/message/message-config.provider";
-import {environment} from "../../../environments/environment";
-import {Message} from "../../algorithms/message/message";
+import {MessageConfigProvider as ProviderInterface} from "../algorithms/message/message-config.provider";
+import {environment} from "../../environments/environment";
+import {Message} from "../algorithms/message/message";
 
 
 @Injectable({

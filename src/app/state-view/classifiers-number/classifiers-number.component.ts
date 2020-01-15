@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AlgorithmService} from "../../../../algorithm-worker/algorithm.service";
+import {AlgorithmService} from "../../algorithm-worker/algorithm.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
