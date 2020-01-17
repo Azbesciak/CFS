@@ -1,4 +1,4 @@
-import {Classifier} from "../algorithms/classifier";
+import {Classifier, ClassifierModel} from "../algorithms/classifier";
 import {GeneticAlgorithmCfg} from "../algorithms/genetic-algorithm/genetic-algorithm-cfg";
 import {BucketBrigadeCfg} from "../algorithms/bucket-brigade/bucket-brigade-cfg";
 import {Pattern} from "../state-view/pattern";
@@ -11,8 +11,9 @@ import {Alphabet} from "../algorithms/alphabet";
 import {Message} from "../algorithms/message/message";
 
 export interface AlgorithmExecutorMessage {
-  classifiers?: Classifier[];
-  runId?: number;
+  classifiersNumber?: number;
+  newClassifier?: ClassifierModel;
+  reset?: boolean;
   running?: boolean;
   gaCfg?: GeneticAlgorithmCfg;
   bbCfg?: BucketBrigadeCfg;
@@ -20,19 +21,21 @@ export interface AlgorithmExecutorMessage {
   msgCfg?: MessageConfigProvider;
 }
 
+export interface ClassifiersUpdate {
+  classifiers: Classifier[];
+}
 
-export interface AlgorithmResultUpdate {
+export interface AlgorithmResultUpdate extends ClassifiersUpdate{
   runId: number;
   prediction: Matrix<Alphabet>;
   messages: Message[];
-  classifiers: Classifier[];
   accuracy: number;
 }
-
 
 export class AlgorithmExecutor {
   private ga: GeneticAlgorithm = null;
   private bb: BucketBrigade = null;
+  private expectedClassifiersNumber = 0;
   private messageCfg: MessageConfigProvider = null;
   private classifiers: Classifier[] = [];
   private runningId = 0;
@@ -43,7 +46,7 @@ export class AlgorithmExecutor {
   constructor(
     private readonly width: number,
     private readonly height: number,
-    private readonly messageConsumer: (mes: AlgorithmResultUpdate) => void
+    private readonly messageConsumer: (mes: AlgorithmResultUpdate | ClassifiersUpdate) => void
   ) {
   }
 
@@ -57,19 +60,51 @@ export class AlgorithmExecutor {
     } else if ((message.gaCfg || message.bbCfg) && !this.messageCfg) {
       throw Error("Message cfg is not set");
     }
-    this.assignGACfgIfDefined(message.gaCfg, message.msgCfg);
+    this.assignGACfgIfDefined(message.gaCfg, this.messageCfg);
     this.assignBBCfgIfDefined(message.bbCfg);
-    if (message.classifiers instanceof Array) {
-      this.classifiers = message.classifiers.map(Classifier.copy);
+    if (typeof message.classifiersNumber === "number") {
+      this.updateClassifiersNumber(message.classifiersNumber);
     }
-
-    if (typeof message.runId === 'number') {
-      this.runningId = message.runId;
+    if (message.reset) {
+      this.reset();
+    }
+    if (message.newClassifier) {
+      this.addNewClassifier(message.newClassifier);
     }
     if (typeof message.running === 'boolean') {
       this.isRunning = message.running;
-      if (message.running) this.run(this.runningId);
+      if (message.running) this.run(++this.runningId);
     }
+  }
+
+  private updateClassifiersNumber(newNumber: number) {
+    this.expectedClassifiersNumber = newNumber;
+    if (this.classifiers.length === newNumber) return;
+    const currentClassifiers = this.classifiers.slice();
+    if (currentClassifiers.length > newNumber) {
+      currentClassifiers.length = newNumber;
+    } else {
+      while (currentClassifiers.length < newNumber) {
+        currentClassifiers.push(this.messageFactory.random());
+      }
+    }
+    this.classifiers = currentClassifiers;
+    this.messageConsumer({classifiers: this.classifiers})
+  }
+
+  private reset() {
+    Classifier.onReset();
+    this.classifiers = Array.from(
+      {length: this.expectedClassifiersNumber},
+      () => this.messageFactory.random()
+    );
+    this.messageConsumer({
+      classifiers: this.classifiers,
+      prediction: this.initialPrediction(),
+      accuracy: 0,
+      runId: this.runningId,
+      messages: []
+    })
   }
 
   private assignGACfgIfDefined(gaCfg: GeneticAlgorithmCfg, msgCfg: MessageConfigProvider) {
@@ -92,14 +127,13 @@ export class AlgorithmExecutor {
     }
   }
 
-
   private run(runId: number) {
     setTimeout(() => {
       if (!this.isRunning || this.runningId !== runId) return;
       let classifiers = this.classifiers.slice();
       const messages = [];
       let accuracy = 0;
-      const prediction = matrix(this.width, this.height, () => Alphabet.PassThrough);
+      const prediction = this.initialPrediction();
       for (let x = 0; x < this.width; x++) {
         for (let y = 0; y < this.height; y++) {
           const runMessages = [this.messageFactory.fromCoords(x, y)];
@@ -127,6 +161,10 @@ export class AlgorithmExecutor {
       this.messageConsumer(message);
       this.run(runId);
     }, 50);
+  }
+
+  private initialPrediction() {
+    return matrix(this.width, this.height, () => Alphabet.PassThrough);
   }
 
   private getClassifiersPrediction(fuzzyResponse: number) {
@@ -159,6 +197,10 @@ export class AlgorithmExecutor {
     if (value === Alphabet.One) return 1;
     if (value === Alphabet.Zero) return 0;
     return -1;
+  }
+
+  private addNewClassifier(newClassifier: ClassifierModel) {
+
   }
 }
 

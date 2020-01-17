@@ -12,6 +12,11 @@ export interface ClassifierView {
   lived: number;
 }
 
+export interface ClassifierModel {
+  action: Alphabet[];
+  condition: Alphabet[];
+}
+
 export class Classifier {
   private static idScheduler = new IdScheduler();
   private _strength = 1;
@@ -55,13 +60,13 @@ export class Classifier {
   private constructor(
     private condition: Alphabet[],
     private action: Alphabet[],
-    readonly id = Classifier.classifiersNumber++
+    readonly id = Classifier.idScheduler.requestNew()
   ) {
     this.specifity = Classifier.calculateSpecifity(condition);
   }
 
-  static newInstanceFrom(classifier: Classifier) {
-    return new Classifier(classifier.condition.slice(), classifier.action.slice());
+  static newInstanceFrom({action, condition}: ClassifierModel) {
+    return new Classifier(condition.slice(), action.slice());
   }
 
   static onReset() {
@@ -215,7 +220,7 @@ export class Classifier {
   }
 
   inverseCopy(): Classifier {
-    const copy = Classifier.newInstanceFrom(this);
+    const copy = Classifier.newInstanceFrom(this as any);
     const lastElementIndex = copy.action.length - 1;
     copy.action[lastElementIndex] = copy.action[lastElementIndex] === Alphabet.One ? Alphabet.Zero : Alphabet.One;
     copy._strength = this._strength + 0.1;

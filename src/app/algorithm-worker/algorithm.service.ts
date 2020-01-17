@@ -1,52 +1,55 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {GeneticAlgorithmCfg} from "../algorithms/genetic-algorithm/genetic-algorithm-cfg";
 import {BucketBrigadeCfg} from "../algorithms/bucket-brigade/bucket-brigade-cfg";
-import {BehaviorSubject, merge, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Unsubscribable} from "rxjs";
 import {Classifier} from "../algorithms/classifier";
 import {MessageConfigProvider} from "../settings-view/message-config.provider";
 import {AlgorithmWorkerProxy} from "./algorithm-worker-proxy.service";
-import {map, shareReplay, tap, throttleTime} from "rxjs/operators";
+import {filter, map, shareReplay} from "rxjs/operators";
 import {Message} from "../algorithms/message/message";
 import {AlgorithmResultUpdate} from "./algorithm.executor";
+import {PatternService} from "../state-view/pattern.service";
 
 @Injectable({
   providedIn: "root"
 })
-export class AlgorithmService {
+export class AlgorithmService implements OnDestroy {
   private gaConfig: GeneticAlgorithmCfg;
   private bbConfig: BucketBrigadeCfg;
   private readonly _isRunning$ = new BehaviorSubject<boolean>(false);
   readonly isStarted$ = this._isRunning$.asObservable();
-  private readonly _classifiers$ = new BehaviorSubject<Classifier[]>([]);
   readonly classifiers$: Observable<Classifier[]>;
-  private readonly messageLength: number;
   readonly resultUpdates$: Observable<AlgorithmResultUpdate>;
   readonly messages$: Observable<Message[]>;
+  private readonly worker: AlgorithmWorkerProxy;
+  private patternSub: Unsubscribable;
 
   constructor(
-    private messageConfigProvider: MessageConfigProvider,
-    private worker: AlgorithmWorkerProxy
+    messageConfigProvider: MessageConfigProvider,
+    private patternService: PatternService
   ) {
-    this.resultUpdates$ = worker.resultUpdates$;
+    this.worker = new AlgorithmWorkerProxy();
+    this.worker.postMessage({msgCfg: messageConfigProvider});
+    this.resultUpdates$ = this.getResultUpdates$();
+    this.patternSub = this.patternService.selectedPattern.subscribe(p => this.worker.postMessage({pattern: p}));
     this.classifiers$ = this.makeClassifiersStream();
     this.messages$ = this.makeMessagesStream();
-    this.messageLength = messageConfigProvider.messageLength;
+  }
+
+  private getResultUpdates$() {
+    return cache(this.worker.resultUpdates$.pipe(
+      filter(v => typeof (v as AlgorithmResultUpdate).accuracy === 'number')) as Observable<AlgorithmResultUpdate>
+    );
   }
 
   private makeMessagesStream() {
-    return this.resultUpdates$.pipe(map(v => v.messages), throttleTime(100), shareReplay(1));
+    return cache(this.resultUpdates$.pipe(map(v => v.messages)));
   }
 
   private makeClassifiersStream() {
-    let resultClassifiers = this.resultUpdates$.pipe(
+    return cache(this.worker.resultUpdates$.pipe(
       map(r => r.classifiers.map(Classifier.copy)),
-      tap(c => {
-        if (c !== this._classifiers$.value)
-          this._classifiers$.next(c);
-      }),
-      throttleTime(100)
-    );
-    return merge(this._classifiers$, resultClassifiers).pipe(shareReplay(1));
+    ));
   }
 
   updateGeneticAlgorithm(cfg: GeneticAlgorithmCfg) {
@@ -57,42 +60,37 @@ export class AlgorithmService {
     this.bbConfig = cfg;
   }
 
-  addClassifier(classifier: Classifier) {
-    let classifiers = this._classifiers$.value.slice();
-    classifiers.push(classifier);
-    this.updateClassifiers(classifiers);
+  addClassifier(newClassifier: Classifier) {
+    this.worker.postMessage({newClassifier: newClassifier as any});
   }
 
-  updateClassifiersNumber(classifiers: number) {
-    const currentClassifiers = this._classifiers$.value.slice();
-    if (currentClassifiers.length === classifiers) return;
-    if (currentClassifiers.length > classifiers) {
-      currentClassifiers.length = classifiers;
-    } else {
-      while (currentClassifiers.length < classifiers) {
-        currentClassifiers.push(Classifier.fromLengths(this.messageLength, this.messageLength));
-      }
-    }
-    this.updateClassifiers(currentClassifiers);
-  }
-
-  private updateClassifiers(classifiers: Classifier[]) {
-    this._classifiers$.next(classifiers);
-    this.worker.updateClassifiers(classifiers);
+  updateClassifiersNumber(classifiersNumber: number) {
+    this.worker.postMessage({classifiersNumber});
   }
 
   start() {
     this._isRunning$.next(true);
-    this.worker.start(this.gaConfig, this.bbConfig);
+    this.worker.postMessage({bbCfg: this.bbConfig, gaCfg: this.gaConfig, running: true});
   }
 
   stop() {
     this._isRunning$.next(false);
-    this.worker.stop();
+    this.worker.postMessage({running: false});
   }
 
   reset() {
-    this._isRunning$.next(false);
+    this.worker.postMessage({reset: true});
   }
 
+  ngOnDestroy(): void {
+    if (this.patternSub) {
+      this.patternSub.unsubscribe();
+      this.patternSub = null;
+    }
+  }
+
+}
+
+function cache<T>(stream: Observable<T>): Observable<T> {
+  return stream.pipe(shareReplay(1));
 }
