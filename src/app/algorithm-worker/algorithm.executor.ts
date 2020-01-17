@@ -200,7 +200,8 @@ export class AlgorithmExecutor {
   }
 
   private addNewClassifier(newClassifier: ClassifierModel) {
-
+    this.classifiers.push(Classifier.newInstanceFrom(newClassifier));
+    this.messageConsumer({classifiers: this.classifiers});
   }
 }
 
