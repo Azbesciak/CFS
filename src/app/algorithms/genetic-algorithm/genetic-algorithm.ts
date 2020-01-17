@@ -79,10 +79,13 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
           first = second;
           second = classifiers[++i];
         }
-      } while (classifiers.find(c => Classifier.equal(c, candidate)) || breed.find(c => Classifier.equal(c, candidate)));
+      } while (
+        classifiers.find(c => Classifier.equal(c, candidate)) ||
+        breed.find(c => Classifier.equal(c, candidate))
+        );
       if (candidate) {
+        Classifier.onBreedAccepted();
         breed.push(candidate);
-        ++Classifier.classifiersNumber;
         first = second;
         ++kb;
       }

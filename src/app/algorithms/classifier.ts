@@ -1,6 +1,7 @@
 import {breed, primitiveArrayEquals, randomArrayMutate, randomArrayOfValues} from './utils';
 import {Message} from './message/message';
 import {ALPHABET, Alphabet} from './alphabet';
+import {IdScheduler} from "./id-scheduler";
 
 export interface ClassifierView {
   id: number;
@@ -12,14 +13,14 @@ export interface ClassifierView {
 }
 
 export class Classifier {
-  static classifiersNumber: number = 0;
+  private static idScheduler = new IdScheduler();
   private _strength = 1;
   private active = false;
-  private readonly specifity: number;
-  private readonly messages: Message[] = [];
   private _bid: number;
   private _lived = 0;
   private _view: ClassifierView;
+  private readonly specifity: number;
+  private readonly messages: Message[] = [];
 
   get view(): ClassifierView {
     if (!this._view)
@@ -61,6 +62,14 @@ export class Classifier {
 
   static newInstanceFrom(classifier: Classifier) {
     return new Classifier(classifier.condition.slice(), classifier.action.slice());
+  }
+
+  static onReset() {
+    this.idScheduler = new IdScheduler();
+  }
+
+  static onBreedAccepted() {
+    this.idScheduler.requestNew();
   }
 
   static copy(classifier: Classifier) {
@@ -202,8 +211,7 @@ export class Classifier {
   breed(classifier: Classifier): Classifier {
     const condition = breed(this.condition, classifier.condition);
     const action = breed(this.action, classifier.action);
-    --Classifier.classifiersNumber;
-    return new Classifier(condition, action);
+    return new Classifier(condition, action, Classifier.idScheduler.next());
   }
 
   inverseCopy(): Classifier {
