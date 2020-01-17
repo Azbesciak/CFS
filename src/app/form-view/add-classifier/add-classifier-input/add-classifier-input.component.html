@@ -1,6 +1,6 @@
 <mat-form-field *ngIf="control">
   <input matInput [placeholder]="name" required autocomplete="off" type="text" name="action" [formControl]="control">
-  <mat-error *ngIf="control.hasError('required')">Value required</mat-error>
+  <mat-error *ngIf="control.hasError('required')">{{'valueIsRequired' | translate}}</mat-error>
   <mat-error *ngIf="control.getError('invalidValue')as err">{{'valueIsInvalid' | translate}} ({{'allowed' | translate:{'value': err.allowed} }})</mat-error>
   <mat-error *ngIf="control.getError('maxlength') as err">{{'valueTooLong' | translate}} ({{'required' | translate:{'value': err.requiredLength} }})</mat-error>
   <mat-error *ngIf="control.getError('minlength') as err">{{'valueTooShort' | translate}} ({{'required' | translate: {'value': err.requiredLength} }})</mat-error>
