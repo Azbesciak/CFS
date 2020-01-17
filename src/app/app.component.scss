@@ -8,9 +8,8 @@ app-root {
     ". header header header ."
     ". settings state form ."
     ". settings chess form .";
-  grid-template-rows: 5rem max-content auto;
+  grid-template-rows: 3.5rem max-content auto;
   grid-template-columns: auto 1fr auto 1fr auto;
-  padding: 1rem;
   grid-gap: 1rem;
   .form-element  {
     padding: var(--form-margin);
