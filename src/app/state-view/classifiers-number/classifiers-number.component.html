@@ -6,7 +6,10 @@
     <mat-error *ngIf="control.hasError('required')">{{'valueIsRequired' | translate}}</mat-error>
     <mat-error *ngIf="control.hasError('pattern')">{{'valueIsInvalid' | translate}}</mat-error>
   </mat-form-field>
-  <button mat-icon-button type="submit" [disabled]="currentValue === control.value" [matTooltip]="'accept' | translate">
-    <mat-icon>done</mat-icon>
-  </button>
+  <div class="change-container">
+    <button mat-icon-button type="submit" [disabled]="currentValue === control.value" [matTooltip]="'accept' | translate">
+      <mat-icon>done</mat-icon>
+    </button>
+    <div class="current-value">({{currentValue}})</div>
+  </div>
 </form>

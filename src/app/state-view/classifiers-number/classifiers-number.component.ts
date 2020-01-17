@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AlgorithmService} from "../../algorithm-worker/algorithm.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
@@ -11,15 +11,20 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class ClassifiersNumberComponent implements OnInit {
   currentValue = 20;
-  control = new FormControl(this.currentValue, [Validators.min(0), Validators.pattern(/\d+/), Validators.required]);
+  control = new FormControl(this.currentValue, [
+    Validators.min(0), Validators.pattern(/\d+/), Validators.required
+  ]);
   group = new FormGroup({"value": this.control});
 
-  constructor(private algorithm: AlgorithmService) {
+  constructor(private algorithm: AlgorithmService, private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.algorithm.classifiers$.subscribe(c => this.control.setValue(c.length));
     this.algorithm.updateClassifiersNumber(this.currentValue);
+    this.algorithm.classifiers$.subscribe(c => {
+      this.currentValue = c.length;
+      this.changeDetector.markForCheck();
+    });
   }
 
   acceptChange() {

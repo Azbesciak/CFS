@@ -1,0 +1,9 @@
+app-classifiers-number {
+  .change-container {
+    display: flex;
+
+    > * {
+      align-self: center;
+    }
+  }
+}
