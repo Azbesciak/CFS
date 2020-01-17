@@ -46,18 +46,12 @@ export class AlgorithmWorkerProxy implements OnDestroy {
   }
 
   start(gaCfg: GeneticAlgorithmCfg, bbCfg: BucketBrigadeCfg) {
-    this.worker.postMessage({gaCfg, bbCfg, msgCfg: this.messageConfigProvider, running: true, runId: this.runId});
+    this.worker.postMessage({gaCfg, bbCfg, msgCfg: this.messageConfigProvider, running: true, runId: ++this.runId});
   }
 
   stop() {
-    this.worker.postMessage({running: false});
+    this.worker.postMessage({running: false, runId: ++this.runId});
   }
-
-  reset() {
-    ++this.runId;
-    this.worker.postMessage({runId: this.runId})
-  }
-
 
   ngOnDestroy(): void {
     if (this.patternUpdate) {
