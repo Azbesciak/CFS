@@ -54,10 +54,12 @@ export class AlgorithmService implements OnDestroy {
 
   updateGeneticAlgorithm(cfg: GeneticAlgorithmCfg) {
     this.gaConfig = cfg;
+    this.worker.postMessage({gaCfg: cfg});
   }
 
   updateBucketBrigade(cfg: BucketBrigadeCfg) {
     this.bbConfig = cfg;
+    this.worker.postMessage({bbCfg: cfg});
   }
 
   addClassifier(newClassifier: Classifier) {
@@ -70,7 +72,7 @@ export class AlgorithmService implements OnDestroy {
 
   start() {
     this._isRunning$.next(true);
-    this.worker.postMessage({bbCfg: this.bbConfig, gaCfg: this.gaConfig, running: true});
+    this.worker.postMessage({running: true});
   }
 
   stop() {
