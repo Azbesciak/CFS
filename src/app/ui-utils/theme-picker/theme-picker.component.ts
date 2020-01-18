@@ -60,6 +60,9 @@ export class ThemePickerComponent implements OnInit {
     const themeName = this._themeStorage.getStoredThemeName();
     if (themeName) {
       this.selectTheme(themeName);
+    } else {
+      const defaultTheme = this.themes.find(t => t.isDefault);
+      this.styleManager.onStyleSelected(defaultTheme.name);
     }
   }
 
@@ -77,6 +80,7 @@ export class ThemePickerComponent implements OnInit {
     } else {
       this.styleManager.setStyle('theme', `assets/${theme.name}.css`);
     }
+    this.styleManager.onStyleSelected(theme.name);
 
     if (this.currentTheme) {
       this._themeStorage.storeTheme(this.currentTheme);

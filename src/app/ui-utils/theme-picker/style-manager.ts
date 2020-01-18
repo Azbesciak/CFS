@@ -11,8 +11,11 @@ export class StyleManager {
    * Set the stylesheet with the specified key.
    */
   setStyle(key: string, href: string) {
-    console.log("SELECT STYLE", key, href)
     getLinkElementForKey(key).setAttribute('href', href);
+  }
+
+  onStyleSelected(key: string) {
+    document.body.setAttribute("theme", key)
   }
 
   /**

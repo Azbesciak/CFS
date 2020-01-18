@@ -31,12 +31,26 @@ body {
 }
 
 :root {
+  --form-margin: 1.25rem;
   --main-background-color: #424242;
   --zero-color: #fff;
   --one-color: #212121;
   --unknown-color: #9E9E9E;
-  --form-margin: 1.25rem;
+  @import "./app/ui-utils/theme-picker/colors";
+  @each $name, $palette in $themes {
+    body[theme=#{$name}] {
+      $accient: lighten(map_get($palette, "accient"), 30);
+      $primary: darken(map_get($palette, "primary"), 10);
+      $unknown: mix($accient, $primary);
+      --main-background-color: #{$unknown};
+      --zero-color: #{$accient};
+      --one-color: #{$primary};
+      --unknown-color: #{$unknown};
+    }
+  }
 }
+
+
 .mat-form-field-flex .mat-form-field-infix {
   width: 4rem;
 }
