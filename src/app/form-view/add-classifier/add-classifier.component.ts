@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MessageConfigProvider} from "../../settings-view/message-config.provider";
+import {MessageConfigProvider} from "../../algorithm-config-view/message-config.provider";
 import {Classifier} from "../../algorithms/classifier";
 import {Alphabet, ALPHABET} from "../../algorithms/alphabet";
 

@@ -8,7 +8,7 @@ import {FormViewModule} from "./form-view/form-view.module";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {LanguageModule} from "./language/language.module";
-import {SettingsViewModule} from "./settings-view/settings-view.module";
+import {AlgorithmConfigViewModule} from "./algorithm-config-view/algorithm-config-view.module";
 import {StateViewModule} from "./state-view/state-view.module";
 import {HeaderModule} from "./header/header.module";
 
@@ -23,7 +23,7 @@ import {HeaderModule} from "./header/header.module";
     FormViewModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     LanguageModule,
-    SettingsViewModule,
+    AlgorithmConfigViewModule,
     StateViewModule,
     HeaderModule
   ],

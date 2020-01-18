@@ -16,11 +16,11 @@ app-root {
     border-radius: 3px;
     box-shadow: 0 0 9px -1px rgba(0, 0, 0, 0.15);
   }
-  app-settings-view, app-form-view, app-state-view {
+  app-algorithm-config-view, app-form-view, app-state-view {
     align-self: flex-start;
     width: min(30rem, 100%);
   }
-  app-settings-view, app-form-view {
+  app-algorithm-config-view, app-form-view {
     grid-row-gap: 0.5rem;
     display: grid;
   }
@@ -41,7 +41,7 @@ app-root {
     grid-area: header;
   }
 
-  app-settings-view {
+  app-algorithm-config-view {
     grid-area: settings;
   }
 }
