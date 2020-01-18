@@ -142,6 +142,7 @@ export class Classifier {
 
   payBid(k: number, tax: number): number {
     this._bid = this.bid * k;
+    this._view = null;
     // this._strength -= this._bid;
     // this._strength -= this._strength * tax
     return this._bid;
@@ -204,7 +205,7 @@ export class Classifier {
   }
 
   dumpMessagesAndPay(): Message[] {
-    this.messages.forEach(m => m.classifier && (m.classifier._strength += this.bidAmount / this.messages.length));
+    this.messages.forEach(m => m.classifier && (m.classifier.strength += this.bidAmount / this.messages.length));
     return this.messages;
   }
 
@@ -223,7 +224,7 @@ export class Classifier {
     const copy = Classifier.newInstanceFrom(this as any);
     const lastElementIndex = copy.action.length - 1;
     copy.action[lastElementIndex] = copy.action[lastElementIndex] === Alphabet.One ? Alphabet.Zero : Alphabet.One;
-    copy._strength = this._strength + 0.1;
+    copy.strength = this._strength + 0.1;
     return copy;
   }
 }
