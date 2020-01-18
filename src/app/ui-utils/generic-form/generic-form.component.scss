@@ -1,15 +1,5 @@
 app-generic-form form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 1rem;
-  align-items: center;
-  label {
-    justify-self: flex-end;
-    max-width: 10rem;
-    text-align: right;
-  }
-
-  .mat-slider, mat-form-field {
-    padding: 0 0.5rem;
+  app-slider {
+    grid-column: 1/5;
   }
 }

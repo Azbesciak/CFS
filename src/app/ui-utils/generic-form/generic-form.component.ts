@@ -38,7 +38,7 @@ export class GenericFormComponent<T> implements OnDestroy {
       return;
     }
     this.form = this.fb.group(extractValues(value, (k, v) =>
-        [v.defaultValue, [
+        [v.current, [
           Validators.required,
           Validators.min(0.01),
           v.type === ValueType.decimal ? Validators.max(1) : null

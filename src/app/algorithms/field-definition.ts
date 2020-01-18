@@ -1,9 +1,10 @@
+import {ValueConfig} from "../config";
+
 export type Properties<T extends any, V> = {
   readonly [P in keyof T]: V;
 }
 
-export interface ConfigValue {
-  defaultValue: number;
+export interface ConfigValue extends ValueConfig {
   type: ValueType;
 }
 
@@ -23,8 +24,8 @@ export function extractValues<T, V>(props: Properties<T, ConfigValue>, mapper: (
 }
 
 export function toFieldDefinition<T>(props: Properties<T, ConfigValue>): FieldDefinition<T>[] {
-  return Object.entries(props).map(([field, {defaultValue, type}]: [string, ConfigValue]) => ({
-    type, defaultValue, field
-  })) as FieldDefinition<T>[]
+  return Object.entries(props).map(
+    ([field, cfg]: [string, ConfigValue]) => ({field, ...cfg})
+  ) as FieldDefinition<T>[]
 }
 

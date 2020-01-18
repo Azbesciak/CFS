@@ -4,5 +4,8 @@
   [min]="valueConfig.min"
   [max]="valueConfig.max"
   [step]="valueConfig.step"
+  [displayWith]="displayWith"
+  thumbLabel="true"
+  color="primary"
 ></mat-slider>
 <div class="value">{{displayWith ? displayWith(control.value) : control.value}}</div>
