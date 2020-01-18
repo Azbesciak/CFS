@@ -11,6 +11,7 @@ import {LanguageModule} from "./language/language.module";
 import {AlgorithmConfigViewModule} from "./algorithm-config-view/algorithm-config-view.module";
 import {StateViewModule} from "./state-view/state-view.module";
 import {HeaderModule} from "./header/header.module";
+import {SettingsModule} from "./settings/settings.module";
 
 @NgModule({
   declarations: [
@@ -24,8 +25,9 @@ import {HeaderModule} from "./header/header.module";
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     LanguageModule,
     AlgorithmConfigViewModule,
-    StateViewModule,
-    HeaderModule
+    HeaderModule,
+    SettingsModule,
+    StateViewModule
   ],
   providers: [],
   bootstrap: [AppComponent]

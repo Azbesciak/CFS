@@ -1,0 +1,8 @@
+<label>{{name | translate}}</label>
+<mat-slider
+  [formControl]="control"
+  [min]="valueConfig.min"
+  [max]="valueConfig.max"
+  [step]="valueConfig.step"
+></mat-slider>
+<div class="value">{{displayWith ? displayWith(control.value) : control.value}}</div>

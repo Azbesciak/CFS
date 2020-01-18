@@ -39,5 +39,6 @@
   "lifeTax": "Podatek istnienia",
   "bidTax": "Podatek zakładu",
   "winners": "Liczba zwyciężców",
-  "msgAgeThreshold": "Maksymalny wiek wiadomości"
+  "msgAgeThreshold": "Maksymalny wiek wiadomości",
+  "computationDelay": "Opóźnienie obliczeń"
 }

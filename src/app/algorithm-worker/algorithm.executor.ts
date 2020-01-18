@@ -19,13 +19,14 @@ export interface AlgorithmExecutorMessage {
   bbCfg?: BucketBrigadeCfg;
   pattern?: Pattern;
   msgCfg?: MessageConfigProvider;
+  computationDelay?: number;
 }
 
 export interface ClassifiersUpdate {
   classifiers: Classifier[];
 }
 
-export interface AlgorithmResultUpdate extends ClassifiersUpdate{
+export interface AlgorithmResultUpdate extends ClassifiersUpdate {
   runId: number;
   prediction: Matrix<Alphabet>;
   messages: Message[];
@@ -42,6 +43,7 @@ export class AlgorithmExecutor {
   private isRunning = false;
   private messageFactory: MessageFactory = null;
   private pattern: Pattern = null;
+  private computationDelay: number = 50;
 
   constructor(
     private readonly width: number,
@@ -51,6 +53,9 @@ export class AlgorithmExecutor {
   }
 
   postMessage(message: AlgorithmExecutorMessage) {
+    if (typeof message.computationDelay === "number") {
+      this.computationDelay = message.computationDelay;
+    }
     if (message.pattern) {
       this.pattern = message.pattern;
     }
@@ -71,7 +76,7 @@ export class AlgorithmExecutor {
     if (message.newClassifier) {
       this.addNewClassifier(message.newClassifier);
     }
-    if (typeof message.running === 'boolean') {
+    if (typeof message.running === "boolean") {
       this.isRunning = message.running;
       if (message.running) this.run(++this.runningId);
     }
@@ -160,7 +165,7 @@ export class AlgorithmExecutor {
       };
       this.messageConsumer(message);
       this.run(runId);
-    }, 50);
+    }, this.computationDelay);
   }
 
   private initialPrediction() {

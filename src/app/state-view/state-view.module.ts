@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {StateViewComponent} from "./state-view.component";
 import {ClassifiersNumberComponent} from "./classifiers-number/classifiers-number.component";
 import {TranslateModule} from "@ngx-translate/core";
@@ -10,7 +10,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-
+import {SettingsModule} from "../settings/settings.module";
 
 
 @NgModule({
@@ -25,7 +25,9 @@ import {MatSelectModule} from "@angular/material/select";
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    SettingsModule
   ]
 })
-export class StateViewModule { }
+export class StateViewModule {
+}

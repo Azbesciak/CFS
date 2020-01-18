@@ -16,7 +16,7 @@ export class AlgorithmWorkerProxy {
   readonly resultUpdates$ = this._resultUpdates$.pipe(filter(v => !!v), shareReplay(1));
 
   constructor() {
-    if (typeof Worker !== 'undefined' && environment.enableWorker) {
+    if (typeof Worker !== 'undefined' && environment.computation.enableWorker) {
       this.worker = new Worker('./algorithm.worker', {type: 'module'});
       this.worker.onmessage = ({data}) => this._resultUpdates$.next(data);
     } else {

@@ -14,3 +14,4 @@
 <mat-select [value]="patternService.selectedPattern | async" (selectionChange)="onPatternChanged($event)">
   <mat-option *ngFor="let p of patterns" [value]="p">{{p.name | translate}}</mat-option>
 </mat-select>
+<app-settings></app-settings>

@@ -84,6 +84,10 @@ export class AlgorithmService implements OnDestroy {
     this.worker.postMessage({reset: true});
   }
 
+  updateComputationDelay(computationDelay: number) {
+    this.worker.postMessage({computationDelay})
+  }
+
   ngOnDestroy(): void {
     if (this.patternSub) {
       this.patternSub.unsubscribe();

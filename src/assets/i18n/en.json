@@ -39,5 +39,6 @@
   "lifeTax": "Life tax",
   "bidTax": "Bid tax",
   "winners": "Number of winners",
-  "msgAgeThreshold": "Max message age"
+  "msgAgeThreshold": "Max message age",
+  "computationDelay": "Computations delay"
 }
