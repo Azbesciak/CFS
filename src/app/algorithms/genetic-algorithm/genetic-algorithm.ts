@@ -59,7 +59,7 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
   private breed(classifiers: Classifier[], toBKilled: number) {
     const breed: Classifier[] = [];
     let kb = 0;
-    if (classifiers.length <= 2) {
+    if (classifiers.length < 2) {
       return breed;
     }
     let first: Classifier = classifiers[0];
