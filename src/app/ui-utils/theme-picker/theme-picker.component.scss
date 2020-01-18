@@ -1,3 +1,21 @@
+@import "./colors";
+
+@mixin prepare-theme-view($name, $palette) {
+  &.#{$name} svg {
+    .theme-icon-background {
+      fill: map-get($palette, "background");
+    }
+
+    .theme-icon-button {
+      fill: map-get($palette, "accient");
+    }
+
+    .theme-icon-toolbar {
+      fill: map-get($palette, "primary");
+    }
+  }
+}
+
 .theme-picker-menu {
   .mat-menu-item {
     .theme-example-icon {
@@ -10,53 +28,8 @@
         width: 1.5rem;
       }
 
-      // The below colors need to align with the themes defined in ThemePicker
-      &.deeppurple-amber svg {
-        .theme-icon-background {
-          fill: #fafafa;
-        }
-        .theme-icon-button {
-          fill: #FFC107;
-        }
-        .theme-icon-toolbar {
-          fill: #673AB7;
-        }
-      }
-
-      &.indigo-pink svg {
-        .theme-icon-background {
-          fill: #fafafa;
-        }
-        .theme-icon-button {
-          fill: #E91E63;
-        }
-        .theme-icon-toolbar {
-          fill: #3F51B5;
-        }
-      }
-
-      &.pink-bluegrey svg {
-        .theme-icon-background {
-          fill: #303030;
-        }
-        .theme-icon-button {
-          fill: #607D8B;
-        }
-        .theme-icon-toolbar {
-          fill: #E91E63;
-        }
-      }
-
-      &.purple-green svg {
-        .theme-icon-background {
-          fill: #303030;
-        }
-        .theme-icon-button {
-          fill: #4CAF50;
-        }
-        .theme-icon-toolbar {
-          fill: #9C27B0;
-        }
+      @each $name, $palette in $themes {
+        @include prepare-theme-view($name, $palette);
       }
     }
   }
