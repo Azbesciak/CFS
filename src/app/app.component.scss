@@ -53,6 +53,16 @@ app-root {
     .mat-slider, mat-form-field {
       padding: 0 0.5rem;
     }
+    .mat-form-field {
+      margin-top: .5em;
+      .mat-form-field-wrapper {
+        padding-bottom: 1em;
+        .mat-form-field-infix {
+          border-top: 0;
+          padding-top: 0;
+        }
+      }
+    }
     display: grid;
     > * {
       align-self: center;

@@ -15,8 +15,8 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
 
   execute(classifiers: Classifier[]) {
     classifiers.sort(GAClassifiersComparator);
-    let outNo = this.removeClassifiersWithToLowStrength(classifiers);
-    const afterBreed = this.breed(classifiers, 1);
+    const outNo = this.removeClassifiersWithToLowStrength(classifiers);
+    const afterBreed = this.breed(classifiers, this.cfg.classifiersToKill);
     if (afterBreed.length > 0)
       classifiers.push(...afterBreed);
     this.mutateClassifiers(classifiers);

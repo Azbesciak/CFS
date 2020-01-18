@@ -40,5 +40,6 @@
   "bidTax": "Podatek zakładu",
   "winners": "Liczba zwyciężców",
   "msgAgeThreshold": "Maksymalny wiek wiadomości",
-  "computationDelay": "Opóźnienie obliczeń"
+  "computationDelay": "Opóźnienie obliczeń",
+  "classifiersToKill": "Klasyfikatory do eliminacji"
 }

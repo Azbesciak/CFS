@@ -40,5 +40,6 @@
   "bidTax": "Bid tax",
   "winners": "Number of winners",
   "msgAgeThreshold": "Max message age",
-  "computationDelay": "Computations delay"
+  "computationDelay": "Computations delay",
+  "classifiersToKill": "Classifiers to kill"
 }
