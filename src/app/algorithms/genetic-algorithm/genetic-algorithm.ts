@@ -16,7 +16,7 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
   execute(classifiers: Classifier[]) {
     classifiers.sort(GAClassifiersComparator);
     const outNo = this.removeClassifiersWithToLowStrength(classifiers);
-    const afterBreed = this.breed(classifiers, this.cfg.classifiersToKill);
+    const afterBreed = this.breed(classifiers);
     if (afterBreed.length > 0)
       classifiers.push(...afterBreed);
     this.mutateClassifiers(classifiers);
@@ -56,7 +56,7 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
     return outNo;
   }
 
-  private breed(classifiers: Classifier[], toBKilled: number) {
+  private breed(classifiers: Classifier[]) {
     const breed: Classifier[] = [];
     let kb = 0;
     if (classifiers.length < 2) {
@@ -64,7 +64,7 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
     }
     let first: Classifier = classifiers[0];
     let second: Classifier;
-    for (let i = 1; i < classifiers.length && kb < toBKilled && classifiers.length < this.cfg.maxClassifiers; i++) {
+    for (let i = 1; i < classifiers.length && kb < this.cfg.breedsLimit && classifiers.length < this.cfg.maxClassifiers; i++) {
       second = classifiers[i];
       let j = 0;
       let candidate: Classifier;

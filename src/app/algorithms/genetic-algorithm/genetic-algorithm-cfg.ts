@@ -1,7 +1,7 @@
 import {ConfigValue, Properties, ValueType} from "../field-definition";
 
 export interface GeneticAlgorithmCfg {
-  readonly classifiersToKill: number;
+  readonly breedsLimit: number;
   readonly mutationProbability: number;
   readonly classifierMutationProbability: number;
   readonly strengthThreshold: number;
@@ -11,7 +11,7 @@ export interface GeneticAlgorithmCfg {
 }
 
 export const geneticAlgorithmProperties: Properties<GeneticAlgorithmCfg, ConfigValue> = {
-  classifiersToKill: {type: ValueType.integer, current: 1, step: 1, max: 100, min: 0},
+  breedsLimit: {type: ValueType.integer, current: 1, step: 1, max: 100, min: 0},
   outPercentage: {type: ValueType.decimal, current: 0.5, step: 0.01, max: 1, min: 0.01},
   elitism: {type: ValueType.decimal, current: 0.3, step: 0.01, max: 1, min: 0.01},
   maxClassifiers: {type: ValueType.integer, current: 100, step: 1, max: 1, min: 1},
