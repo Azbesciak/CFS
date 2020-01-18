@@ -44,7 +44,8 @@ export class AlgorithmExecutor {
   private messageFactory: MessageFactory = null;
   private pattern: Pattern = null;
   private computationDelay: number = 50;
-
+  private step: number = this.computationDelay;
+  private recentInvocation: number;
   constructor(
     private readonly width: number,
     private readonly height: number,
@@ -78,8 +79,13 @@ export class AlgorithmExecutor {
     }
     if (typeof message.running === "boolean") {
       this.isRunning = message.running;
-      if (message.running) this.run(++this.runningId);
+      if (message.running) this.fireComputation();
     }
+  }
+
+  private fireComputation() {
+    this.recentInvocation = new Date().getTime();
+    this.run(++this.runningId);
   }
 
   private updateClassifiersNumber(newNumber: number) {
@@ -133,39 +139,49 @@ export class AlgorithmExecutor {
   }
 
   private run(runId: number) {
-    setTimeout(() => {
-      if (!this.isRunning || this.runningId !== runId) return;
-      let classifiers = this.classifiers.slice();
-      const messages = [];
-      let accuracy = 0;
-      const prediction = this.initialPrediction();
-      for (let x = 0; x < this.width; x++) {
-        for (let y = 0; y < this.height; y++) {
-          const runMessages = [this.messageFactory.fromCoords(x, y)];
-          this.bb.matchCompete(classifiers, runMessages);
-          const response = this.getClassifiersAggregatedResponse(runMessages);
-          let quality = this.computeQuality(x, y, response);
-          accuracy += quality;
-          if (quality === 0 && response !== -1) {
-            this.bb.invertedCopy(classifiers);
-          }
-          this.bb.payCurrentClassifiers(quality);
-          this.ga.execute(classifiers);
-          messages.push(...runMessages);
-          prediction[x][y] = this.getClassifiersPrediction(response);
-        }
+    const interval = setInterval(() => {
+      if (!this.isRunning || this.runningId !== runId) {
+        clearInterval(interval);
+        return;
       }
-      this.classifiers = classifiers;
-      const message = {
-        runId,
-        prediction,
-        classifiers,
-        messages,
-        accuracy: accuracy / (this.width * this.height)
-      };
-      this.messageConsumer(message);
-      this.run(runId);
-    }, this.computationDelay);
+      const currentTime = new Date().getTime();
+      if (currentTime - this.recentInvocation >= this.computationDelay) {
+        this.recentInvocation = currentTime;
+        this.compute(runId);
+      }
+    }, this.step);
+  }
+
+  private compute(runId: number) {
+    let classifiers = this.classifiers.slice();
+    const messages = [];
+    let accuracy = 0;
+    const prediction = this.initialPrediction();
+    for (let x = 0; x < this.width; x++) {
+      for (let y = 0; y < this.height; y++) {
+        const runMessages = [this.messageFactory.fromCoords(x, y)];
+        this.bb.matchCompete(classifiers, runMessages);
+        const response = this.getClassifiersAggregatedResponse(runMessages);
+        let quality = this.computeQuality(x, y, response);
+        accuracy += quality;
+        if (quality === 0 && response !== -1) {
+          this.bb.invertedCopy(classifiers);
+        }
+        this.bb.payCurrentClassifiers(quality);
+        this.ga.execute(classifiers);
+        messages.push(...runMessages);
+        prediction[x][y] = this.getClassifiersPrediction(response);
+      }
+    }
+    this.classifiers = classifiers;
+    const message = {
+      runId,
+      prediction,
+      classifiers,
+      messages,
+      accuracy: accuracy / (this.width * this.height)
+    };
+    this.messageConsumer(message);
   }
 
   private initialPrediction() {
