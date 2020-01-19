@@ -41,5 +41,8 @@
   "winners": "Number of winners",
   "msgAgeThreshold": "Max message age",
   "computationDelay": "Computations delay",
-  "breedsLimit": "Breeds limit"
+  "breedsLimit": "Breeds limit",
+  "message": "Message",
+  "count": "Count",
+  "classifiersViews": "Classifier (count)"
 }

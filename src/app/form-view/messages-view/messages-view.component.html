@@ -1,12 +1,6 @@
-<app-section-header [label]="'messages' | translate"></app-section-header>
-<mat-list *ngIf="messages && messages.length > 0; else noMessages">
-  <mat-list-item *ngFor="let mes of messages">
-    <div class="message">
-      <span class="message-value">{{mes.value.join("")}}</span>
-      <span class="message-sender" *ngIf="mes.classifier">({{mes.classifier.id}})</span>
-    </div>
-  </mat-list-item>
-</mat-list>
-<ng-template #noMessages>
-  <app-no-content [message]="'noMessages' | translate"></app-no-content>
-</ng-template>
+<app-table
+  label="messages"
+  noValueMessage="noMessages"
+  [data]="messagesViews"
+  [columns]="displayedColumns"
+></app-table>

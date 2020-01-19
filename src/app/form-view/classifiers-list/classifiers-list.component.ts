@@ -1,7 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {Classifier, ClassifierView} from "../../algorithms/classifier";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-classifiers-list',
@@ -11,16 +9,13 @@ import {MatSort} from "@angular/material/sort";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClassifiersListComponent {
-  dataSource = new MatTableDataSource<ClassifierView>([]);
   displayedColumns: (keyof ClassifierView)[] = ["id", "condition", "action", "strength", "specifity", "lived"];
-
-  @ViewChild(MatSort, {static: false})
-  sort: MatSort;
 
   @Input()
   set classifiers(classifiers: Classifier[]) {
-    this.dataSource.data = (classifiers || []).map(v => v.view);
-    setTimeout(() => this.dataSource.sort = this.sort)
+    this.classifiersViews = (classifiers || []).map(v => v.view);
   }
+
+  classifiersViews: ClassifierView[] = [];
 
 }
