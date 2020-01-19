@@ -162,7 +162,7 @@ export class AlgorithmExecutor {
         const runMessages = [this.messageFactory.fromCoords(x, y)];
         this.bb.matchCompete(classifiers, runMessages);
         const response = this.getClassifiersAggregatedResponse(runMessages);
-        let quality = this.computeQuality(x, y, response);
+        const quality = this.computeQuality(x, y, response);
         accuracy += quality;
         if (quality === 0 && response !== -1) {
           this.bb.invertedCopy(classifiers);
