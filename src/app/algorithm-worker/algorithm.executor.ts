@@ -159,9 +159,8 @@ export class AlgorithmExecutor {
     const prediction = this.initialPrediction();
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
-        const runMessages = [this.messageFactory.fromCoords(x, y)];
-        this.bb.matchCompete(classifiers, runMessages);
-        const response = this.getClassifiersAggregatedResponse(runMessages);
+        const newMessages = this.bb.matchCompete(classifiers, [this.messageFactory.fromCoords(x, y)]);
+        const response = this.getClassifiersAggregatedResponse(newMessages);
         const quality = this.computeQuality(x, y, response);
         accuracy += quality;
         if (quality === 0 && response !== -1) {
@@ -169,7 +168,7 @@ export class AlgorithmExecutor {
         }
         this.bb.payCurrentClassifiers(quality);
         this.ga.execute(classifiers);
-        messages.push(...runMessages);
+        messages.push(...newMessages);
         prediction[x][y] = this.getClassifiersPrediction(response);
       }
     }

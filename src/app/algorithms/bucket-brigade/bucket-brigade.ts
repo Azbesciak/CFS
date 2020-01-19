@@ -13,11 +13,11 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
     super(cfg)
   }
 
-  matchCompete(classifiers: Classifier[], messages: Message[]) {
+  matchCompete(classifiers: Classifier[], messages: Message[]): Message[] {
     const active = this.findActiveClassifiers(classifiers, messages);
     const {winners, newMessages} = this.getWinners(active);
     this.activated = winners;
-    messages.push(...newMessages);// make immutable?
+    return newMessages.length === 0 ? messages.slice() : [...messages, ...newMessages];
   }
 
   payCurrentClassifiers(amount: number) {
