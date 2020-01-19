@@ -41,8 +41,8 @@ export class GenericFormComponent<T> implements OnDestroy {
     this.form = this.fb.group(extractValues(value, (k, v) =>
         [v.current, [
           Validators.required,
-          Validators.min(v.min),
-          isNum(v.max) ? Validators.max(v.max) : null
+          v.type === ValueType.integer ? Validators.min(v.min) : null,
+          v.type === ValueType.integer && isNum(v.max) ? Validators.max(v.max) : null
         ].filter(v => v)]
       )
     );
