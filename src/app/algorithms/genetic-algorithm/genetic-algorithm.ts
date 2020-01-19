@@ -13,6 +13,15 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
     this.messageLength = messageConfig.messageLength;
   }
 
+  /**
+   * Execute genetic algorithm iteration on set of classifiers.
+   * Invocation mutates passed classifiers:
+   *  - too weak are removed
+   *  - classifiers are breded with some limitations
+   *  - each classifier may be also mutated with some probability
+   *  - given percentage of classifiers is eventually made as output
+   * @param classifiers classifiers to mutate
+   */
   execute(classifiers: Classifier[]) {
     classifiers.sort(GAClassifiersComparator);
     const outNo = this.removeClassifiersWithToLowStrength(classifiers);

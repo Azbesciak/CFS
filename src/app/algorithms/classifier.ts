@@ -206,23 +206,40 @@ export class Classifier {
     return this.activate(message);
   }
 
+  /**
+   * Pays this classi
+   */
   dumpMessagesAndPay(): Message[] {
     if (this.messages.length !== 0)
       this.strength += this.bidAmount;
     return this.messages;
   }
 
+  /**
+   * With given probability mutates THIS classifier
+   * @param mutationProbability [0,1)
+   */
   mutate(mutationProbability: number) {
     randomArrayMutate(this.condition, ALPHABET, mutationProbability);
     randomArrayMutate(this.action, ALPHABET, mutationProbability);
   }
 
+  /**
+   * Breeds this classifier with the passed.
+   * This classifier is however considered as temporary.
+   * After acceptance you ought to call Classifier#onBreedAccepted.
+   * @param classifier another classifier to breed
+   */
   breed(classifier: Classifier): Classifier {
     const condition = breed(this.condition, classifier.condition);
     const action = breed(this.action, classifier.action);
     return new Classifier(condition, action, Classifier.idScheduler.next());
   }
 
+  /**
+   * Returns new classifier with last bit message's bit inverted.
+   * Also, new classifier receives a little strength boost.
+   */
   inverseCopy(): Classifier {
     const copy = Classifier.newInstanceFrom(this as any);
     const lastElementIndex = copy.action.length - 1;

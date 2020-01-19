@@ -13,6 +13,13 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
     super(cfg)
   }
 
+  /**
+   * - Matches classifiers with given messages
+   * - finds winners depending on their limit (this one mutates algorithm state)
+   * - returns upgraded message list
+   * @param classifiers classifiers to match
+   * @param messages messages with coordinates for classifiers
+   */
   matchCompete(classifiers: Classifier[], messages: Message[]): Message[] {
     const active = this.findActiveClassifiers(classifiers, messages);
     const {winners, newMessages} = this.getWinners(active);
@@ -20,10 +27,19 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
     return newMessages.length === 0 ? messages.slice() : [...messages, ...newMessages];
   }
 
+  /**
+   * Pays recent algorithm iteration winners passed amount
+   * @param amount value to pay
+   */
   payCurrentClassifiers(amount: number) {
     this.activated.forEach(c => c.pay(amount));
   }
 
+  /**
+   * Adds to passed classifiers (mutation) new one with inverted last bit if such does not exist in passed list.
+   * Otherwise existing classifier's strength is increased.
+   * @param classifiers list of classifiers to expand
+   */
   invertedCopy(classifiers: Classifier[]) {
     const classifiersSet: Classifier[] = [];
     for (const c of this.activated) {
