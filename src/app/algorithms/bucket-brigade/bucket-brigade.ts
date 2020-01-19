@@ -13,33 +13,21 @@ const BBClassifiersComparator =
   (c1: BucketBrigadeClassifier, c2: BucketBrigadeClassifier) => c2.classifier.bid - c1.classifier.bid;
 
 export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
-  private active: Classifier[] = [];
   private activated: Classifier[] = [];
-  private prevActivated: Classifier[] = [];
 
   constructor(cfg: BucketBrigadeCfg) {
     super(cfg)
   }
 
   matchCompete(classifiers: Classifier[], messages: Message[]) {
-    this.prevActivated = this.activated.slice();
-    this.activated = [];
-    this.active = this.findActiveClassifiers(classifiers, messages);
-    const {winners, newMessages} = this.getWinners(this.active);
-    this.activated.push(...winners);
+    const active = this.findActiveClassifiers(classifiers, messages);
+    const {winners, newMessages} = this.getWinners(active);
+    this.activated = winners;
     messages.push(...newMessages);// make immutable?
   }
 
   payCurrentClassifiers(amount: number) {
     this.activated.forEach(c => c.pay(amount));
-  }
-
-  payPreviousClassifiers(amount: number) {
-    if (this.prevActivated.length === 0) {
-      return;
-    }
-    const toPay = amount / this.prevActivated.length;
-    this.active.forEach(c => c.pay(toPay));
   }
 
   invertedCopy(classifiers: Classifier[]) {
