@@ -25,7 +25,7 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
     this.prevActivated = this.activated.slice();
     this.activated = [];
     this.active = this.findActiveClassifiers(classifiers, messages);
-    const {winners, newMessages} = this.getWinners(classifiers);
+    const {winners, newMessages} = this.getWinners(this.active);
     this.activated.push(...winners);
     messages.push(...newMessages);// make immutable?
   }
