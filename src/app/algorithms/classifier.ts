@@ -17,6 +17,10 @@ export interface ClassifierModel {
   condition: Alphabet[];
 }
 
+function round(value: number) {
+  return Math.round(value * 1e4) / 1e4;
+}
+
 export class Classifier {
   private static idScheduler = new IdScheduler();
   private _strength = 1;
@@ -33,8 +37,8 @@ export class Classifier {
         action: this.action.join(""),
         condition: this.condition.join(""),
         id: this.id,
-        specifity: +this.specifity.toFixed(4),
-        strength: +this._strength.toFixed(4),
+        specifity: round(this.specifity),
+        strength: round(this._strength),
         lived: this._lived
       };
     return this._view;
