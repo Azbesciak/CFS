@@ -146,9 +146,8 @@ export class Classifier {
 
   payBid(k: number, tax: number): number {
     this._bid = this.bid * k;
+    this._strength -= this._bid * tax;
     this._view = null;
-    // this._strength -= this._bid;
-    // this._strength -= this._strength * tax
     return this._bid;
   }
 
