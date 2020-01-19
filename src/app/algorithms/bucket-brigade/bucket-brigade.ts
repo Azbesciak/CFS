@@ -46,7 +46,7 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
     const classifiersSet: Classifier[] = [];
     for (const c of this.activated) {
       const candidate = c.inverseCopy();
-      let existing = classifiersSet.find(cs => Classifier.equal(cs, candidate));
+      let existing = classifiers.find(cs => Classifier.equal(cs, candidate));
       if (!existing) {
         existing = classifiersSet.find(cs => Classifier.equal(cs, candidate));
         if (!existing) {
