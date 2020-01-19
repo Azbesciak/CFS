@@ -39,3 +39,7 @@ export function primitiveArrayEquals<T>(a1: T[], a2: T[]) {
   }
   return true;
 }
+
+export function isNum(value: any): value is number {
+  return typeof value === "number";
+}

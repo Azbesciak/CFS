@@ -17,6 +17,7 @@ import {
 } from "../../algorithms/field-definition";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {merge, of, Unsubscribable} from "rxjs";
+import {isNum} from "../../algorithms/utils";
 
 @Component({
   selector: 'app-generic-form',
@@ -40,8 +41,8 @@ export class GenericFormComponent<T> implements OnDestroy {
     this.form = this.fb.group(extractValues(value, (k, v) =>
         [v.current, [
           Validators.required,
-          Validators.min(0.01),
-          v.type === ValueType.decimal ? Validators.max(1) : null
+          Validators.min(v.min),
+          isNum(v.max) ? Validators.max(v.max) : null
         ].filter(v => v)]
       )
     );

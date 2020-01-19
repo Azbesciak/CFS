@@ -4,8 +4,9 @@ export type Properties<T extends any, V> = {
   readonly [P in keyof T]: V;
 }
 
-export interface ConfigValue extends ValueConfig {
+export interface ConfigValue extends Omit<ValueConfig, "max"> {
   type: ValueType;
+  max?: number;
 }
 
 export enum ValueType {

@@ -4,10 +4,11 @@
     <ng-container *ngSwitchCase="'integer'">
       <label>{{f.field | translate}}</label>
       <mat-form-field >
-        <input matInput [formControlName]="f.field" type="number" step="1" pattern="-?\d+" required>
-        <mat-error *ngIf="form.get(f.field).hasError('min')">Value must be positive</mat-error>
-        <mat-error *ngIf="form.get(f.field).hasError('required')">Value is required</mat-error>
-        <mat-error *ngIf="form.get(f.field).hasError('pattern')">Integer values allowed only</mat-error>
+        <input matInput [formControlName]="f.field" type="number" [step]="f.step" pattern="-?\d+" required>
+        <mat-error *ngIf="form.get(f.field).getError('min') as err">{{'minValue' | translate: {'value': err.min} }}</mat-error>
+        <mat-error *ngIf="form.get(f.field).getError('max') as err">{{'maxValue' | translate: {'value': err.max} }}</mat-error>
+        <mat-error *ngIf="form.get(f.field).hasError('required')">{{'valueIsRequired' | translate}}</mat-error>
+        <mat-error *ngIf="form.get(f.field).hasError('pattern')">{{'integerValueRequired' | translate}}</mat-error>
       </mat-form-field>
     </ng-container>
   </ng-container>
