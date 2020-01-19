@@ -4,7 +4,7 @@ import {BucketBrigadeCfg} from "./bucket-brigade-cfg";
 import {Algorithm} from "../algorithm";
 
 
-const BBClassifiersComparator = (c1: Classifier, c2: Classifier) => c2.bid - c1.bid;
+const BBClassifiersComparator = (c1: Classifier, c2: Classifier) => c2.maxBidAmount - c1.maxBidAmount;
 
 export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
   private activated: Classifier[] = [];

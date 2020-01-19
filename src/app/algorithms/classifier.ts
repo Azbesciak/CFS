@@ -25,7 +25,7 @@ export class Classifier {
   private static idScheduler = new IdScheduler();
   private _strength = 1;
   private active = false;
-  private _bid: number;
+  private _currentBidAmount: number = 0;
   private _lived = 0;
   private _view: ClassifierView;
   private readonly specifity: number;
@@ -53,12 +53,12 @@ export class Classifier {
     return this._strength;
   }
 
-  get bid() {
+  get maxBidAmount() {
     return this._strength * this.specifity;
   }
 
-  get bidAmount() {
-    return this._bid;
+  get currentBidAmount() {
+    return this._currentBidAmount;
   }
 
   private constructor(
@@ -86,7 +86,7 @@ export class Classifier {
     newCls._strength = classifier._strength;
     newCls._view = classifier._view;
     newCls._lived = classifier._lived;
-    newCls._bid = classifier._bid;
+    newCls._currentBidAmount = classifier._currentBidAmount;
     newCls.active = classifier.active;
     if (classifier.messages.length > 0)
       newCls.messages.push(...classifier.messages);
@@ -144,11 +144,17 @@ export class Classifier {
   }
 
 
+  /**
+   * Classifier pays bid depending on current it's max bid amount and k value.
+   * Tax is also paid from this bid amount.
+   * @param k ratio of bid
+   * @param tax tax to take
+   */
   payBid(k: number, tax: number): number {
-    this._bid = this.bid * k;
-    this._strength -= this._bid * tax;
+    this._currentBidAmount = this.maxBidAmount * k;
+    this._strength -= this._currentBidAmount * tax;
     this._view = null;
-    return this._bid;
+    return this._currentBidAmount;
   }
 
   pay(amount: number) {
@@ -206,11 +212,11 @@ export class Classifier {
   }
 
   /**
-   * Pays this classi
+   * Pays this classifier if he generated any message last bid amount and returns its messages
    */
   dumpMessagesAndPay(): Message[] {
     if (this.messages.length !== 0)
-      this.strength += this.bidAmount;
+      this.strength += this.currentBidAmount;
     return this.messages;
   }
 
