@@ -9,9 +9,9 @@ export interface BucketBrigadeCfg {
 }
 
 export const bucketBrigadeProperties: Properties<BucketBrigadeCfg, ConfigValue> = {
-  k: {type: ValueType.decimal, current: 0.1, min: 0.01, max: 1, step: 0.01},
-  lifeTax: {type: ValueType.decimal, current: 0.06, min: 0.01, max: 1, step: 0.01},
-  bidTax: {type: ValueType.decimal, current: 0.05, min: 0.01, max: 1, step: 0.01},
-  winners: {type: ValueType.integer, current: 1, min: 1, max: 100, step: 1},
+  k: {type: ValueType.decimal, current: 0.1, min: 0.01, max: 1, step: 0},
+  lifeTax: {type: ValueType.decimal, current: 0.06, min: 0.01, max: 1, step: 0},
+  bidTax: {type: ValueType.decimal, current: 0.05, min: 0.01, max: 1, step: 0},
+  winners: {type: ValueType.integer, current: 1, min: 1, max: 100, step: 0},
   msgAgeThreshold: {type: ValueType.integer, current: 3, min: 0, max: 100, step: 1}
 };
