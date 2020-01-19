@@ -1,9 +1,9 @@
 {
   "classifiersSystem": "Adaptacyjny system klasyfikatorów",
   "numberOfClassifiers": "Liczba klasyfikatorów",
-  "messages": "Lista komunikatów",
+  "messages": "Komunikaty",
   "noMessages": "Brak komunikatów",
-  "classifiers": "Lista klasyfikatorów",
+  "classifiers": "Klasyfikatory",
   "noClassifiers": "Brak klasyfikatorów",
   "action": "Akcja",
   "condition": "Warunek",
