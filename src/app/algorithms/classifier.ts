@@ -169,11 +169,9 @@ export class Classifier {
         result[i] = message.value[i];
       }
     }
-    return new Message(result, this);
-  }
-
-  addToMessages(message: Message) {
-    this.messages.push(message);
+    const activatedMessage = new Message(result, this);
+    this.messages.push(activatedMessage);
+    return activatedMessage;
   }
 
   isOutput() {
@@ -209,7 +207,8 @@ export class Classifier {
   }
 
   dumpMessagesAndPay(): Message[] {
-    this.messages.forEach(m => m.classifier && (m.classifier.strength += this.bidAmount / this.messages.length));
+    if (this.messages.length !== 0)
+      this.strength += this.bidAmount;
     return this.messages;
   }
 

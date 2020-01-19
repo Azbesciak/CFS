@@ -70,7 +70,6 @@ export class BucketBrigade extends Algorithm<BucketBrigadeCfg> {
       if (!temp) {
         return;
       }
-      classifier.addToMessages(temp);
       active.push(classifier);
     });
   }
