@@ -15,12 +15,11 @@ app-root {
     justify-self: flex-end;
     text-align: right;
   }
-  .form-element  {
+  .form-element {
     padding: var(--form-margin);
     border-radius: 3px;
-    box-shadow: 0 0 9px -1px rgba(0, 0, 0, 0.15);
   }
-  app-algorithm-config-view, app-form-view, app-state-view {
+  .app-algorithm-config-view, .app-form-view, .app-state-view {
     align-self: flex-start;
     width: min(30rem, 100%);
   }
@@ -33,11 +32,11 @@ app-root {
     grid-area: chess;
   }
 
-  app-form-view {
+  .app-form-view {
     grid-area: form;
   }
 
-  app-state-view {
+  .app-state-view {
     grid-area: state;
   }
 
@@ -45,7 +44,7 @@ app-root {
     grid-area: header;
   }
 
-  app-algorithm-config-view {
+  .app-algorithm-config-view {
     grid-area: settings;
   }
 
