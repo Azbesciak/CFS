@@ -28,8 +28,15 @@ export class ThemePickerComponent implements OnInit {
       accent: '#E91E63',
       displayName: 'Indigo & Pink',
       name: 'indigo-pink',
+      isDark: false
+    },
+    {
+      primary: "#FF9800",
+      accent: "#CDDC39",
+      displayName: "Orange & Lime",
+      name: "orange-lime",
       isDark: false,
-      isDefault: true,
+      isDefault: true
     },
     {
       primary: '#E91E63',
@@ -45,6 +52,13 @@ export class ThemePickerComponent implements OnInit {
       name: 'purple-green',
       isDark: true,
     },
+    {
+      primary: "#FF5722",
+      accent: "#4CAF50",
+      displayName: "Deep Orange & Green",
+      name: "deeporange-green",
+      isDark: true
+    }
   ];
 
   constructor(
@@ -63,6 +77,7 @@ export class ThemePickerComponent implements OnInit {
     } else {
       const defaultTheme = this.themes.find(t => t.isDefault);
       this.styleManager.onStyleSelected(defaultTheme.name);
+      this.currentTheme = defaultTheme;
     }
   }
 

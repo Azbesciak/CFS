@@ -34,7 +34,7 @@
               }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/assets/orange-lime.css",
               "src/styles.scss"
             ],
             "scripts": [],
