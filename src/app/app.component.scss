@@ -4,7 +4,7 @@ app-root {
   width: 100vw;
   align-items: center;
   justify-items: center;
-  grid-template:
+  grid-template-areas:
     ". header header header ."
     ". settings state form ."
     ". settings chess form .";
@@ -26,7 +26,7 @@ app-root {
     }
   }
   @media screen and (max-width: 71.2499rem) {
-    grid-template:
+    grid-template-areas:
       "header header"
       "state chess"
       "settings chess"
@@ -34,7 +34,7 @@ app-root {
     grid-template-columns: 1fr 1fr;
   }
   @media screen and (max-width: 53.5rem) {
-    grid-template:
+    grid-template-areas:
       "header"
       "state"
       "chess"
