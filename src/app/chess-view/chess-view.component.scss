@@ -2,8 +2,17 @@ app-chess-view {
   $cell-border-color: var(--main-background-color);
   $cell-border-width: 0.1rem;
   display: grid;
-  width: max(min(30vw, 60vh), 25rem);
-  height: max(min(30vw, 60vh), 25rem);
+  $expected-size: max(min(30vw, 60vh), 25rem);
+  width: $expected-size;
+  height: $expected-size;
+  @supports not (width: $expected-size) {
+    $max-size: 35rem;
+    $min-size: 25rem;
+    max-width: $max-size;
+    max-height: $max-size;
+    min-width: $min-size;
+    min-height: $min-size;
+  }
   grid-gap: $cell-border-width;
   background-color: $cell-border-color;
   border: $cell-border-width solid $cell-border-color;

@@ -1,7 +1,6 @@
 app-root {
   display: grid;
   height: 100vh;
-  width: 100vw;
   align-items: center;
   justify-items: center;
   grid-template-areas:
@@ -10,60 +9,27 @@ app-root {
     ". settings chess form .";
   grid-template-rows: 3.5rem max-content auto;
   grid-template-columns: auto 1fr auto 1fr auto;
-  //@media screen and (max-width: 1320px) and (min-width: 1140px) {
-  @media screen and (max-width: 82.5rem) and (min-width: 71.25rem) {
-    $template-cols: auto 2.5rem;
-    .app-algorithm-config-view app-generic-form form {
-      grid-template-columns: $template-cols;
-      label {
-        text-align: left;
-        justify-self: flex-start;
-      }
-      app-slider {
-        grid-column: 1/3;
-        grid-template-columns: $template-cols;
-      }
-    }
-  }
-  @media screen and (max-width: 71.2499rem) {
-    grid-template-areas:
-      "header header"
-      "state chess"
-      "settings chess"
-      "settings form";
-    grid-template-columns: 1fr 1fr;
-  }
-  @media screen and (max-width: 53.5rem) {
-    grid-template-areas:
-      "header"
-      "state"
-      "chess"
-      "form"
-      "settings";
-    grid-template-columns: 1fr;
-    $card-width: max(30rem, 90vw);
-    .form-element {
-      width: $card-width !important;
-    }
-    app-chess-view {
-      $max-chess-size: max(20rem, min(50vh, max(30rem, 90vw)));
-      height: $max-chess-size !important;
-      width: $max-chess-size !important;
-    }
-  }
   grid-gap: 1rem;
+
   label:not(.mat-form-field-label) {
     justify-self: flex-end;
     text-align: right;
   }
+
   .form-element {
     padding: var(--form-margin);
     border-radius: 3px;
   }
+
   .app-algorithm-config-view, .app-form-view, .app-state-view {
     align-self: flex-start;
-    width: min(30rem, 100%);
+    $expected-width: min(30rem, 100%) ;
+    width: $expected-width;
+    @supports not(width: $expected-width) {
+      width: 100%;
+    }
   }
+
   app-algorithm-config-view, app-form-view {
     grid-row-gap: 0.5rem;
     display: grid;
@@ -93,24 +59,109 @@ app-root {
     .mat-slider, mat-form-field {
       padding: 0 0.5rem;
     }
+
     .mat-form-field {
       margin-top: .5em;
+
       .mat-form-field-wrapper {
         padding-bottom: 1em;
+
         .mat-form-field-infix {
           border-top: 0;
           padding-top: 0;
         }
       }
     }
+
     display: grid;
+
     > * {
       align-self: center;
     }
+
     label {
       grid-column: 1/3;
     }
+
     grid-template-columns: 2.5rem 1fr 1fr 2.5rem;
     grid-column-gap: .625rem;
+  }
+
+  @supports not (width: min(10rem, 10%)) {
+    @media screen and (min-width: 71.25001rem) {
+      app-chess-view {
+        width: 40vw;
+        height: 40vw;
+        max-width: 40rem;
+        max-height: 40rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 82.5rem) and (min-width: 71.25rem) {
+    $template-cols: auto 2.5rem;
+    .app-algorithm-config-view {
+      @supports not (width: min(10rem, 10%)) {
+        max-width: 20rem;
+        width: 20vw;
+      }
+
+      app-generic-form form {
+        grid-template-columns: $template-cols;
+
+        label {
+          text-align: left;
+          justify-self: flex-start;
+        }
+
+        app-slider {
+          grid-column: 1/3;
+          grid-template-columns: $template-cols;
+        }
+      }
+    }
+
+  }
+  @media screen and (max-width: 71.2499rem) {
+    grid-template-areas:
+      "header header"
+      "state chess"
+      "settings chess"
+      "settings form";
+    grid-template-columns: 1fr 1fr;
+
+    app-chess-view {
+      $max-chess-size: 45vw;
+      height: $max-chess-size !important;
+      width: $max-chess-size !important;
+    }
+  }
+
+  @media screen and (max-width: 53.5rem) {
+    grid-template-areas:
+      "header"
+      "state"
+      "chess"
+      "form"
+      "settings";
+    grid-template-columns: 1fr;
+    .form-element {
+      $expected-card-width: max(30rem, 90vw);
+      width: $expected-card-width !important;
+      @supports not (width: $expected-card-width) {
+        $card-width: 90vw;
+        width: $card-width !important;
+      }
+    }
+    app-chess-view {
+      $max-chess-size: max(20rem, min(50vh, max(30rem, 90vw)));
+      width: $max-chess-size;
+      height: $max-chess-size;
+      @supports not (height: $max-chess-size) {
+        $max-chess-size: 90vw;
+        height: $max-chess-size !important;
+        width: $max-chess-size !important;
+      }
+    }
   }
 }
