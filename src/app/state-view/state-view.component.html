@@ -1,4 +1,7 @@
-<app-classifiers-number></app-classifiers-number>
+<label class="pattern-label">{{'pattern' | translate}}</label>
+<mat-select [value]="patternService.selectedPattern | async" (selectionChange)="onPatternChanged($event)">
+  <mat-option *ngFor="let p of patterns" [value]="p">{{p.name | translate}}</mat-option>
+</mat-select>
 <label>{{'globalAccuracy' | translate}}</label>
 <div class="result-value">{{accuracy$ | async| number:"0.2-2" | percent}}</div>
 <div class="buttons">
@@ -10,8 +13,5 @@
     <mat-icon>replay</mat-icon>
   </button>
 </div>
-<label class="pattern-label">{{'pattern' | translate}}</label>
-<mat-select [value]="patternService.selectedPattern | async" (selectionChange)="onPatternChanged($event)">
-  <mat-option *ngFor="let p of patterns" [value]="p">{{p.name | translate}}</mat-option>
-</mat-select>
 <app-settings></app-settings>
+<app-classifiers-number></app-classifiers-number>
