@@ -6,7 +6,7 @@ import java.util.Arrays;
  * 	10 ??? ???
  * 	[2-4] - x-coords
  *  [5-7] - y-coords
- *  
+ *
  * @author qba
  *
  */
@@ -15,16 +15,16 @@ import java.util.Arrays;
 public class Message {
 	static String code_input  = "10";
 	static String code_output = "00";
-	
+
 	char[] msg;
 	int length;
-	
+
 	Classifier byClassifier;
-	
+
 	boolean used = false;
-	
+
 	int age = 0;
-	
+
 	static int coord_len = 3;
 
 	public static String leftPad(String s, int width) {
@@ -35,26 +35,26 @@ public class Message {
 		this.msg = msg;
 		this.length = msg.length;
 	}
-	
+
 	public Message(int x, int y) {
-		String tmp = Message.code_input + Message.leftPad(Integer.toBinaryString(x), Message.coord_len) + 
+		String tmp = Message.code_input + Message.leftPad(Integer.toBinaryString(x), Message.coord_len) +
 			Message.leftPad(Integer.toBinaryString(y), Message.coord_len);
 		this.byClassifier = null;
 		this.msg = tmp.toCharArray();
 	}
-	
+
 	public void print() {
 		System.out.print(this.msg);
 	}
-	
+
 	public boolean isOutput() {
 		return (new String(this.msg)).startsWith(code_output);
 	}
-	
+
 	public String toString() {
 		return new String(this.msg);// + "[ u: " + this.used + "]");
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,4 +74,9 @@ public class Message {
 		Message other = (Message) obj;
 		return Arrays.equals(msg, other.msg);
 	}
+
+  public static void main(String[] args) {
+    Message m = new Message(3,5);
+    System.out.println(m);
+  }
 }

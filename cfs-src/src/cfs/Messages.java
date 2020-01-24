@@ -13,18 +13,17 @@ import java.util.ResourceBundle;
 public class Messages {
 	private static String BUNDLE_NAME = "messages_en"; //$NON-NLS-1$
 //
-//	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-//			.getBundle(BUNDLE_NAME);
+//	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 	static ResourceBundle RESOURCE_BUNDLE = null;
-	
+
 	private Messages() {
 	}
-	
+
 	public static void setBundleName(String bundle) {
 //		try {
-//			
-////			Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(bundle + ".properties")));
-////			RESOURCE_BUNDLE = new PropertyResourceBundle(reader);
+//
+//			Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(bundle + ".properties")));
+//			RESOURCE_BUNDLE = new PropertyResourceBundle(reader);
 //		} catch (FileNotFoundException e) {
 //			System.out.println("There is no such language pack.");
 //		} catch (IOException e) {

@@ -1,0 +1,23 @@
+app-messages-view {
+  table {
+    @mixin column-dim($size) {
+      max-width: #{$size}em;
+      min-width: #{$size}em;
+    }
+    th, td {
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &.mat-column-message {
+        @include column-dim(5.5);
+      }
+
+      &.mat-column-count {
+        @include column-dim(2.5);
+      }
+      &.mat-column-classifiersViews {
+        @include column-dim(14);
+      }
+    }
+  }
+}

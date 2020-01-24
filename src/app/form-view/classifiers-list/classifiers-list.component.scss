@@ -1,0 +1,25 @@
+app-classifiers-list {
+  table {
+    @mixin column-dim($size) {
+      max-width: #{$size}em;
+      min-width: #{$size}em;
+    }
+    th, td {
+      @include column-dim(5.5);
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &.mat-column-id, &.mat-column-age {
+        @include column-dim(3.5);
+      }
+
+      &.mat-column-strength {
+        @include column-dim(4.5);
+      }
+
+      &.mat-column-specifity {
+        @include column-dim(5);
+      }
+    }
+  }
+}

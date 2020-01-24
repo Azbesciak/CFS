@@ -441,7 +441,9 @@ public class CFSdemo extends JFrame implements MouseListener, MouseMotionListene
         board.getComponent(curTileIndex).paint(board.getComponent(curTileIndex).getGraphics());
 
         this.bb.match_compete(classifierList, msgList);
-        this.evaluateEffect(this.getEffect(), c, mouse);
+      double effect = this.getEffect();
+//      System.out.println("efekt " + effect);
+      this.evaluateEffect(effect, c, mouse);
 
         this.ga.execute(classifierList);
 
@@ -525,6 +527,7 @@ public class CFSdemo extends JFrame implements MouseListener, MouseMotionListene
 
 
     public static void main(String[] args) {
+        Messages.setBundleName("messages_pl_ogonki");
         JFrame frame = new CFSdemo();
 //		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();

@@ -11,6 +11,7 @@ public class BB {
 
     int msgAgeThr = 3;
 
+    private ArrayList<Double> values = new ArrayList<>();
     List<Classifier> active = new ArrayList<>();
     List<Classifier> activated = new ArrayList<Classifier>();
     List<Classifier> prevActivated = new ArrayList<Classifier>();
@@ -21,7 +22,14 @@ public class BB {
     public void match_compete(List<Classifier> classifierList, List<Message> msgList) {
         Random rand = new Random();
         List<Message> newMsgs = new ArrayList<>();
-
+        if (values.size() == 64*10) {
+          double sum = 0;
+          for (double v : values) {
+            sum += v;
+          }
+          System.out.println("average " + sum/values.size());
+          values.clear();
+        }
         newMsgs.clear();
 
         active.clear();
@@ -33,6 +41,8 @@ public class BB {
         Iterator<Classifier> it = classifierList.iterator();
         int i = 0;
         double max_strength = 0;
+        int matched = 0;
+        double total = 0;
         while (it.hasNext()) {
             Classifier curClassifier = it.next();
             curClassifier.generatedMsgs.clear();
@@ -44,7 +54,9 @@ public class BB {
             for (Message curMsg : msgList) {
                 //System.out.print("\t"); curMsg.print(); System.out.print(" -> ");
                 Message tmp = curClassifier.match(curMsg);
+                total++;
                 if (tmp != null) {
+                  matched++;
                     tmp.byClassifier = curClassifier;
                     curClassifier.generatedMsgs.add(tmp);
                     //newMsgs.add(tmp);
@@ -59,7 +71,7 @@ public class BB {
             }
             i++;
         }
-
+        values.add(matched/ total);
 //        System.out.println("max strength: " + max_strength);
         it = active.iterator();
         while (it.hasNext()) {

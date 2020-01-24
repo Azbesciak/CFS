@@ -3,8 +3,11 @@ app-table {
 
   .table-container {
     max-height: 15rem;
+    min-height: 15rem;
     overflow: auto;
-
+    tr.mat-header-row {
+      height: 2.5rem;
+    }
     tr.mat-row {
       height: 2rem;
     }
@@ -12,8 +15,14 @@ app-table {
       &:not(:first-of-type) {
         padding-left: 0.25rem;
       }
+      &:first-of-type {
+        padding-left: 1rem;
+      }
       &:not(:last-of-type) {
         padding-right: 0.25rem;
+      }
+      &:last-of-type {
+        padding-right: 1rem;
       }
     }
 
