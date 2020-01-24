@@ -2,4 +2,13 @@ app-state-controls {
   display: grid;
   grid-template-columns: repeat(2, max-content);
   justify-self: flex-start;
+  .start-btn {
+    color: var(--start-color);
+  }
+  .stop-btn {
+    color: var(--stop-color);
+  }
+  .reset-btn {
+    color: var(--reset-color);
+  }
 }
