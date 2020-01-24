@@ -11,10 +11,11 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {SettingsModule} from "../settings/settings.module";
+import { StateControlsComponent } from './state-controls/state-controls.component';
 
 
 @NgModule({
-  declarations: [StateViewComponent, ClassifiersNumberComponent],
+  declarations: [StateViewComponent, ClassifiersNumberComponent, StateControlsComponent],
   exports: [StateViewComponent],
   imports: [
     CommonModule,

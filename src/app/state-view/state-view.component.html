@@ -4,14 +4,10 @@
 </mat-select>
 <label>{{'globalAccuracy' | translate}}</label>
 <div class="result-value">{{accuracy$ | async| number:"0.2-2" | percent}}</div>
-<div class="buttons">
-  <button mat-icon-button (click)="isStarted ? algorithm.stop() : algorithm.start()"
-          [matTooltip]="isStarted ? 'Stop' : 'Start'">
-    <mat-icon>{{isStarted ? "stop" : "play_arrow"}}</mat-icon>
-  </button>
-  <button mat-icon-button (click)="algorithm.reset()" matTooltip="Reset">
-    <mat-icon>replay</mat-icon>
-  </button>
-</div>
+<app-state-controls
+  [isStarted]="isStarted"
+  (isStartedChanged)="startedChanged($event)"
+  (reset)="algorithm.reset()"
+></app-state-controls>
 <app-settings></app-settings>
 <app-classifiers-number></app-classifiers-number>

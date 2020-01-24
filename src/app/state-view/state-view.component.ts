@@ -41,4 +41,11 @@ export class StateViewComponent implements OnInit, OnDestroy {
       this.startSub = null;
     }
   }
+
+  startedChanged(isStarted: boolean) {
+    if (isStarted)
+      this.algorithm.start();
+    else
+      this.algorithm.stop();
+  }
 }

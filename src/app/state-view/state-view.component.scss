@@ -13,9 +13,8 @@ app-state-view {
     }
   }
 
-  .buttons {
+  app-state-controls {
     grid-column: 4;
-    justify-items: flex-start;
   }
 
   mat-select {
