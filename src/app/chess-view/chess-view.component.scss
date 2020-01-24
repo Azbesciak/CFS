@@ -6,8 +6,8 @@ app-chess-view {
   width: $expected-size;
   height: $expected-size;
   @supports not (width: $expected-size) {
-    $max-size: 35rem;
-    $min-size: 25rem;
+    $max-size: 25rem;
+    $min-size: 15rem;
     max-width: $max-size;
     max-height: $max-size;
     min-width: $min-size;

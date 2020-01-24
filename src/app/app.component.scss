@@ -10,6 +10,11 @@ app-root {
   grid-template-rows: 3.5rem max-content auto;
   grid-template-columns: auto 1fr auto 1fr auto;
   grid-gap: 1rem;
+  app-table {
+    .table-container {
+      overflow-x: hidden;
+    }
+  }
 
   label:not(.mat-form-field-label) {
     justify-self: flex-end;
@@ -92,8 +97,6 @@ app-root {
       app-chess-view {
         width: 40vw;
         height: 40vw;
-        max-width: 40rem;
-        max-height: 40rem;
       }
     }
   }
@@ -102,7 +105,7 @@ app-root {
     $template-cols: auto 2.5rem;
     .app-algorithm-config-view {
       @supports not (width: min(10rem, 10%)) {
-        max-width: 20rem;
+        max-width: 30rem;
         width: 20vw;
       }
 
