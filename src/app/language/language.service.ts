@@ -1,6 +1,9 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Title} from "@angular/platform-browser";
+import {flatMap} from "rxjs/operators";
+import {Unsubscribable} from "rxjs";
 
 export interface Language {
   key: string;
@@ -17,9 +20,11 @@ const AVAILABLE_LANGUAGES: Language[] = [
 @Injectable({
   providedIn: "root"
 })
-export class LanguageService {
+export class LanguageService implements OnDestroy {
   readonly allowedLanguages: Language[];
   private _selectedLanguage: Language;
+  private langSub: Unsubscribable;
+
   get selectedLanguage() {
     return this._selectedLanguage;
   }
@@ -30,12 +35,27 @@ export class LanguageService {
       return;
     }
     this._selectedLanguage = language;
-    this.translate.setDefaultLang(language.key);
+    this.translate.use(language.key);
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language.key);
   }
 
-  constructor(private translate: TranslateService, private toast: MatSnackBar) {
+  constructor(
+    private translate: TranslateService,
+    private toast: MatSnackBar,
+    private titleService: Title
+  ) {
     this.allowedLanguages = AVAILABLE_LANGUAGES;
+    this.updateTitleOnLanguageChange();
+    this.selectInitialLanguage();
+  }
+
+  private updateTitleOnLanguageChange() {
+    this.langSub = this.translate.onLangChange.pipe(
+      flatMap(() => this.translate.get("classifiersSystem")),
+    ).subscribe(v => this.titleService.setTitle(v));
+  }
+
+  private selectInitialLanguage() {
     this.selectedLanguage = this.supported(this.getLanguageFromUrl()) ||
       this.supported(LanguageService.getUserDefinedLanguage()) ||
       this.getBrowserLanguageIfSupported() ||
@@ -59,6 +79,13 @@ export class LanguageService {
 
   private supported(language: string) {
     return this.allowedLanguages.find(l => l.key === language);
+  }
+
+  ngOnDestroy(): void {
+    if (this.langSub) {
+      this.langSub.unsubscribe();
+      this.langSub = null;
+    }
   }
 
 }
