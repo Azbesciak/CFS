@@ -1,4 +1,4 @@
-<form (submit)="forceUpdate()" [formGroup]="group" class="grid-row">
+<form (submit)="updateValue()" [formGroup]="group" class="grid-row">
   <label>{{'numberOfClassifiers' | translate}}</label>
   <mat-form-field>
     <input matInput [formControl]="control" type="number" required>

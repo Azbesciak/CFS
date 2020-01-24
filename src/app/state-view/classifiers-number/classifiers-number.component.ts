@@ -42,11 +42,13 @@ export class ClassifiersNumberComponent implements OnInit, OnDestroy {
   }
 
   watchValueChange() {
-    return this.group.valueChanges.subscribe(({value}) => this.algorithm.updateClassifiersNumber(value))
+    return this.group.valueChanges.subscribe(({value}) => this.updateValue(value))
   }
 
-  forceUpdate() {
-    this.algorithm.updateClassifiersNumber(this.control.value);
+  updateValue(value = this.control.value) {
+    if (value < 0) return;
+    value = Math.floor(value);
+    this.algorithm.updateClassifiersNumber(value);
   }
 
   ngOnDestroy(): void {
