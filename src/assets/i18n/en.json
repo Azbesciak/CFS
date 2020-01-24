@@ -48,5 +48,6 @@
   "message": "Message",
   "count": "Count",
   "classifiersViews": "Classifier (count)",
-  "k": "Bid fraction (k)"
+  "k": "Bid fraction (k)",
+  "selectTheme": "Select a theme"
 }

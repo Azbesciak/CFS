@@ -7,6 +7,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {StyleManager} from "./style-manager";
 import {ThemePickerComponent} from "./theme-picker.component";
 import {ThemeStorage} from "./theme-storage";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import {ThemeStorage} from "./theme-storage";
     MatIconModule,
     MatMenuModule,
     MatTooltipModule,
+    TranslateModule,
   ],
   exports: [ThemePickerComponent],
   declarations: [ThemePickerComponent],
