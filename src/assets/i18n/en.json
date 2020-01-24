@@ -47,5 +47,6 @@
   "breedsLimit": "Breeding limit",
   "message": "Message",
   "count": "Count",
-  "classifiersViews": "Classifier (count)"
+  "classifiersViews": "Classifier (count)",
+  "k": "Bid fraction (k)"
 }
