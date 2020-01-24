@@ -29,7 +29,7 @@ function verticalLinesPattern(width: number, height: number): Pattern {
 
 function whitePattern(width: number, height: number): Pattern {
   return {
-    name: "white",
+    name: "zeros",
     value: matrix(width, height, () => Alphabet.Zero)
   }
 }

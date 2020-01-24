@@ -22,7 +22,7 @@
   "custom": "Własny",
   "horizontalLines": "Linie poziome",
   "verticalLines": "Linie pionowe",
-  "white": "Biały",
+  "zeros": "Zera",
   "chess": "Szachownica",
   "allowed": "Dozwolone {{value}}",
   "required": "Wymagane {{value}}",
