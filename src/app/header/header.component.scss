@@ -1,7 +1,7 @@
 app-header {
   display: grid;
-  grid-template-columns: auto 3rem;
-  grid-column-gap: 3rem;
+  grid-template-columns: auto max-content;
+  grid-column-gap: 2rem;
   align-items: center;
   .title {
     font-size: 1.5rem;
@@ -14,7 +14,7 @@ app-header {
       align-self: center;
     }
     app-language-select {
-      width: 3rem;
+      width: 100%;
     }
   }
 }

@@ -1,3 +1,8 @@
-<mat-select [value]="languageService.selectedLanguage" (selectionChange)="languageService.selectedLanguage = $event.value" panelClass="app-language-select">
-  <mat-option *ngFor="let lang of languageService.allowedLanguages" [value]="lang">{{lang | uppercase}}</mat-option>
+<mat-select
+  [value]="languageService.selectedLanguage"
+  (selectionChange)="languageService.selectedLanguage = $event.value"
+  panelClass="app-language-select"
+>
+  <mat-option *ngFor="let lang of languageService.allowedLanguages"
+              [value]="lang">{{lang.name | titlecase}}</mat-option>
 </mat-select>
