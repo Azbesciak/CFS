@@ -36,9 +36,14 @@ export class LanguageService {
 
   constructor(private translate: TranslateService, private toast: MatSnackBar) {
     this.allowedLanguages = AVAILABLE_LANGUAGES;
-    this.selectedLanguage = this.supported(LanguageService.getUserDefinedLanguage()) ||
+    this.selectedLanguage = this.supported(this.getLanguageFromUrl()) ||
+      this.supported(LanguageService.getUserDefinedLanguage()) ||
       this.getBrowserLanguageIfSupported() ||
       this.allowedLanguages[0];
+  }
+
+  private getLanguageFromUrl() {
+    return new URLSearchParams(location.search).get("lang")
   }
 
   private static getUserDefinedLanguage() {
