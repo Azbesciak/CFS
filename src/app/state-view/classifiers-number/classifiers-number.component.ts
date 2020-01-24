@@ -1,6 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {AlgorithmService} from "../../algorithm-worker/algorithm.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Unsubscribable} from "rxjs";
 
 @Component({
   selector: 'app-classifiers-number',
@@ -9,7 +17,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ClassifiersNumberComponent implements OnInit {
+export class ClassifiersNumberComponent implements OnInit, OnDestroy {
+  private subs: Unsubscribable[] = [];
   currentValue = 20;
   control = new FormControl(this.currentValue, [
     Validators.min(0), Validators.pattern(/\d+/), Validators.required
@@ -21,14 +30,27 @@ export class ClassifiersNumberComponent implements OnInit {
 
   ngOnInit() {
     this.algorithm.updateClassifiersNumber(this.currentValue);
-    this.algorithm.classifiers$.subscribe(c => {
+    this.subs.push(this.subscribeClassifiersCountChange());
+    this.subs.push(this.watchValueChange());
+  }
+
+  private subscribeClassifiersCountChange() {
+    return this.algorithm.classifiers$.subscribe(c => {
       this.currentValue = c.length;
       this.changeDetector.markForCheck();
     });
   }
 
-  acceptChange() {
-    this.currentValue = this.control.value;
-    this.algorithm.updateClassifiersNumber(this.currentValue);
+  watchValueChange() {
+    return this.group.valueChanges.subscribe(({value}) => this.algorithm.updateClassifiersNumber(value))
+  }
+
+  forceUpdate() {
+    this.algorithm.updateClassifiersNumber(this.control.value);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
+    this.subs.length = 0;
   }
 }

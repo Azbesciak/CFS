@@ -1,4 +1,4 @@
-<form (submit)="acceptChange()" [formGroup]="group" class="grid-row">
+<form (submit)="forceUpdate()" [formGroup]="group" class="grid-row">
   <label>{{'numberOfClassifiers' | translate}}</label>
   <mat-form-field>
     <input matInput [formControl]="control" type="number" required>
@@ -7,9 +7,6 @@
     <mat-error *ngIf="control.hasError('pattern')">{{'valueIsInvalid' | translate}}</mat-error>
   </mat-form-field>
   <div class="change-container">
-    <button mat-icon-button type="submit" [disabled]="currentValue === control.value" [matTooltip]="'accept' | translate">
-      <mat-icon>done</mat-icon>
-    </button>
     <div class="current-value">({{currentValue}})</div>
   </div>
 </form>
