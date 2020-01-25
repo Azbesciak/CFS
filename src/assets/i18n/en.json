@@ -22,7 +22,7 @@
   "custom": "Custom",
   "horizontalLines": "Horizontal lines",
   "verticalLines": "Vertical lines",
-  "zeros": "Zeros",
+  "ones": "Light",
   "chess": "Chess",
   "allowed": "allowed {{value}}",
   "required": "required {{value}}",
