@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChessViewComponent } from './chess-view.component';
 import { ChessCellComponent } from './chess-cell/chess-cell.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 
@@ -9,7 +11,9 @@ import { ChessCellComponent } from './chess-cell/chess-cell.component';
   declarations: [ChessViewComponent, ChessCellComponent],
   exports: [ChessViewComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatTooltipModule,
+    TranslateModule
   ]
 })
 export class ChessViewModule { }

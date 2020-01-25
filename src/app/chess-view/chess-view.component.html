@@ -1,6 +1,7 @@
 <ng-container *ngFor="let row of chessboard; let x = index">
   <app-chess-cell
     *ngFor="let cell of row; let y = index; trackBy: cellIdentity"
-    [value]="cell" (click)="onCellClicked(cell, x, y, $event)"
+    [value]="cell" (click)="onCellClicked(cell, x, y)"
+    [matTooltip]="'classifierResult' | translate:cell"
   ></app-chess-cell>
 </ng-container>

@@ -1,4 +1,4 @@
-import {breed, primitiveArrayEquals, randomArrayMutate, randomArrayOfValues} from './utils';
+import {breed, primitiveArrayEquals, randomArrayMutate, randomArrayOfValues, round} from './utils';
 import {Message} from './message/message';
 import {ALPHABET, Alphabet} from './alphabet';
 import {IdScheduler} from "./id-scheduler";
@@ -15,10 +15,6 @@ export interface ClassifierView {
 export interface ClassifierModel {
   action: Alphabet[];
   condition: Alphabet[];
-}
-
-function round(value: number) {
-  return Math.round(value * 1e4) / 1e4;
 }
 
 export class Classifier {

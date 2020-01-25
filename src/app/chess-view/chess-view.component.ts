@@ -15,6 +15,7 @@ import {Unsubscribable} from "rxjs";
 import {Pattern} from "../state-view/pattern";
 import {Matrix, matrix} from "../algorithms/matrix";
 import {AlgorithmService} from "../algorithm-worker/algorithm.service";
+import {round} from "../algorithms/utils";
 
 export type Chessboard = ChessCell[][];
 
@@ -33,7 +34,8 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   chessboard: Chessboard = matrix(this.width, this.height, (x, y) => ({
     id: x * this.width + y,
     originalValue: Alphabet.Zero,
-    predictedValue: Alphabet.PassThrough
+    predictedValue: Alphabet.PassThrough,
+    accuracy: 0
   }));
   private currentPattern: Pattern;
   // repeat(1fr, len) does not work in angular 8 - sanitizer .
@@ -69,14 +71,19 @@ export class ChessViewComponent implements OnInit, OnDestroy {
     this.resultSub = this.algorithm.resultUpdates$.subscribe(r =>
       this.applyForEachMatrixCell(
         r.prediction,
-        (current, predictedValue) => ({...current, predictedValue})
+        (current, prediction) => ({
+          id: current.id,
+          originalValue: current.originalValue,
+          predictedValue: prediction.result,
+          accuracy: round(prediction.accuracy)
+        })
       )
     );
   }
 
-  private applyForEachMatrixCell(
-    newValues: Matrix<Alphabet>,
-    mapper: (currentValue: ChessCell, newValue: Alphabet) => ChessCell
+  private applyForEachMatrixCell<T>(
+    newValues: Matrix<T>,
+    mapper: (currentValue: ChessCell, newValue: T) => ChessCell
   ) {
     newValues.forEach((row, x) => {
       const chessRow = this.chessboard[x];
@@ -85,7 +92,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
     this.changeDet.markForCheck();
   }
 
-  onCellClicked(cell: ChessCell, x: number, y: number, $event: MouseEvent) {
+  onCellClicked(cell: ChessCell, x: number, y: number) {
     const pattern = this.currentPattern.value.map(row => row.slice());
     pattern[x][y] = cell.originalValue === Alphabet.Zero ? Alphabet.One : Alphabet.Zero;
     this.patternService.selectCustomPattern(pattern);

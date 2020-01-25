@@ -28,9 +28,21 @@ export interface ClassifiersUpdate {
 
 export interface AlgorithmResultUpdate extends ClassifiersUpdate {
   runId: number;
-  prediction: Matrix<Alphabet>;
+  prediction: Matrix<Prediction>;
   messages: Message[];
   accuracy: number;
+}
+
+export interface Prediction {
+  result: Alphabet;
+  accuracy: number;
+}
+
+export function initialPrediction(): Prediction {
+  return {
+    result: Alphabet.PassThrough,
+    accuracy: 0
+  }
 }
 
 export class AlgorithmExecutor {
@@ -159,17 +171,18 @@ export class AlgorithmExecutor {
     const prediction = this.initialPrediction();
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
+        const pred = prediction[x][y];
         const newMessages = this.bb.matchCompete(classifiers, [this.messageFactory.fromCoords(x, y)]);
         const response = this.getClassifiersAggregatedResponse(newMessages);
-        const quality = this.computeQuality(x, y, response);
-        accuracy += quality;
-        if (quality === 0 && response !== -1) {
+        pred.accuracy = this.computeAccuracy(x, y, response);
+        accuracy += pred.accuracy;
+        if (pred.accuracy === 0 && response !== -1) {
           this.bb.invertedCopy(classifiers);
         }
-        this.bb.payCurrentClassifiers(quality);
+        this.bb.payCurrentClassifiers(pred.accuracy);
         this.ga.execute(classifiers);
         messages.push(...newMessages);
-        prediction[x][y] = this.getClassifiersPrediction(response);
+        pred.result = this.getClassifiersPrediction(response);
       }
     }
     this.classifiers = classifiers;
@@ -184,7 +197,7 @@ export class AlgorithmExecutor {
   }
 
   private initialPrediction() {
-    return matrix(this.width, this.height, () => Alphabet.PassThrough);
+    return matrix(this.width, this.height, initialPrediction);
   }
 
   private getClassifiersPrediction(fuzzyResponse: number) {
@@ -192,7 +205,7 @@ export class AlgorithmExecutor {
     return fuzzyResponse > 0.5 ? Alphabet.One : Alphabet.Zero;
   }
 
-  private computeQuality(x: number, y: number, fuzzyResponse: number) {
+  private computeAccuracy(x: number, y: number, fuzzyResponse: number) {
     if (fuzzyResponse === -1) return 0;
     return this.pattern.value[x][y] === Alphabet.Zero ? (1 - fuzzyResponse) : fuzzyResponse;
   }

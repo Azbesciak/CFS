@@ -49,5 +49,6 @@
   "count": "Liczba",
   "classifiersViews": "Klasyfikator (wystąpienia)",
   "k": "Procent zakładu (k)",
-  "selectTheme": "Wybierz motyw"
+  "selectTheme": "Wybierz motyw",
+  "classifierResult": "Wynik: {{predictedValue}}, dokładność: {{accuracy}}"
 }

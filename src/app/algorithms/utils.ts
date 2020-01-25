@@ -43,3 +43,7 @@ export function primitiveArrayEquals<T>(a1: T[], a2: T[]) {
 export function isNum(value: any): value is number {
   return typeof value === "number";
 }
+
+export function round(value: number) {
+  return Math.round(value * 1e4) / 1e4;
+}

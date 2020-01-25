@@ -49,5 +49,6 @@
   "count": "Count",
   "classifiersViews": "Classifier (count)",
   "k": "Bid fraction (k)",
-  "selectTheme": "Select a theme"
+  "selectTheme": "Select a theme",
+  "classifierResult": "Result: {{predictedValue}}, accuracy: {{accuracy}}"
 }
