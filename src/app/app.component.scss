@@ -33,6 +33,7 @@ app-root {
     width: $expected-width;
     @supports not(width: $expected-width) {
       width: 100%;
+      max-width: 30rem;
     }
   }
 
@@ -102,7 +103,7 @@ app-root {
     }
   }
 
-  @media screen and (max-width: 82.5rem) and (min-width: 71.25rem) {
+  @media screen and (max-width: 87rem) and (min-width: 71.25rem) {
     $template-cols: auto 2.5rem;
     .app-algorithm-config-view {
       @supports not (width: min(10rem, 10%)) {
