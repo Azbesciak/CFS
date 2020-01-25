@@ -54,7 +54,7 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
     }
     let first: Classifier = classifiers[0];
     let second: Classifier;
-    for (let i = 1; i < classifiers.length && kb < this.cfg.breedsLimit && classifiers.length < this.cfg.maxClassifiers; i++) {
+    for (let i = 1; i < classifiers.length && kb < this.cfg.breedingLimit && classifiers.length < this.cfg.maxClassifiers; i++) {
       second = classifiers[i];
       let j = 0;
       let candidate: Classifier;
