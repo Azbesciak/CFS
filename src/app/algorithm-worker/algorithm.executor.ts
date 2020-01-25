@@ -9,6 +9,7 @@ import {MessageFactory} from "../algorithms/message/message.factory";
 import {Matrix, matrix} from "../algorithms/matrix";
 import {Alphabet} from "../algorithms/alphabet";
 import {Message} from "../algorithms/message/message";
+import {isBoolean} from "util";
 
 export interface AlgorithmExecutorMessage {
   classifiersNumber?: number;
@@ -20,18 +21,29 @@ export interface AlgorithmExecutorMessage {
   pattern?: Pattern;
   msgCfg?: MessageConfigProvider;
   computationDelay?: number;
+  iterative?: boolean;
 }
 
 export interface ClassifiersUpdate {
   classifiers: Classifier[];
 }
 
-export interface AlgorithmResultUpdate extends ClassifiersUpdate {
-  runId: number;
-  prediction: Matrix<Prediction>;
+export interface AlgorithmResponse extends ClassifiersUpdate {
   messages: Message[];
   accuracy: number;
 }
+
+export interface AlgorithmFullResultUpdate extends AlgorithmResponse {
+  prediction: Matrix<Prediction>;
+}
+
+export interface AlgorithmSingleResultUpdate extends AlgorithmResponse {
+  x: number,
+  y: number,
+  prediction: Prediction;
+}
+
+export type AlgorithmResultUpdate = (AlgorithmFullResultUpdate | AlgorithmSingleResultUpdate)
 
 export interface Prediction {
   result: Alphabet;
@@ -56,8 +68,11 @@ export class AlgorithmExecutor {
   private messageFactory: MessageFactory = null;
   private pattern: Pattern = null;
   private computationDelay: number = 50;
-  private step: number = this.computationDelay;
+  private step: number = 10;
+  private currentIndex: number = 0;
   private recentInvocation: number;
+  private isIterative: boolean = true;
+
   constructor(
     private readonly width: number,
     private readonly height: number,
@@ -89,6 +104,9 @@ export class AlgorithmExecutor {
     if (message.newClassifier) {
       this.addNewClassifier(message.newClassifier);
     }
+    if (isBoolean(message.iterative)) {
+      this.isIterative = message.iterative;
+    }
     if (typeof message.running === "boolean") {
       this.isRunning = message.running;
       if (message.running) this.fireComputation();
@@ -96,6 +114,7 @@ export class AlgorithmExecutor {
   }
 
   private fireComputation() {
+    this.currentIndex = 0;
     this.recentInvocation = new Date().getTime();
     this.run(++this.runningId);
   }
@@ -121,11 +140,11 @@ export class AlgorithmExecutor {
       {length: this.expectedClassifiersNumber},
       () => this.messageFactory.random()
     );
+    this.currentIndex = 0;
     this.messageConsumer({
       classifiers: this.classifiers,
       prediction: this.initialPrediction(),
       accuracy: 0,
-      runId: this.runningId,
       messages: []
     })
   }
@@ -159,41 +178,64 @@ export class AlgorithmExecutor {
       const currentTime = new Date().getTime();
       if (currentTime - this.recentInvocation >= this.computationDelay) {
         this.recentInvocation = currentTime;
-        this.compute(runId);
+        if (this.isIterative)
+          this.makeSingleIteration();
+        else
+          this.makeFullRun();
       }
     }, this.step);
   }
 
-  private compute(runId: number) {
+  private makeFullRun() {
     let classifiers = this.classifiers.slice();
-    const messages = [];
-    let accuracy = 0;
-    const prediction = this.initialPrediction();
+    const allMessages = [];
+    let totalAccuracy = 0;
+    const totalPrediction = matrix(this.width, this.height, () => null);
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
-        const pred = prediction[x][y];
-        const newMessages = this.bb.matchCompete(classifiers, [this.messageFactory.fromCoords(x, y)]);
-        const response = this.getClassifiersAggregatedResponse(newMessages);
-        pred.accuracy = this.computeAccuracy(x, y, response);
-        accuracy += pred.accuracy;
-        if (pred.accuracy === 0 && response !== -1) {
-          this.bb.invertedCopy(classifiers);
-        }
-        this.bb.payCurrentClassifiers(pred.accuracy);
-        this.ga.execute(classifiers);
-        messages.push(...newMessages);
-        pred.result = this.getClassifiersPrediction(response);
+        const {messages, accuracy, prediction} = this.predictForCoordinates(classifiers, x, y);
+        totalAccuracy += accuracy;
+        allMessages.push(...messages);
+        totalPrediction[x][y] = prediction;
       }
     }
     this.classifiers = classifiers;
     const message = {
-      runId,
+      prediction: totalPrediction,
+      classifiers,
+      messages: allMessages,
+      accuracy: totalAccuracy / (this.width * this.height)
+    };
+    this.messageConsumer(message);
+  }
+
+  private makeSingleIteration() {
+    const classifiers = this.classifiers.slice();
+    const x = Math.floor(this.currentIndex / this.width);
+    const y = this.currentIndex % this.height;
+    this.currentIndex = ++this.currentIndex % (this.height * this.width);
+    const {messages, accuracy, prediction} = this.predictForCoordinates(classifiers, x, y);
+    this.classifiers = classifiers;
+    const message = {
+      x, y,
       prediction,
       classifiers,
       messages,
-      accuracy: accuracy / (this.width * this.height)
+      accuracy
     };
     this.messageConsumer(message);
+  }
+
+  private predictForCoordinates(classifiers: Classifier[], x: number, y: number) {
+    const messages = this.bb.matchCompete(classifiers, [this.messageFactory.fromCoords(x, y)]);
+    const response = this.getClassifiersAggregatedResponse(messages);
+    const accuracy = this.computeAccuracy(x, y, response);
+    if (accuracy === 0 && response !== -1) this.bb.invertedCopy(classifiers);
+    this.bb.payCurrentClassifiers(accuracy);
+    this.ga.execute(classifiers);
+    const result = this.getClassifiersPrediction(response);
+    const prediction = {result, accuracy};
+    return {messages, accuracy, prediction};
   }
 
   private initialPrediction() {

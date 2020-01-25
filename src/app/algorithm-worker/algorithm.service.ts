@@ -7,8 +7,9 @@ import {MessageConfigProvider} from "../algorithm-config-view/message-config.pro
 import {AlgorithmWorkerProxy} from "./algorithm-worker-proxy.service";
 import {filter, map, shareReplay} from "rxjs/operators";
 import {Message} from "../algorithms/message/message";
-import {AlgorithmResultUpdate} from "./algorithm.executor";
+import {AlgorithmFullResultUpdate, AlgorithmResultUpdate, AlgorithmSingleResultUpdate} from "./algorithm.executor";
 import {PatternService} from "../state-view/pattern.service";
+import {isArray, isNum} from "../algorithms/utils";
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +20,8 @@ export class AlgorithmService implements OnDestroy {
   private readonly _isRunning$ = new BehaviorSubject<boolean>(false);
   readonly isStarted$ = this._isRunning$.asObservable();
   readonly classifiers$: Observable<Classifier[]>;
-  readonly resultUpdates$: Observable<AlgorithmResultUpdate>;
+  readonly resultUpdates$: Observable<AlgorithmFullResultUpdate>;
+  readonly singleResultUpdates$: Observable<AlgorithmSingleResultUpdate>;
   readonly messages$: Observable<Message[]>;
   private readonly worker: AlgorithmWorkerProxy;
   private patternSub: Unsubscribable;
@@ -30,10 +32,12 @@ export class AlgorithmService implements OnDestroy {
   ) {
     this.worker = new AlgorithmWorkerProxy();
     this.worker.postMessage({msgCfg: messageConfigProvider});
-    this.resultUpdates$ = this.getResultUpdates$();
+    const resultUpdates = this.getResultUpdates$();
+    this.resultUpdates$ = this.getFullResultUpdates(resultUpdates);
+    this.singleResultUpdates$ = this.getSingleResultUpdate(resultUpdates);
     this.patternSub = this.patternService.selectedPattern.subscribe(p => this.worker.postMessage({pattern: p}));
     this.classifiers$ = this.makeClassifiersStream();
-    this.messages$ = this.makeMessagesStream();
+    this.messages$ = this.makeMessagesStream(resultUpdates);
   }
 
   private getResultUpdates$() {
@@ -42,8 +46,20 @@ export class AlgorithmService implements OnDestroy {
     );
   }
 
-  private makeMessagesStream() {
-    return cache(this.resultUpdates$.pipe(map(v => v.messages)));
+  private getFullResultUpdates(updates: Observable<AlgorithmResultUpdate>) {
+    return cache(updates.pipe(
+      filter(u => isArray((u as AlgorithmFullResultUpdate).prediction))
+    )) as Observable<AlgorithmFullResultUpdate>
+  }
+
+  private getSingleResultUpdate(updates: Observable<any>) {
+    return cache(updates.pipe(
+      filter(u => isNum((u as AlgorithmSingleResultUpdate).x))
+    )) as Observable<AlgorithmSingleResultUpdate>
+  }
+
+  private makeMessagesStream(results: Observable<AlgorithmResultUpdate>) {
+    return cache(results.pipe(map(v => v.messages)));
   }
 
   private makeClassifiersStream() {

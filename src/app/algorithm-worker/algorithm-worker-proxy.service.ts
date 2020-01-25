@@ -3,7 +3,7 @@ import {filter, shareReplay} from "rxjs/operators";
 import {
   AlgorithmExecutor,
   AlgorithmExecutorMessage,
-  AlgorithmResultUpdate,
+  AlgorithmResponse,
   ClassifiersUpdate
 } from "./algorithm.executor";
 import {environment} from "../../environments/environment";
@@ -12,7 +12,7 @@ type AlgorithmWorker = AlgorithmExecutor | Worker
 
 export class AlgorithmWorkerProxy {
   private readonly worker: AlgorithmWorker;
-  private readonly _resultUpdates$ = new BehaviorSubject<AlgorithmResultUpdate | ClassifiersUpdate>(null);
+  private readonly _resultUpdates$ = new BehaviorSubject<AlgorithmResponse | ClassifiersUpdate>(null);
   readonly resultUpdates$ = this._resultUpdates$.pipe(filter(v => !!v), shareReplay(1));
 
   constructor() {
