@@ -4,11 +4,12 @@ app-root {
   align-items: center;
   justify-items: center;
   grid-template-areas:
-    ". header header header ."
-    ". settings state form ."
-    ". settings chess form .";
+    "header header header"
+    "settings state form"
+    "settings chess form";
   grid-template-rows: 3.5rem max-content auto;
-  grid-template-columns: auto 1fr auto 1fr auto;
+  grid-template-columns: 1fr auto 1fr;
+  justify-content: space-around;
   grid-gap: 1rem;
   app-table {
     .table-container {
