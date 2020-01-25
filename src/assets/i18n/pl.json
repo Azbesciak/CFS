@@ -44,7 +44,7 @@
   "winners": "Liczba zwyciężców",
   "msgAgeThreshold": "Maksymalny wiek wiadomości",
   "computationDelay": "Czas między iteracjami algorytmu",
-  "breedsLimit": "Limit rozmnożeń",
+  "breedingLimit": "Limit rozmnożeń",
   "message": "Wiadomość",
   "count": "Liczba",
   "classifiersViews": "Klasyfikator (wystąpienia)",
