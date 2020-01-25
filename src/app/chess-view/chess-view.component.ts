@@ -27,8 +27,7 @@ export type Chessboard = ChessCell[][];
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChessViewComponent implements OnInit, OnDestroy {
-  private patternSub: Unsubscribable;
-  private resultSub: Unsubscribable;
+  private subs: Unsubscribable[] = [];
   height = environment.chess.height;
   width = environment.chess.width;
   chessboard: Chessboard = matrix(this.width, this.height, (x, y) => ({
@@ -55,20 +54,21 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeToPatternChange();
     this.subscribeToPrediction();
+    this.subscribeSingleValueUpdate();
   }
 
   private subscribeToPatternChange() {
-    this.patternSub = this.patternService.selectedPattern.subscribe(p => {
+    this.subs.push(this.patternService.selectedPattern.subscribe(p => {
       this.currentPattern = p;
       this.applyForEachMatrixCell(
         p.value,
         (current, originalValue) => ({...current, originalValue})
       );
-    });
+    }));
   }
 
   private subscribeToPrediction() {
-    this.resultSub = this.algorithm.resultUpdates$.subscribe(r =>
+    this.subs.push(this.algorithm.resultUpdates$.subscribe(r =>
       this.applyForEachMatrixCell(
         r.prediction,
         (current, prediction) => ({
@@ -78,7 +78,17 @@ export class ChessViewComponent implements OnInit, OnDestroy {
           accuracy: round(prediction.accuracy)
         })
       )
-    );
+    ));
+  }
+
+  private subscribeSingleValueUpdate() {
+    this.subs.push(this.algorithm.singleResultUpdates$.subscribe(r => {
+      const {id, originalValue} = this.chessboard[r.x][r.y];
+      this.chessboard[r.x][r.y] = {
+        id, originalValue, accuracy: r.accuracy, predictedValue: r.prediction.result
+      };
+      this.changeDet.markForCheck();
+    }))
   }
 
   private applyForEachMatrixCell<T>(
@@ -99,14 +109,8 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.patternSub) {
-      this.patternSub.unsubscribe();
-      this.patternSub = null;
-    }
-    if (this.resultSub) {
-      this.resultSub.unsubscribe();
-      this.resultSub = null;
-    }
+    this.subs.forEach(s => s.unsubscribe());
+    this.subs = [];
   }
 
 }

@@ -12,6 +12,7 @@ export interface Config {
   },
   computation: {
     delay: ValueConfig,
+    iterative: boolean,
     enableWorker: boolean;
   }
 }
@@ -24,11 +25,12 @@ export function defaultConfig(): Config {
     },
     computation: {
       enableWorker: true,
+      iterative: true,
       delay: {
         current: 50,
-        min: 50,
+        min: 10,
         max: 5000,
-        step: 50
+        step: 10
       }
     }
   }
