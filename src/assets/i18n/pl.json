@@ -33,7 +33,7 @@
   "valueTooLong": "Zbyt wiele znaków",
   "accept": "Zatwierdź",
   "add": "Dodaj",
-  "outPercentage": "Stopień utrzymanych klasyfikatorów",
+  "outPercentage": "Stopień klasyfikatorów głosujących",
   "elitism": "Elitaryzm",
   "strengthThreshold": "Próg siły",
   "mutationProbability": "Prawdopodobieństwo mutacji",
