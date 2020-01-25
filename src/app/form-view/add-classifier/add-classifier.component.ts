@@ -25,6 +25,8 @@ export class AddClassifierComponent implements OnInit {
   form: FormGroup;
   conditionControl: FormControl;
   actionControl: FormControl;
+  private focusIn: boolean = false;
+  private outTimeout;
 
   constructor(
     private messagesFactory: MessageConfigProvider,
@@ -61,5 +63,29 @@ export class AddClassifierComponent implements OnInit {
     this.form.markAsPristine();
     this.actionControl.setErrors(null);
     this.conditionControl.setErrors(null);
+  }
+
+  onFocus() {
+    clearTimeout(this.outTimeout);
+    if (this.focusIn) return;
+    Object.values(this.form.controls).forEach(v => {
+      if (!v.value) {
+        v.reset(v.value, {emitEvent: false});
+      } else {
+        v.updateValueAndValidity({onlySelf: false, emitEvent: true});
+      }
+    });
+    this.focusIn = true;
+  }
+
+  onFocusOut() {
+    this.outTimeout = setTimeout(() => {
+      this.focusIn = false;
+      if (!this.actionControl.errors && !this.conditionControl.errors) return;
+      this.form.reset(this.form.value);
+      this.form.markAsPristine();
+      this.actionControl.setErrors(null);
+      this.conditionControl.setErrors(null);
+    })
   }
 }
