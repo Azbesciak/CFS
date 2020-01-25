@@ -32,25 +32,6 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
     this.makeAsExternalOutput(classifiers, outNo);
   }
 
-  private makeAsExternalOutput(classifiers: Classifier[], outNo: number) {
-    const maxOutNo = Math.floor(classifiers.length * this.cfg.outPercentage);
-    for (let i = classifiers.length - 1; i >= 0 && outNo < maxOutNo; i--) {
-      const classifier = classifiers[i];
-      if (classifier.isOutput()) {
-        continue
-      }
-      classifier.asOutput();
-      ++outNo;
-    }
-  }
-
-  private mutateClassifiers(classifiers: Classifier[]) {
-    for (let i = Math.floor(classifiers.length * this.cfg.elitism); i < classifiers.length; i++) {
-      if (Math.random() < this.cfg.mutationProbability)
-        classifiers[i].mutate(this.cfg.classifierMutationProbability);
-    }
-  }
-
   private removeClassifiersWithToLowStrength(classifiers: Classifier[]) {
     let outNo = 0;
     for (let i = classifiers.length - 1; i >= 0 && classifiers.length > 2; i--) {
@@ -100,6 +81,25 @@ export class GeneticAlgorithm extends Algorithm<GeneticAlgorithmCfg> {
       }
     }
     return breed;
+  }
+
+  private mutateClassifiers(classifiers: Classifier[]) {
+    for (let i = Math.floor(classifiers.length * this.cfg.elitism); i < classifiers.length; i++) {
+      if (Math.random() < this.cfg.mutationProbability)
+        classifiers[i].mutate(this.cfg.classifierMutationProbability);
+    }
+  }
+
+  private makeAsExternalOutput(classifiers: Classifier[], outNo: number) {
+    const maxOutNo = Math.floor(classifiers.length * this.cfg.outPercentage);
+    for (let i = classifiers.length - 1; i >= 0 && outNo < maxOutNo; i--) {
+      const classifier = classifiers[i];
+      if (classifier.isOutput()) {
+        continue
+      }
+      classifier.asOutput();
+      ++outNo;
+    }
   }
 
 }
