@@ -43,7 +43,7 @@
   "bidTax": "Bid tax",
   "winners": "Number of winners",
   "msgAgeThreshold": "Max message age",
-  "computationDelay": "Computations delay",
+  "computationDelay": "Time between algorithm's iterations",
   "breedsLimit": "Breeding limit",
   "message": "Message",
   "count": "Count",
