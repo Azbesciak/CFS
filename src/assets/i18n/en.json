@@ -33,7 +33,7 @@
   "integerValueRequired": "Integer value required",
   "accept": "Accept",
   "add": "Add",
-  "outPercentage": "Degree of maintained classifiers",
+  "outPercentage": "Degree of voting classifiers",
   "elitism": "Elitism",
   "strengthThreshold": "Strength threshold",
   "mutationProbability": "Mutation probability",
