@@ -16,7 +16,7 @@ function horizontalLinesPattern(width: number, height: number): Pattern {
 function halfByHalfPattern(width: number, height: number): Pattern {
   return {
     name: "halfByHalf",
-    value: matrix(width, height, x => x > height / 2 ? Alphabet.Zero : Alphabet.One)
+    value: matrix(width, height, x => x >= height / 2 ? Alphabet.Zero : Alphabet.One)
   }
 }
 
