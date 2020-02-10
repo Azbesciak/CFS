@@ -8,13 +8,13 @@
   "action": "Akcja",
   "condition": "Warunek",
   "strength": "Siła",
-  "specifity": "Dokładność",
+  "specifity": "Specyficzność",
   "lived": "Wiek",
   "state": "Stan",
   "geneticAlgorithm": "Algorytm Genetyczny",
   "bucketBrigade": "Bucket Brigade",
-  "globalAccuracy": "Globalna dokładność",
-  "pattern": "Wzorzec",
+  "globalAccuracy": "Globalna trafność",
+  "pattern": "Wzorzec docelowy",
   "valueMustBePositive": "Wartość musi być dodatnia",
   "valueIsRequired": "Wartość wymagana",
   "valueIsInvalid": "Nieprawidłowa wartość",
@@ -40,7 +40,7 @@
   "classifierMutationProbability": "Prawdopodobieństwo mutacji klasyfikatora",
   "maxClassifiers": "Limit klasyfikatorów",
   "lifeTax": "Podatek istnienia",
-  "bidTax": "Podatek zakładu",
+  "bidTax": "Udział wpłaty",
   "winners": "Liczba zwyciężców",
   "msgAgeThreshold": "Maksymalny wiek wiadomości",
   "computationDelay": "Czas między iteracjami algorytmu",
@@ -50,5 +50,5 @@
   "classifiersViews": "Klasyfikator (wystąpienia)",
   "k": "Procent zakładu (k)",
   "selectTheme": "Wybierz motyw",
-  "classifierResult": "Wynik: {{predictedValue}}, dokładność: {{accuracy}}"
+  "classifierResult": "Wynik: {{predictedValue}}, trafność: {{accuracy}}"
 }
