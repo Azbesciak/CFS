@@ -44,6 +44,7 @@ app-root {
 
   app-chess-view {
     grid-area: chess;
+    align-self: flex-start;
   }
 
   .app-form-view {
