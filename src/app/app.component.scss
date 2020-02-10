@@ -17,7 +17,7 @@ app-root {
     }
   }
 
-  label:not(.mat-form-field-label) {
+  label:not(.mat-form-field-label):not(.computation-label) {
     justify-self: flex-end;
     text-align: right;
   }

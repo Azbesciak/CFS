@@ -1,0 +1,31 @@
+app-computation-speed {
+  display: grid;
+  grid-template-areas:
+    "label label label"
+    "slow slider fast";
+  grid-column-gap: .5em;
+
+  .computation-label {
+    justify-self: center;
+    text-align: center;
+    align-self: center;
+  }
+
+  grid-template-columns: 1fr 2fr 1fr;
+
+  .computation-speed {
+    grid-area: label;
+  }
+
+  .slow-computation {
+    grid-area: slow;
+  }
+
+  .fast-computation {
+    grid-area: fast;
+  }
+
+  .mat-slider {
+    grid-area: slider;
+  }
+}

@@ -1,0 +1,7 @@
+<label class="computation-speed computation-label">{{"computationSpeed" | translate}}</label>
+<label class="slow-computation computation-label">{{"slow" | translate}}</label>
+<mat-slider
+  [min]="settings.min" [max]="settings.max"
+  [formControl]="control" color="primary" [step]="settings.step"
+></mat-slider>
+<label class="fast-computation computation-label">{{'fast' | translate}}</label>
