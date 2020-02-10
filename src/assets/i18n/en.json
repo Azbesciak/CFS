@@ -50,5 +50,8 @@
   "classifiersViews": "Classifier (count)",
   "k": "Bid fraction (k)",
   "selectTheme": "Select a theme",
-  "classifierResult": "Result: {{predictedValue}}, accuracy: {{accuracy}}"
+  "classifierResult": "Result: {{predictedValue}}, accuracy: {{accuracy}}",
+  "slow": "Slow",
+  "fast": "Fast",
+  "computationSpeed": "Computation speed"
 }

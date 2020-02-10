@@ -50,5 +50,8 @@
   "classifiersViews": "Klasyfikator (wystąpienia)",
   "k": "Procent zakładu (k)",
   "selectTheme": "Wybierz motyw",
-  "classifierResult": "Wynik: {{predictedValue}}, trafność: {{accuracy}}"
+  "classifierResult": "Wynik: {{predictedValue}}, trafność: {{accuracy}}",
+  "slow": "Wolno",
+  "fast": "Szybko",
+  "computationSpeed": "Prędkość obliczeń"
 }
