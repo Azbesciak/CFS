@@ -14,7 +14,7 @@
   "geneticAlgorithm": "Genetic Algorithm",
   "bucketBrigade": "Bucket Brigade",
   "globalAccuracy": "Global accuracy",
-  "pattern": "Pattern",
+  "pattern": "Target pattern",
   "valueMustBePositive": "Value must be positive",
   "valueIsRequired": "Value is required",
   "valueIsInvalid": "Invalid value",
