@@ -27,6 +27,10 @@ app-state-view {
   app-classifiers-number, app-computation-speed {
     grid-column: 1/5;
   }
+  app-classifiers-number {
+    margin-top: -1.5rem;
+    margin-bottom: -.25rem;
+  }
 }
 
 .mat-option-text {
