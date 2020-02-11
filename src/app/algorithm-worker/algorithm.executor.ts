@@ -67,8 +67,6 @@ export class AlgorithmExecutor {
   private isRunning = false;
   private messageFactory: MessageFactory = null;
   private pattern: Pattern = null;
-  private computationDelay: number = 50;
-  private step: number = 10;
   private currentIndex: number = 0;
   private recentInvocation: number;
   private isIterative: boolean = true;
@@ -76,6 +74,8 @@ export class AlgorithmExecutor {
   constructor(
     private readonly width: number,
     private readonly height: number,
+    private refreshStep: number = 10,
+    private computationDelay: number = 50,
     private readonly messageConsumer: (mes: AlgorithmResultUpdate | ClassifiersUpdate) => void
   ) {
   }
@@ -183,7 +183,7 @@ export class AlgorithmExecutor {
         else
           this.makeFullRun();
       }
-    }, this.step);
+    }, this.refreshStep);
   }
 
   private makeFullRun() {

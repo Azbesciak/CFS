@@ -6,7 +6,9 @@ import {AlgorithmExecutor} from "./algorithm.executor";
 const worker = new AlgorithmExecutor(
   environment.chess.width,
   environment.chess.height,
-    m => postMessage(m)
+  environment.computation.delay.step,
+  environment.computation.delay.current,
+  m => postMessage(m)
 );
 
 addEventListener('message', ({data}) => worker.postMessage(data));

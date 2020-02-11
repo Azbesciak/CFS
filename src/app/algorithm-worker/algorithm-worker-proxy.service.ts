@@ -23,6 +23,8 @@ export class AlgorithmWorkerProxy {
       this.worker = new AlgorithmExecutor(
         environment.chess.width,
         environment.chess.height,
+        environment.computation.delay.step,
+        environment.computation.delay.current,
         res => this._resultUpdates$.next(res)
       );
     }
