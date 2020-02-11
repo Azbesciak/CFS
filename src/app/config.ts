@@ -14,7 +14,8 @@ export interface Config {
     delay: ValueConfig,
     iterative: boolean,
     enableWorker: boolean;
-  }
+  },
+  listThrottleTime: number
 }
 
 export function defaultConfig(): Config {
@@ -32,6 +33,7 @@ export function defaultConfig(): Config {
         max: 1000,
         step: 1
       }
-    }
+    },
+    listThrottleTime: 50
   }
 }
