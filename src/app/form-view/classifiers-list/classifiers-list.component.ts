@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {Classifier, ClassifierView} from "../../algorithms/classifier";
+import {CustomAction} from "../../ui-utils/table/table.component";
 
 @Component({
   selector: 'app-classifiers-list',
@@ -16,6 +17,14 @@ export class ClassifiersListComponent {
     this.classifiersViews = (classifiers || []).map(v => v.view);
   }
 
+  @Output()
+  classifierRemoved = new EventEmitter<number>();
+
   classifiersViews: ClassifierView[] = [];
 
+  removeAction: CustomAction<ClassifierView> = {
+    action: row => this.classifierRemoved.next(row.id),
+    label: "delete",
+    icon: "close"
+  }
 }

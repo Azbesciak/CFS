@@ -10,10 +10,12 @@ import {Matrix, matrix} from "../algorithms/matrix";
 import {Alphabet} from "../algorithms/alphabet";
 import {Message} from "../algorithms/message/message";
 import {isBoolean} from "util";
+import {isNum} from "../algorithms/utils";
 
 export interface AlgorithmExecutorMessage {
   classifiersNumber?: number;
   newClassifier?: ClassifierModel;
+  removeClassifier?: number;
   reset?: boolean;
   running?: boolean;
   gaCfg?: GeneticAlgorithmCfg;
@@ -103,6 +105,9 @@ export class AlgorithmExecutor {
     }
     if (message.newClassifier) {
       this.addNewClassifier(message.newClassifier);
+    }
+    if (isNum(message.removeClassifier)) {
+      this.removeClassifier(message.removeClassifier);
     }
     if (isBoolean(message.iterative)) {
       this.isIterative = message.iterative;
@@ -275,6 +280,11 @@ export class AlgorithmExecutor {
 
   private addNewClassifier(newClassifier: ClassifierModel) {
     this.classifiers.push(Classifier.newInstanceFrom(newClassifier));
+    this.messageConsumer({classifiers: this.classifiers});
+  }
+
+  private removeClassifier(classifierId: number) {
+    this.classifiers = this.classifiers.filter(c => c.id !== classifierId);
     this.messageConsumer({classifiers: this.classifiers});
   }
 }

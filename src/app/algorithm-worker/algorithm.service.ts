@@ -82,6 +82,10 @@ export class AlgorithmService implements OnDestroy {
     this.worker.postMessage({newClassifier: newClassifier as any});
   }
 
+  removeClassifier(classifierId: number) {
+    this.worker.postMessage({removeClassifier: classifierId});
+  }
+
   updateClassifiersNumber(classifiersNumber: number) {
     this.worker.postMessage({classifiersNumber});
   }

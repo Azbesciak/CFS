@@ -22,6 +22,10 @@ export class FormViewComponent {
   onClassifierAdded(newClassifier: Classifier) {
     this.algorithm.addClassifier(newClassifier);
   }
+
+  onClassifierRemoved(classifierId: number) {
+    this.algorithm.removeClassifier(classifierId);
+  }
 }
 
 function throttle<T>(observable: Observable<T>) {

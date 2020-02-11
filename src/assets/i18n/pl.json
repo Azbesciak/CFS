@@ -53,5 +53,6 @@
   "classifierResult": "Wynik: {{predictedValue}}, trafność: {{accuracy}}",
   "slow": "Wolno",
   "fast": "Szybko",
-  "computationSpeed": "Prędkość obliczeń"
+  "computationSpeed": "Prędkość obliczeń",
+  "delete": "Usuń"
 }

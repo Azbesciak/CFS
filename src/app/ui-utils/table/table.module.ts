@@ -6,6 +6,8 @@ import {NoContentModule} from "../no-content/no-content.component";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {TranslateModule} from "@ngx-translate/core";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -20,7 +22,9 @@ import {TranslateModule} from "@ngx-translate/core";
     NoContentModule,
     MatTableModule,
     MatSortModule,
-    TranslateModule
+    TranslateModule,
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class TableModule { }
