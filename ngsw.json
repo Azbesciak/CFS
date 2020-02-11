@@ -1,0 +1,100 @@
+{
+  "configVersion": 1,
+  "timestamp": 1581452865869,
+  "index": "https://azbesciak.github.io/CFS/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://azbesciak.github.io/CFS/0-es2015.e236b7b49492d2bcb88b.worker.js",
+        "https://azbesciak.github.io/CFS/favicon.ico",
+        "https://azbesciak.github.io/CFS/index.html",
+        "https://azbesciak.github.io/CFS/main-es2015.ceb77411dc5602b142c1.js",
+        "https://azbesciak.github.io/CFS/main-es5.ceb77411dc5602b142c1.js",
+        "https://azbesciak.github.io/CFS/manifest.webmanifest",
+        "https://azbesciak.github.io/CFS/polyfills-es2015.2987770fde9daa1d8a2e.js",
+        "https://azbesciak.github.io/CFS/polyfills-es5.ef4b1e1fc703b3ff76e3.js",
+        "https://azbesciak.github.io/CFS/runtime-es2015.edb2fcf2778e7bf1d426.js",
+        "https://azbesciak.github.io/CFS/runtime-es5.edb2fcf2778e7bf1d426.js",
+        "https://azbesciak.github.io/CFS/styles.3cbcc84a2625a9e94b1b.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://azbesciak.github.io/CFS/assets/deeporange-green.css",
+        "https://azbesciak.github.io/CFS/assets/deeppurple-amber.css",
+        "https://azbesciak.github.io/CFS/assets/i18n/en.json",
+        "https://azbesciak.github.io/CFS/assets/i18n/pl.json",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-128x128.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-144x144.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-152x152.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-192x192.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-384x384.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-512x512.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-72x72.png",
+        "https://azbesciak.github.io/CFS/assets/icons/icon-96x96.png",
+        "https://azbesciak.github.io/CFS/assets/indigo-pink.css",
+        "https://azbesciak.github.io/CFS/assets/orange-lime.css",
+        "https://azbesciak.github.io/CFS/assets/pink-bluegrey.css",
+        "https://azbesciak.github.io/CFS/assets/purple-green.css",
+        "https://azbesciak.github.io/CFS/assets/theme-demo-icon.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://azbesciak.github.io/CFS/0-es2015.e236b7b49492d2bcb88b.worker.js": "eadcda7b293e6a4689599a1839953a1602f6f844",
+    "https://azbesciak.github.io/CFS/assets/deeporange-green.css": "d52c206c8c6b7fd437f780d1989f0f9e94969332",
+    "https://azbesciak.github.io/CFS/assets/deeppurple-amber.css": "f421b18272d02ed93ca2035381a68dae1cc1224a",
+    "https://azbesciak.github.io/CFS/assets/i18n/en.json": "46a54cb31cffda50d3d729b3cb4ae4dbaf9fc627",
+    "https://azbesciak.github.io/CFS/assets/i18n/pl.json": "018c18b30ea1eb26861a8703c90c82cd7ee30c33",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://azbesciak.github.io/CFS/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://azbesciak.github.io/CFS/assets/indigo-pink.css": "988c3e1fa0b10b0ee4007e77bc5b34295a202a02",
+    "https://azbesciak.github.io/CFS/assets/orange-lime.css": "1577047865ba51e1f2e01cf5414a99afa828ad1c",
+    "https://azbesciak.github.io/CFS/assets/pink-bluegrey.css": "e0d5087fc88d0572285f667a9fa4c59e6c395336",
+    "https://azbesciak.github.io/CFS/assets/purple-green.css": "501d558d579f7508815d9c3f8500d0c51708153e",
+    "https://azbesciak.github.io/CFS/assets/theme-demo-icon.svg": "8a5c0882ec6c20d7dee9873ae774db3b79a85cc3",
+    "https://azbesciak.github.io/CFS/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "https://azbesciak.github.io/CFS/index.html": "c05c8f848832f13984aec9cc373291290f7f1806",
+    "https://azbesciak.github.io/CFS/main-es2015.ceb77411dc5602b142c1.js": "d214d468d6ded61aed77e1e82d25663bff19672f",
+    "https://azbesciak.github.io/CFS/main-es5.ceb77411dc5602b142c1.js": "c12baeeb8fd442216f16e2b18dcde34f06ac642f",
+    "https://azbesciak.github.io/CFS/manifest.webmanifest": "594b1fcc91a5ab6214fdcbfd2da5ade54e1408a7",
+    "https://azbesciak.github.io/CFS/polyfills-es2015.2987770fde9daa1d8a2e.js": "cf5cbfa9134716054fb479ab21362146cdf1f2ff",
+    "https://azbesciak.github.io/CFS/polyfills-es5.ef4b1e1fc703b3ff76e3.js": "6bff0c03e05bb347d213ad1b3674045eb892d189",
+    "https://azbesciak.github.io/CFS/runtime-es2015.edb2fcf2778e7bf1d426.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://azbesciak.github.io/CFS/runtime-es5.edb2fcf2778e7bf1d426.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://azbesciak.github.io/CFS/styles.3cbcc84a2625a9e94b1b.css": "f102cc5443518cce01c78b0e3998fe403b0e9f86"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
