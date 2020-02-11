@@ -114,7 +114,6 @@ export class AlgorithmExecutor {
   }
 
   private fireComputation() {
-    this.currentIndex = 0;
     this.recentInvocation = new Date().getTime();
     this.run(++this.runningId);
   }
