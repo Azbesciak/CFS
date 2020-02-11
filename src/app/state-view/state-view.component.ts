@@ -4,7 +4,7 @@ import {MatSelectChange} from "@angular/material/select";
 import {AlgorithmService} from "../algorithm-worker/algorithm.service";
 import {merge, Observable, of, Unsubscribable} from "rxjs";
 import {Pattern} from "./pattern";
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-state-view',
@@ -28,7 +28,23 @@ export class StateViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.patterns = this.patternService.getAvailablePatterns();
     this.startSub = this.algorithm.isStarted$.subscribe(v => this.isStarted = v);
-    this.accuracy$ = merge(of(0), this.algorithm.resultUpdates$.pipe(map(v => v.accuracy)));
+    this.accuracy$ = this.prepareAccuracyUpdates();
+  }
+
+  private prepareAccuracyUpdates() {
+    const aggregated: number[] = [];
+    return merge(
+      of(0),
+      this.algorithm.resultUpdates$.pipe(map(v => v.accuracy), tap(() => aggregated.length = 0)),
+      this.algorithm.singleResultUpdates$.pipe(map(r => {
+        aggregated.unshift(r.accuracy);
+        if (aggregated.length > this.patternService.maxSize)
+          aggregated.length = this.patternService.maxSize;
+        let avg = 0;
+        for (const v of aggregated) avg += v;
+        return avg / aggregated.length;
+      }))
+    );
   }
 
   onPatternChanged($event: MatSelectChange) {
