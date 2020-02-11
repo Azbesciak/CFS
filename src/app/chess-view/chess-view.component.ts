@@ -30,6 +30,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   private subs: Unsubscribable[] = [];
   height = environment.chess.height;
   width = environment.chess.width;
+  private chessRefresh: any;
   chessboard: Chessboard = matrix(this.width, this.height, (x, y) => ({
     id: x * this.width + y,
     originalValue: Alphabet.Zero,
@@ -87,7 +88,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
       this.chessboard[r.x][r.y] = {
         id, originalValue, accuracy: r.accuracy, predictedValue: r.prediction.result
       };
-      this.changeDet.markForCheck();
+      this.refreshView();
     }))
   }
 
@@ -99,7 +100,12 @@ export class ChessViewComponent implements OnInit, OnDestroy {
       const chessRow = this.chessboard[x];
       row.forEach((value, y) => chessRow[y] = mapper(chessRow[y], value))
     });
-    this.changeDet.markForCheck();
+    this.refreshView();
+  }
+
+  private refreshView() {
+    cancelAnimationFrame(this.chessRefresh);
+    this.chessRefresh = requestAnimationFrame(() => this.changeDet.markForCheck());
   }
 
   onCellClicked(cell: ChessCell, x: number, y: number) {
