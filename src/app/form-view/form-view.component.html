@@ -1,3 +1,3 @@
-<app-classifiers-list [classifiers]="algorithm.classifiers$ | async"></app-classifiers-list>
+<app-classifiers-list [classifiers]="classifiers$ | async"></app-classifiers-list>
 <app-add-classifier (classifierAdded)="onClassifierAdded($event)"></app-add-classifier>
-<app-messages-view [messages]="algorithm.messages$ | async"></app-messages-view>
+<app-messages-view [messages]="messages$ | async"></app-messages-view>

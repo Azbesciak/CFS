@@ -1,6 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {AlgorithmService} from "../algorithm-worker/algorithm.service";
 import {Classifier} from "../algorithms/classifier";
+import {throttleTime} from "rxjs/operators";
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-form-view',
@@ -9,14 +12,18 @@ import {Classifier} from "../algorithms/classifier";
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormViewComponent implements OnInit {
-  constructor(readonly algorithm: AlgorithmService) {
-  }
+export class FormViewComponent {
+  messages$ = throttle(this.algorithm.messages$);
+  classifiers$ = throttle(this.algorithm.classifiers$);
 
-  ngOnInit() {
+  constructor(readonly algorithm: AlgorithmService) {
   }
 
   onClassifierAdded(newClassifier: Classifier) {
     this.algorithm.addClassifier(newClassifier);
   }
+}
+
+function throttle<T>(observable: Observable<T>) {
+  return observable.pipe(throttleTime(environment.listThrottleTime));
 }
