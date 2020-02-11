@@ -11,26 +11,24 @@ import {LanguageModule} from "./language/language.module";
 import {AlgorithmConfigViewModule} from "./algorithm-config-view/algorithm-config-view.module";
 import {StateViewModule} from "./state-view/state-view.module";
 import {HeaderModule} from "./header/header.module";
-import {SettingsModule} from "./settings/settings.module";
 import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        ChessViewModule,
-        FormViewModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        LanguageModule,
-        AlgorithmConfigViewModule,
-        HeaderModule,
-        SettingsModule,
-        StateViewModule,
-        MatCardModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ChessViewModule,
+    FormViewModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    LanguageModule,
+    AlgorithmConfigViewModule,
+    HeaderModule,
+    StateViewModule,
+    MatCardModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

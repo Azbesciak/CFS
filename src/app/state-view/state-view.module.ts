@@ -10,8 +10,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {SettingsModule} from "../settings/settings.module";
-import { StateControlsComponent } from './state-controls/state-controls.component';
+import {StateControlsComponent} from './state-controls/state-controls.component';
+import {ComputationSpeedModule} from "./computation-speed/computation-speed.module";
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { StateControlsComponent } from './state-controls/state-controls.componen
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
-    SettingsModule
+    ComputationSpeedModule
   ]
 })
 export class StateViewModule {
