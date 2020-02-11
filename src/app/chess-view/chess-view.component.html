@@ -3,5 +3,6 @@
     *ngFor="let cell of row; let y = index; trackBy: cellIdentity"
     [value]="cell" (click)="onCellClicked(cell, x, y)"
     [matTooltip]="'classifierResult' | translate:cell"
+    [class.last-updated]="lastUpdated === cell.id"
   ></app-chess-cell>
 </ng-container>
