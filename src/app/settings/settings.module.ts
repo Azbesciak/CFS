@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SettingsComponent } from './settings.component';
-import {ComputationDelayModule} from "./computation-delay/computation-delay.module";
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SettingsComponent} from './settings.component';
+import {ComputationSpeedModule} from "./computation-speed/computation-speed.module";
 
 
 @NgModule({
@@ -12,7 +11,8 @@ import {ComputationDelayModule} from "./computation-delay/computation-delay.modu
   ],
   imports: [
     CommonModule,
-    ComputationDelayModule
+    ComputationSpeedModule
   ]
 })
-export class SettingsModule { }
+export class SettingsModule {
+}

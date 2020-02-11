@@ -20,5 +20,5 @@ import {ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule
   ]
 })
-export class ComputationDelayModule {
+export class ComputationSpeedModule {
 }
