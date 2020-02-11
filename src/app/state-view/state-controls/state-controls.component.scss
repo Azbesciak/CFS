@@ -2,6 +2,15 @@ app-state-controls {
   display: grid;
   grid-template-columns: repeat(2, max-content);
   justify-self: flex-start;
+  $btn-size: 36px; // normally icons are in px, default 24px in material
+  .start-btn, .stop-btn {
+    .mat-icon {
+      width: $btn-size;
+      height: $btn-size;
+      line-height: $btn-size;
+      font-size: $btn-size;
+    }
+  }
   .start-btn {
     color: var(--start-color);
   }
