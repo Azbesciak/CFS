@@ -28,9 +28,9 @@ export function defaultConfig(): Config {
       iterative: true,
       delay: {
         current: 50,
-        min: 10,
-        max: 5000,
-        step: 10
+        min: 5,
+        max: 1000,
+        step: 1
       }
     }
   }
