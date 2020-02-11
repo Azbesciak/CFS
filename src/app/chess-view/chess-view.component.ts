@@ -31,6 +31,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
   height = environment.chess.height;
   width = environment.chess.width;
   private chessRefresh: any;
+  lastUpdated = -1;
   chessboard: Chessboard = matrix(this.width, this.height, (x, y) => ({
     id: x * this.width + y,
     originalValue: Alphabet.Zero,
@@ -88,6 +89,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
       this.chessboard[r.x][r.y] = {
         id, originalValue, accuracy: r.accuracy, predictedValue: r.prediction.result
       };
+      this.lastUpdated = id;
       this.refreshView();
     }))
   }
@@ -100,6 +102,7 @@ export class ChessViewComponent implements OnInit, OnDestroy {
       const chessRow = this.chessboard[x];
       row.forEach((value, y) => chessRow[y] = mapper(chessRow[y], value))
     });
+    this.lastUpdated = -1;
     this.refreshView();
   }
 
