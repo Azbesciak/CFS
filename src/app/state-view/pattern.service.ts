@@ -59,6 +59,7 @@ const customPatternName = "custom";
 export class PatternService {
   private width: number = environment.chess.width;
   private height: number = environment.chess.height;
+  readonly maxSize = this.height * this.width;
   private readonly patterns: Pattern[] = generatePatterns(this.width, this.height);
 
   private readonly _selectedPattern = new BehaviorSubject<Pattern>(this.patterns[0]);
